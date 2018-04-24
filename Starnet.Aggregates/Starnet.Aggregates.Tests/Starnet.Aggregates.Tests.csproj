@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.10.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Starnet.Aggregates.Testing\Starnet.Aggregates.Testing.csproj" />
+    <ProjectReference Include="..\Starnet.Aggregates\Starnet.Aggregates.csproj" />
+  </ItemGroup>
+
+</Project>

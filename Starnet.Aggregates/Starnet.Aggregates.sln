@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starnet.Aggregates.GetEvent
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starnet.Aggregates.Testing", "Starnet.Aggregates.Testing\Starnet.Aggregates.Testing.csproj", "{CE227BC1-99C8-4FA2-B345-24BB1A1D92BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starnet.Aggregates.Tests", "Starnet.Aggregates.Tests\Starnet.Aggregates.Tests.csproj", "{F4FE12B1-9601-4051-9F4A-A7A37F966B87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starnet.Aggregates.GetEventStore.Tests", "Starnet.Aggregates.GetEventStore.Tests\Starnet.Aggregates.GetEventStore.Tests.csproj", "{CBD10E73-1800-4E4A-A5B7-E2C638C60B75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{CE227BC1-99C8-4FA2-B345-24BB1A1D92BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE227BC1-99C8-4FA2-B345-24BB1A1D92BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE227BC1-99C8-4FA2-B345-24BB1A1D92BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4FE12B1-9601-4051-9F4A-A7A37F966B87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4FE12B1-9601-4051-9F4A-A7A37F966B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4FE12B1-9601-4051-9F4A-A7A37F966B87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4FE12B1-9601-4051-9F4A-A7A37F966B87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBD10E73-1800-4E4A-A5B7-E2C638C60B75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBD10E73-1800-4E4A-A5B7-E2C638C60B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBD10E73-1800-4E4A-A5B7-E2C638C60B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBD10E73-1800-4E4A-A5B7-E2C638C60B75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
