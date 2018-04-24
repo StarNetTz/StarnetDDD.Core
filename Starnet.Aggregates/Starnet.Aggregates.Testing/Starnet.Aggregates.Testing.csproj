@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.10.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Starnet.Aggregates\Starnet.Aggregates.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Starnet.ObjectComparer">
+      <HintPath>..\lib\Starnet.ObjectComparer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
