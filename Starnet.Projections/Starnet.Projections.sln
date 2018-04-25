@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starnet.Projections", "Starnet.Projections\Starnet.Projections.csproj", "{F27AA905-BF70-46F5-94AC-54048CB3C3AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starnet.Projections.Tests", "Starnet.Projections.Tests\Starnet.Projections.Tests.csproj", "{298B577F-73E9-438C-9304-759C6B4E4BAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F27AA905-BF70-46F5-94AC-54048CB3C3AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F27AA905-BF70-46F5-94AC-54048CB3C3AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F27AA905-BF70-46F5-94AC-54048CB3C3AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F27AA905-BF70-46F5-94AC-54048CB3C3AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{298B577F-73E9-438C-9304-759C6B4E4BAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{298B577F-73E9-438C-9304-759C6B4E4BAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{298B577F-73E9-438C-9304-759C6B4E4BAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{298B577F-73E9-438C-9304-759C6B4E4BAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E45F0D46-F648-4D79-B323-CAD92E86BBB3}
+	EndGlobalSection
+EndGlobal

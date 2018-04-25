@@ -1,6 +1,7 @@
 ﻿using EventStore.ClientAPI;
 using EventStore.ClientAPI.Exceptions;
 using NUnit.Framework;
+using Starnet.Projections;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -126,7 +127,6 @@ namespace Starnet.Aggregates.GetEventStore.Tests
             } //dirty hack, normal throw async fails to finish test
             catch (Exception ex)
             {
-
                 Assert.That(ex is WrongExpectedVersionException);
             }
         }

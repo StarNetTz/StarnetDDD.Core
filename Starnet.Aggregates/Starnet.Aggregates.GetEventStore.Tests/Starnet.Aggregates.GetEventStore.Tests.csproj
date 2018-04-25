@@ -4,4 +4,20 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.10.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Starnet.Aggregates.GetEventStore\Starnet.Aggregates.GetEventStore.csproj" />
+    <ProjectReference Include="..\Starnet.Aggregates\Starnet.Aggregates.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Starnet.Projections">
+      <HintPath>..\lib\Starnet.Projections.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
