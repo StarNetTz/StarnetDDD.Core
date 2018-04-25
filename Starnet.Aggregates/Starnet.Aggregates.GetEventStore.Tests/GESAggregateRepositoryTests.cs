@@ -1,8 +1,9 @@
 ﻿using EventStore.ClientAPI;
-using EventStore.ClientAPI.Embedded;
 using EventStore.ClientAPI.Exceptions;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Threading.Tasks;
 
 namespace Starnet.Aggregates.GetEventStore.Tests
@@ -132,13 +133,7 @@ namespace Starnet.Aggregates.GetEventStore.Tests
 
         private async Task InitializeConnection()
         {
-            var nodeBuilder = EmbeddedVNodeBuilder.AsSingleNode()
-                                      .OnDefaultEndpoints()
-                                      .RunInMemory();
-            var node = nodeBuilder.Build();
-            node.StartAndWaitUntilReady().Wait();
-
-            Connection = EmbeddedEventStoreConnection.Create(node);
+            Connection = EventStoreConnection.Create(EventStoreConnectionSettings.TcpEndpoint);
             await Connection.ConnectAsync();
         }
 
