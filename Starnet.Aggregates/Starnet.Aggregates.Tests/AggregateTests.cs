@@ -5,7 +5,6 @@ namespace Starnet.Aggregates.Tests
     [TestFixture]
     class AggregateTests
     {
-
         PersonAggregate Person;
 
         [SetUp]
@@ -29,14 +28,14 @@ namespace Starnet.Aggregates.Tests
             AssertPersonCreated(Person);
         }
 
-        private static void AssertPersonCreated(PersonAggregate person)
-        {
-            Assert.That(person.Id, Is.EqualTo("1"));
-            Assert.That(person.Version, Is.EqualTo(1));
-            var e = person.Changes[0] as PersonCreated;
-            Assert.That(e.Id, Is.EqualTo("1"));
-            Assert.That(e.Name, Is.EqualTo("Zvjezdan"));
-        }
+            static void AssertPersonCreated(PersonAggregate person)
+            {
+                Assert.That(person.Id, Is.EqualTo("1"));
+                Assert.That(person.Version, Is.EqualTo(1));
+                var e = person.Changes[0] as PersonCreated;
+                Assert.That(e.Id, Is.EqualTo("1"));
+                Assert.That(e.Name, Is.EqualTo("Zvjezdan"));
+            }
 
         [Test]
         public void can_rename_person()
@@ -48,23 +47,20 @@ namespace Starnet.Aggregates.Tests
             AssertPersonRenamed(Person);
         }
 
-        private static void AssertPersonRenamed(PersonAggregate person)
-        {
-            Assert.That(person.Id, Is.EqualTo("1"));
-            Assert.That(person.Version, Is.EqualTo(2));
-            var e = person.Changes[1] as PersonRenamed;
-            Assert.That(e.Name, Is.EqualTo("Muriz"));
-        }
+            static void AssertPersonRenamed(PersonAggregate person)
+            {
+                Assert.That(person.Id, Is.EqualTo("1"));
+                Assert.That(person.Version, Is.EqualTo(2));
+                var e = person.Changes[1] as PersonRenamed;
+                Assert.That(e.Name, Is.EqualTo("Muriz"));
+            }
 
         [Test]
         public void rename_with_invalid_name_throws_domain_error()
         {
             Person.Create(new CreatePerson() { Id = "1", Name = "Zvjezdan" });
-            var exception = Assert.Throws<DomainError>(() => {
-                Person.Rename(new RenamePerson() { Id = "1", Name = "" });
-            });
+            var exception = Assert.Throws<DomainError>(() => { Person.Rename(new RenamePerson() { Id = "1", Name = "" }); });
             Assert.That(exception.Name, Is.EqualTo("InvalidPersonName"));
-
         }
 
         [Test]

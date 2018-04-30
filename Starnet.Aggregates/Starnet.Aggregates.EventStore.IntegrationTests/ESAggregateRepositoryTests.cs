@@ -1,26 +1,33 @@
 ﻿using EventStore.ClientAPI;
 using EventStore.ClientAPI.Exceptions;
 using NUnit.Framework;
-using Starnet.Projections;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
+using System.Net;
 using System.Threading.Tasks;
 
-namespace Starnet.Aggregates.GetEventStore.Tests
+namespace Starnet.Aggregates.EventStore.Tests
 {
     [TestFixture]
-    class GESAggregateRepositoryTests
+    class ESAggregateRepositoryTests
     {
         private IEventStoreConnection Connection;
-        private GESAggregateRepository Repository;
+        private ESAggregateRepository Repository;
+
+        private const int EventStoreTcpPort = 1113;
+        private const string EventStoreIp = "127.0.0.1";
 
         [OneTimeSetUp]
         public async Task OneTimeSetup()
         {
             await InitializeConnection();
-            Repository = new GESAggregateRepository(Connection);
+            Repository = new ESAggregateRepository(Connection);
         }
+
+            async Task InitializeConnection()
+            {
+                Connection = EventStoreConnection.Create(new IPEndPoint(IPAddress.Parse(EventStoreIp), EventStoreTcpPort));
+                await Connection.ConnectAsync();
+            }
 
         [Test]
         public async Task can_store_aggregate()
@@ -28,7 +35,6 @@ namespace Starnet.Aggregates.GetEventStore.Tests
             var id = $"persons-{Guid.NewGuid()}";
             var agg = CreatePersonAggregate(id, "Zvjezdan");
             await Repository.StoreAsync(agg);
-
         }
 
         [Test]
@@ -131,11 +137,7 @@ namespace Starnet.Aggregates.GetEventStore.Tests
             }
         }
 
-        private async Task InitializeConnection()
-        {
-            Connection = EventStoreConnection.Create(EventStoreConnectionSettings.TcpEndpoint);
-            await Connection.ConnectAsync();
-        }
+        
 
         private PersonAggregate CreatePersonAggregate(string id, string name)
         {

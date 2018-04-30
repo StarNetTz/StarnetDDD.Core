@@ -4,6 +4,8 @@
     <MetricsExclusionList>
       <Value>Starnet.Aggregates.GetEventStore\Starnet.Aggregates.GetEventStore.csproj</Value>
       <Value>Starnet.Aggregates.GetEventStore.Tests\Starnet.Aggregates.GetEventStore.Tests.csproj</Value>
+      <Value>Starnet.Aggregates.EventStore\Starnet.Aggregates.EventStore.csproj</Value>
+      <Value>Starnet.Aggregates.EventStore.Tests\Starnet.Aggregates.EventStore.Tests.csproj</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>
