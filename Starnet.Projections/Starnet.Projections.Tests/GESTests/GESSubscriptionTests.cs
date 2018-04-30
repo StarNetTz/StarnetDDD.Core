@@ -48,7 +48,7 @@ namespace Starnet.Projections.Tests
             Assert.That(LastEvent, Is.InstanceOf<TestEvent>());
             Assert.That(LastEvent, Is.Not.Null);
             Assert.That((LastEvent as TestEvent).SomeValue, Contains.Substring("Match name:"));
-            Assert.That(Checkpoint, Is.EqualTo(2));
+            Assert.That(Checkpoint, Is.GreaterThan(0));
         }
     }
 }

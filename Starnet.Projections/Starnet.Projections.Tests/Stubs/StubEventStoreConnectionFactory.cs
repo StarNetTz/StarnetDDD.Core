@@ -7,7 +7,6 @@ namespace Starnet.Projections.Tests
         public IEventStoreConnection Create()
         {
             var Connection = EventStoreConnection.Create(EventStoreConnectionSettings.TcpEndpoint);
-            Connection.ConnectAsync().Wait();
             return Connection;
         }
     }

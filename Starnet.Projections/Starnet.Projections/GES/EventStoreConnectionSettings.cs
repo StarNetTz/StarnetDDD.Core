@@ -14,11 +14,9 @@ namespace Starnet.Projections
 
         static EventStoreConnectionSettings()
         {
-           
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json");
-
             Configuration = builder.Build();
 
             UserCredentials = new UserCredentials(Configuration["EventStore:Username"], Configuration["EventStore:Password"]);
