@@ -1,6 +1,10 @@
 ﻿<SolutionConfiguration>
   <Settings>
     <AllowParallelTestExecution>False</AllowParallelTestExecution>
+    <MetricsExclusionList>
+      <Value>Starnet.Aggregates.GetEventStore\Starnet.Aggregates.GetEventStore.csproj</Value>
+      <Value>Starnet.Aggregates.GetEventStore.Tests\Starnet.Aggregates.GetEventStore.Tests.csproj</Value>
+    </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>
 </SolutionConfiguration>
