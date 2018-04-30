@@ -72,11 +72,9 @@ namespace Starnet
 
         public bool AutoClearCache { get; set; }
 
-
         public bool Caching { get; set; }
 
         public List<Type> AttributesToIgnore { get; set; }
-
 
         public ObjectComparer()
         {

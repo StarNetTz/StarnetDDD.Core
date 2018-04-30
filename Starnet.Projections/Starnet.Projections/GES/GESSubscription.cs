@@ -66,7 +66,7 @@ namespace Starnet.Projections
             await Connection.ConnectAsync();
             CatchUpSubscriptionSettings settings = new CatchUpSubscriptionSettings(500, 500, false, true);
             long? eventstoreCheckpoint = (fromCheckpoint == 0) ? null : (long?)(fromCheckpoint - 1);
-            Subscription = Connection.SubscribeToStreamFrom(StreamName, eventstoreCheckpoint, settings, EventAppeared, null, SubscriptionDropped, EventStoreConnectionSettings.UserCredentials);
+            Subscription = Connection.SubscribeToStreamFrom(StreamName, eventstoreCheckpoint, settings, EventAppeared, null, SubscriptionDropped);
         }
     }
 }
