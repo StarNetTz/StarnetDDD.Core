@@ -33,13 +33,13 @@ namespace Starnet.Projections.Tests
             AssertThatEventProjectedAsExpected();
         }
 
-        private void AssertThatEventProjectedAsExpected()
-        {
-            var e = LastEvent as TestEvent;
-            Assert.That(Checkpoint == 1);
-            Assert.That(e.Id == "1");
-            Assert.That(e.SomeValue == "Manchester - Sloboda");
-        }
+            void AssertThatEventProjectedAsExpected()
+            {
+                var e = LastEvent as TestEvent;
+                Assert.That(Checkpoint == 1);
+                Assert.That(e.Id == "1");
+                Assert.That(e.SomeValue == "Manchester - Sloboda");
+            }
 
         [Test]
         public async Task can_project_multiple_events()
@@ -57,7 +57,7 @@ namespace Starnet.Projections.Tests
             AssertLastEvent();
         }
 
-        private void LoadTwoEvents()
+        void LoadTwoEvents()
         {
             Subscription.LoadEvents(
                 new TestEvent() { Id = "1", SomeValue = "Manchester - Sloboda" },
@@ -65,7 +65,7 @@ namespace Starnet.Projections.Tests
                 );
         }
 
-        private void AssertLastEvent()
+        void AssertLastEvent()
         {
             var e = LastEvent as TestEvent;
             Assert.That(Checkpoint == 2);

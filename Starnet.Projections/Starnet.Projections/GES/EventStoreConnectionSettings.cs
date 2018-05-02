@@ -7,9 +7,9 @@ namespace Starnet.Projections
 {
     public class EventStoreConnectionSettings
     {
-        public static UserCredentials UserCredentials { get; private set; }
-        public static IPEndPoint HttpEndpoint { get; private set; }
-        public static IPEndPoint TcpEndpoint { get; private set; }
+        public static UserCredentials UserCredentials { get; set; }
+        public static IPEndPoint HttpEndpoint { get; set; }
+        public static IPEndPoint TcpEndpoint { get; set; }
         public static IConfiguration Configuration { get; set; }
 
         static EventStoreConnectionSettings()

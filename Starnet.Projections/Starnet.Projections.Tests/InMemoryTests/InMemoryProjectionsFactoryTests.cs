@@ -16,11 +16,11 @@ namespace Starnet.Projections.Tests
         {
             Container = new Container();
             Container.Register<IHandlerFactory, StubHandlerFactory>();
-            Container.Register<IFailureNotifierFactory, StubFailureNotifierFactory>();
             Container.Register<ICheckpointReader, StubCheckpointReader>();
             Container.Register<ICheckpointWriterFactory, StubCheckpointWriterFactory>();
             Container.Register<ISubscriptionFactory, InMemorySubscriptionFactory>();
             Container.Register<IProjectionsFactory, ProjectionsFactory>();
+        
             Container.Verify();
         }
 
@@ -58,14 +58,14 @@ namespace Starnet.Projections.Tests
             Assert.That(async () => { await proj.Start(); }, Throws.Exception.TypeOf<AggregateException>());
         }
 
-        private void PreloadFailingProjectionsSubscription(IProjection proj)
-        {
-            var sub = proj.Subscription as InMemorySubscription;
-            sub.LoadEvents(
-               new TestEvent() { Id = "1", SomeValue = "Manchester - Sloboda" },
-               new TestEvent() { Id = "2", SomeValue = "Manchester - Sloboda City" }
-               );
-        }
+            void PreloadFailingProjectionsSubscription(IProjection proj)
+            {
+                var sub = proj.Subscription as InMemorySubscription;
+                sub.LoadEvents(
+                   new TestEvent() { Id = "1", SomeValue = "Manchester - Sloboda" },
+                   new TestEvent() { Id = "2", SomeValue = "Manchester - Sloboda City" }
+                   );
+            }
 
         [Test]
         public async Task can_create_all_projections_within_assembly()

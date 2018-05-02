@@ -14,12 +14,12 @@ namespace Starnet.Projections
 
         public Func<object, long, Task> EventAppearedCallback { get; set; }
 
-        private const string EventClrTypeHeader = "EventClrTypeName";
+        const string EventClrTypeHeader = "EventClrTypeName";
         readonly IEventStoreConnection Connection;
       
         EventStoreStreamCatchUpSubscription Subscription = null;
-        private static Logger Logger = LogManager.GetCurrentClassLogger();
-        private static readonly JsonSerializerSettings SerializerSettings;
+        static Logger Logger = LogManager.GetCurrentClassLogger();
+        static readonly JsonSerializerSettings SerializerSettings;
 
         static GESSubscription()
         {
@@ -31,7 +31,7 @@ namespace Starnet.Projections
             Connection = connection;
         }
 
-        private static object DeserializeEvent(byte[] metadata, byte[] data)
+        static object DeserializeEvent(byte[] metadata, byte[] data)
         {
             var eventClrTypeName = JObject.Parse(Encoding.UTF8.GetString(metadata)).Property(EventClrTypeHeader).Value;
             var jsonString = Encoding.UTF8.GetString(data);

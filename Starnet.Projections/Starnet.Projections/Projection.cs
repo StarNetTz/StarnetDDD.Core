@@ -6,25 +6,26 @@ using System.Threading.Tasks;
 
 namespace Starnet.Projections
 {
-    public abstract class Projection : IProjection
+    public class Projection : IProjection
     {
         public string Name { get; set; }
+        public string SubscriptionStreamName { get; set; }
         public ISubscription Subscription { get; set; }
         public IEnumerable<IHandler> Handlers { get; set; }
         public ICheckpointWriter CheckpointWriter { get; set; }
-       
-        public Checkpoint Checkpoint { get; set; }
         private static Logger Logger = LogManager.GetCurrentClassLogger();
 
+        public Checkpoint Checkpoint { get; set; }
+       
         public async Task Project(object e, long c)
         {
             try
             {
                 await HandleEvent(e, c);
             }
-            catch (AggregateException ex)
+            catch (AggregateException aex)
             {
-                Logger.Error(ex);
+                Logger.Error(aex.InnerException);
                 throw;
             }
         }
