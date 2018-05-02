@@ -25,7 +25,7 @@ namespace Starnet.Projections
             }
             catch (AggregateException aex)
             {
-                Logger.Error(aex.InnerException);
+                Logger.Error(aex);
                 throw;
             }
         }
