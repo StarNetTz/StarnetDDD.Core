@@ -52,7 +52,6 @@ namespace Starnet.Projections
             proj.CheckpointWriter = await CheckpointWriterFactory.Create();
             proj.Subscription = CreateSubscription(proj);
             proj.Handlers = GetHandlers(type);
-          
             return proj;
         }
 
