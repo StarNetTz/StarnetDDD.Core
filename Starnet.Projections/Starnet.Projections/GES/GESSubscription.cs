@@ -16,7 +16,7 @@ namespace Starnet.Projections
 
         private const string EventClrTypeHeader = "EventClrTypeName";
         readonly IEventStoreConnection Connection;
-        public IFailureNotifier FailureNotifier { get; set; }
+      
         EventStoreStreamCatchUpSubscription Subscription = null;
         private static Logger Logger = LogManager.GetCurrentClassLogger();
         private static readonly JsonSerializerSettings SerializerSettings;
@@ -51,11 +51,7 @@ namespace Starnet.Projections
             {
                 Console.WriteLine($"Exception StackTrace: {ex.StackTrace} \r\n Exception Message: {ex.Message}");
                 Logger.Info(ex);
-                FailureNotifier.Notify(new FailureMessage
-                {
-                    Message = $"{ex.Message}\r\n{ex.StackTrace}",
-                    Subject = $"Subscription {subscription.SubscriptionName} dropped!"
-                }).Wait();
+              
             }
 
             Start(0).Wait();

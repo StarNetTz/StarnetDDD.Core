@@ -18,19 +18,15 @@ namespace Starnet.Aggregates.EventStore
         const int ReadPageSize = 500;
 
         readonly IEventStoreConnection EventStoreConnection;
-        static readonly JsonSerializerSettings SerializerSettings;
-
-        static ESAggregateRepository()
-        {
-            SerializerSettings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-        }
+        readonly JsonSerializerSettings SerializerSettings;
 
         public ESAggregateRepository(IEventStoreConnection eventStoreConnection)
         {
+            SerializerSettings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
             EventStoreConnection = eventStoreConnection;
         }
 
-        static object DeserializeEvent(byte[] metadata, byte[] data)
+        object DeserializeEvent(byte[] metadata, byte[] data)
         {
             var eventClrTypeName = JObject.Parse(Encoding.UTF8.GetString(metadata)).Property(EventClrTypeHeader).Value;
             return JsonConvert.DeserializeObject(Encoding.UTF8.GetString(data), Type.GetType((string)eventClrTypeName), SerializerSettings);
@@ -74,7 +70,7 @@ namespace Starnet.Aggregates.EventStore
             aggregate.Changes.Clear();
         }
 
-        static EventData ToEventData(dynamic evnt, IDictionary<string, object> headers)
+        EventData ToEventData(dynamic evnt, IDictionary<string, object> headers)
         {
             var data = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(evnt, SerializerSettings));
             var eventHeaders = new Dictionary<string, object>(headers)

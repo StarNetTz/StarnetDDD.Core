@@ -10,11 +10,14 @@ namespace Starnet.Aggregates.EventStore.Tests
     [TestFixture]
     class ESAggregateRepositoryTests
     {
-        private IEventStoreConnection Connection;
-        private ESAggregateRepository Repository;
+        IEventStoreConnection Connection;
+        ESAggregateRepository Repository;
 
-        private const int EventStoreTcpPort = 1113;
-        private const string EventStoreIp = "127.0.0.1";
+        const int EventStoreTcpPort = 1113;
+        const string EventStoreIp = "127.0.0.1";
+
+        const int WritePageSize = 500;
+        const int OverflownPageSize = WritePageSize + 20;
 
         [OneTimeSetUp]
         public async Task OneTimeSetup()
@@ -30,74 +33,55 @@ namespace Starnet.Aggregates.EventStore.Tests
             }
 
         [Test]
-        public async Task can_store_aggregate()
+        public async Task can_store_and_load_aggregates_below_page_size_treshold()
         {
             var id = $"persons-{Guid.NewGuid()}";
-            var agg = CreatePersonAggregate(id, "Zvjezdan");
-            await Repository.StoreAsync(agg);
+            await CreateAndStoreAggregate(id);
+
+            var loadedAggregate = await Repository.GetAsync<PersonAggregate>(id);
+            Assert.That(loadedAggregate.Version, Is.EqualTo(1));
         }
 
         [Test]
-        public async Task can_store_aggregate_using_pagination_with_over_500_events()
+        public async Task can_store_and_load_aggregates_above_page_size_treshold()
         {
             var id = $"persons-{Guid.NewGuid()}";
-            var agg = CreatePersonAggregate(id, "Zvjezdan");
-            for (int i = 0; i < 510; i++)
-                agg.Rename(new RenamePerson() { Id = id, Name = $"Name {i + 1}" });
-            await Repository.StoreAsync(agg);
+            await CreateAndPersistAggregateThatExceedesPageSizeTreshold(id);
+            var loadedAggregate = await Repository.GetAsync<PersonAggregate>(id);
+            const int ExpectedVersion = OverflownPageSize + 1;
+            Assert.That(loadedAggregate.Version, Is.EqualTo(ExpectedVersion));
         }
+
+            async Task CreateAndPersistAggregateThatExceedesPageSizeTreshold(string id)
+            {
+                var agg = CreatePersonAggregate(id, "Zvjezdan", OverflownPageSize);
+                await Repository.StoreAsync(agg);
+            }
 
         [Test]
         public async Task storing_an_aggregate_resets_list_of_changes()
         {
-            var id = $"persons-{Guid.NewGuid()}";
-            var agg = CreatePersonAggregate(id, "Zvjezdan");
-            agg.Rename(new RenamePerson() { Id = id, Name = "Zeka peka" });
-
+            var agg = CreatePersonAggregate($"persons-{Guid.NewGuid()}", "Zvjezdan");
             await Repository.StoreAsync(agg);
-
             Assert.That(agg.Changes, Is.Empty);
-        }
-
-        [Test]
-        public async Task can_load_stored_aggregate()
-        {
-            var id = $"persons-{Guid.NewGuid()}";
-            var agg = CreatePersonAggregate(id, "Zvjezdan");
-            agg.Rename(new RenamePerson() { Id = id, Name = "Zeka peka" });
-            await Repository.StoreAsync(agg);
-
-            var loadedAggregate = await Repository.GetAsync<PersonAggregate>(agg.Id);
-
-            Assert.That(loadedAggregate.Version, Is.EqualTo(2));
-        }
-
-        [Test]
-        public async Task can_load_aggregate_using_pagination_with_over_500_events()
-        {
-            var id = $"persons-{Guid.NewGuid()}";
-            var agg = CreatePersonAggregate(id, "Zvjezdan");
-            for (int i = 0; i < 509; i++)
-                agg.Rename(new RenamePerson() { Id = id, Name = $"Name {i + 1}" });
-            await Repository.StoreAsync(agg);
-            var loadedAggregate = await Repository.GetAsync<PersonAggregate>(id);
-            Assert.That(loadedAggregate.Version, Is.EqualTo(510));
         }
 
         [Test]
         public async Task can_load_requested_version_of_aggregate()
         {
-            var id = $"persons-{Guid.NewGuid()}";
-            var agg = CreatePersonAggregate(id, "Zvjezdan");
-            for (int i = 0; i < 5; i++)
-                agg.Rename(new RenamePerson() { Id = id, Name = $"Name {i + 1}" });
+            const int NrOfEventsToAdd = 5;
+            const int FinalVersion = 6;
+            const int RequestedVersion = 2;
 
+            var id = $"persons-{Guid.NewGuid()}";
+
+            var agg = CreatePersonAggregate(id, "Zvjezdan", NrOfEventsToAdd);
             await Repository.StoreAsync(agg);
 
-            var loadedAggregate = await Repository.GetAsync<PersonAggregate>(id, 2);
+            var loadedAggregate = await Repository.GetAsync<PersonAggregate>(id, RequestedVersion);
 
-            Assert.That(agg.Version, Is.EqualTo(6));
-            Assert.That(loadedAggregate.Version, Is.EqualTo(2));
+            Assert.That(agg.Version, Is.EqualTo(FinalVersion));
+            Assert.That(loadedAggregate.Version, Is.EqualTo(RequestedVersion));
         }
 
         [Test]
@@ -126,42 +110,45 @@ namespace Starnet.Aggregates.EventStore.Tests
             var loadedAggregate = await Repository.GetAsync<PersonAggregate>(id);
             await UpdateAggOutOfThisTransaction(id);
             UpdateAggInThisTransaction(loadedAggregate);
+            Assert.That(async () => { await Repository.StoreAsync(loadedAggregate); }, Throws.Exception.TypeOf<WrongExpectedVersionException>());
+        }
 
-            try
+            async Task InitializeAggregate(string id)
             {
-                await Repository.StoreAsync(loadedAggregate); Assert.Fail();
-            } //dirty hack, normal throw async fails to finish test
-            catch (Exception ex)
-            {
-                Assert.That(ex is WrongExpectedVersionException);
+                await Repository.StoreAsync(CreatePersonAggregate(id, "Zeko"));
             }
+
+            async Task UpdateAggOutOfThisTransaction(string id)
+            {
+                var agg = await Repository.GetAsync<PersonAggregate>(id);
+                agg.Rename(new RenamePerson() { Id = id, Name = "new value" });
+                await Repository.StoreAsync(agg);
+            }
+
+            void UpdateAggInThisTransaction(PersonAggregate agg)
+            {
+                var cmd = new RenamePerson() { Id = agg.Id, Name = "new value" };
+                agg.Rename(cmd);
+            }
+
+        PersonAggregate CreatePersonAggregate(string id, string name)
+        {
+            var pa = new PersonAggregate(new PersonAggregateState());
+            pa.Create(new CreatePerson() { Id = id, Name = name });
+            return pa;
         }
 
-        
-
-        private PersonAggregate CreatePersonAggregate(string id, string name)
+        PersonAggregate CreatePersonAggregate(string id, string name, int numberOfEventsToAdd)
         {
-            var p = new PersonAggregate(new PersonAggregateState());
-            p.Create(new CreatePerson() { Id = id, Name = name });
-            return p;
+            var pa = CreatePersonAggregate(id, name);
+            for (int i = 0; i < numberOfEventsToAdd; i++)
+                pa.Rename(new RenamePerson() { Id = id, Name = $"Name {i + 1}" });
+            return pa;
         }
 
-        private async Task InitializeAggregate(string id)
+        async Task CreateAndStoreAggregate(string id)
         {
-
-            await Repository.StoreAsync(CreatePersonAggregate(id, "Zeko"));
-        }
-
-        private void UpdateAggInThisTransaction(PersonAggregate agg)
-        {
-            var cmd = new RenamePerson() { Id = agg.Id, Name = "new value" };
-            agg.Rename(cmd);
-        }
-
-        private async Task UpdateAggOutOfThisTransaction(string id)
-        {
-            var agg = await Repository.GetAsync<PersonAggregate>(id);
-            agg.Rename(new RenamePerson() { Id = id, Name = "new value" });
+            var agg = CreatePersonAggregate(id, "Zvjezdan");
             await Repository.StoreAsync(agg);
         }
     }

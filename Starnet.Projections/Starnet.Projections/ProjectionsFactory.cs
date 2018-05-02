@@ -12,21 +12,20 @@ namespace Starnet.Projections
         protected readonly ICheckpointWriterFactory CheckpointWriterFactory;
         protected readonly ISubscriptionFactory SubscriptionFactory;
         protected readonly IHandlerFactory HandlerFactory;
-        protected readonly IFailureNotifierFactory FailureNotifierFactory;
+       
 
         public ProjectionsFactory(
             ICheckpointReader checkpointReader,
             ICheckpointWriterFactory checkpointWriterFactory,
             ISubscriptionFactory subscriptionFactory,
-            IHandlerFactory denromalizerFactory,
-            IFailureNotifierFactory failureNotifierFactory
+            IHandlerFactory denromalizerFactory
             )
         {
             CheckpointReader = checkpointReader;
             CheckpointWriterFactory = checkpointWriterFactory;
             SubscriptionFactory = subscriptionFactory;
             HandlerFactory = denromalizerFactory;
-            FailureNotifierFactory = failureNotifierFactory;
+        
         }
 
         public async Task<IList<IProjection>> Create(Assembly projectionsAssembly)
@@ -53,7 +52,7 @@ namespace Starnet.Projections
             proj.CheckpointWriter = await CheckpointWriterFactory.Create();
             proj.Subscription = CreateSubscription(proj);
             proj.Handlers = GetHandlers(type);
-            proj.FailureNotifier = FailureNotifierFactory.Create();
+         
             return proj;
         }
 

@@ -1,0 +1,6 @@
+﻿Run event store in docker with default settings, for integration tests purposes.
+1. Install docker, linux mode
+2. Pull docker image:	docker pull eventstore/eventstore
+3. Run container using:	docker run --name eventstore-node -it -p 2113:2113 -p 1113:1113 eventstore/eventstore
+4. Activate/deactivate ncrunch on ES projects to check tests and coverage
+5. Pay attention to docker image db contents, as it will only grow with time. Purge it from time to time.

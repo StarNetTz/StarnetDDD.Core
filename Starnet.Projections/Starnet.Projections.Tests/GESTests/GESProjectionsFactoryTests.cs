@@ -15,7 +15,7 @@ namespace Starnet.Projections.Tests
             Container = new Container();
 
             Container.Register<IHandlerFactory, StubHandlerFactory>();
-            Container.Register<IFailureNotifierFactory, StubFailureNotifierFactory>();
+          
             Container.Register<ICheckpointReader, StubCheckpointReader>();
             Container.Register<ICheckpointWriterFactory, StubCheckpointWriterFactory>();
             Container.Register<IEventStoreConnectionFactory>(() => new StubEventStoreConnectionFactory());
