@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starnet.Aggregates.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starnet.Aggregates.EventStore.IntegrationTests", "Starnet.Aggregates.EventStore.IntegrationTests\Starnet.Aggregates.EventStore.IntegrationTests.csproj", "{CBD10E73-1800-4E4A-A5B7-E2C638C60B75}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventStore", "EventStore", "{FE2DFB83-4F26-4CAA-B1A6-751296196B07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{44E7BFB6-02A8-4AEE-BB9A-A5A4BC669110} = {FE2DFB83-4F26-4CAA-B1A6-751296196B07}
+		{CBD10E73-1800-4E4A-A5B7-E2C638C60B75} = {FE2DFB83-4F26-4CAA-B1A6-751296196B07}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82F50364-EAAB-4710-A48A-F72E0AEFAD42}
