@@ -14,12 +14,12 @@ namespace Starnet.Projections
 
         public Func<object, long, Task> EventAppearedCallback { get; set; }
 
-        private const string EventClrTypeHeader = "EventClrTypeName";
+        const string EventClrTypeHeader = "EventClrTypeName";
         readonly IEventStoreConnection Connection;
-        public IFailureNotifier FailureNotifier { get; set; }
+      
         EventStoreStreamCatchUpSubscription Subscription = null;
-        private static Logger Logger = LogManager.GetCurrentClassLogger();
-        private static readonly JsonSerializerSettings SerializerSettings;
+        static Logger Logger = LogManager.GetCurrentClassLogger();
+        static readonly JsonSerializerSettings SerializerSettings;
 
         static GESSubscription()
         {
@@ -31,7 +31,7 @@ namespace Starnet.Projections
             Connection = connection;
         }
 
-        private static object DeserializeEvent(byte[] metadata, byte[] data)
+        static object DeserializeEvent(byte[] metadata, byte[] data)
         {
             var eventClrTypeName = JObject.Parse(Encoding.UTF8.GetString(metadata)).Property(EventClrTypeHeader).Value;
             var jsonString = Encoding.UTF8.GetString(data);
@@ -51,11 +51,7 @@ namespace Starnet.Projections
             {
                 Console.WriteLine($"Exception StackTrace: {ex.StackTrace} \r\n Exception Message: {ex.Message}");
                 Logger.Info(ex);
-                FailureNotifier.Notify(new FailureMessage
-                {
-                    Message = $"{ex.Message}\r\n{ex.StackTrace}",
-                    Subject = $"Subscription {subscription.SubscriptionName} dropped!"
-                }).Wait();
+              
             }
 
             Start(0).Wait();
@@ -66,7 +62,7 @@ namespace Starnet.Projections
             await Connection.ConnectAsync();
             CatchUpSubscriptionSettings settings = new CatchUpSubscriptionSettings(500, 500, false, true);
             long? eventstoreCheckpoint = (fromCheckpoint == 0) ? null : (long?)(fromCheckpoint - 1);
-            Subscription = Connection.SubscribeToStreamFrom(StreamName, eventstoreCheckpoint, settings, EventAppeared, null, SubscriptionDropped, EventStoreConnectionSettings.UserCredentials);
+            Subscription = Connection.SubscribeToStreamFrom(StreamName, eventstoreCheckpoint, settings, EventAppeared, null, SubscriptionDropped);
         }
     }
 }

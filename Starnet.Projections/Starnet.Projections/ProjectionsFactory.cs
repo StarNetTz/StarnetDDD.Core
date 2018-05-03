@@ -12,21 +12,18 @@ namespace Starnet.Projections
         protected readonly ICheckpointWriterFactory CheckpointWriterFactory;
         protected readonly ISubscriptionFactory SubscriptionFactory;
         protected readonly IHandlerFactory HandlerFactory;
-        protected readonly IFailureNotifierFactory FailureNotifierFactory;
 
         public ProjectionsFactory(
             ICheckpointReader checkpointReader,
             ICheckpointWriterFactory checkpointWriterFactory,
             ISubscriptionFactory subscriptionFactory,
-            IHandlerFactory denromalizerFactory,
-            IFailureNotifierFactory failureNotifierFactory
+            IHandlerFactory denromalizerFactory
             )
         {
             CheckpointReader = checkpointReader;
             CheckpointWriterFactory = checkpointWriterFactory;
             SubscriptionFactory = subscriptionFactory;
             HandlerFactory = denromalizerFactory;
-            FailureNotifierFactory = failureNotifierFactory;
         }
 
         public async Task<IList<IProjection>> Create(Assembly projectionsAssembly)
@@ -47,47 +44,61 @@ namespace Starnet.Projections
 
         public async Task<IProjection> Create(Type type)
         {
-            var proj = Activator.CreateInstance(type) as Projection;
-            proj.Name = GetCheckpointName(type);
+            var pi = GetProjectionInfo(type);
+            var proj = new Projection();
+            proj.Name = pi.Name;
+            proj.SubscriptionStreamName = pi.SubscriptionStreamName;
             proj.Checkpoint = await CheckpointReader.Read($"Checkpoints-{proj.Name}");
             proj.CheckpointWriter = await CheckpointWriterFactory.Create();
             proj.Subscription = CreateSubscription(proj);
             proj.Handlers = GetHandlers(type);
-            proj.FailureNotifier = FailureNotifierFactory.Create();
             return proj;
         }
 
-        private List<IHandler> GetHandlers(Type type)
-        {
+            ISubscription CreateSubscription(Projection proj)
+            {
+                var subscription = SubscriptionFactory.Create();
+                subscription.StreamName = proj.SubscriptionStreamName;
+                subscription.EventAppearedCallback = proj.Project;
+                return subscription;
+            }
 
-            Type[] typeArgs = (
-                from iType in type.GetInterfaces()
-                where iType.IsGenericType
-                && iType.GetGenericTypeDefinition() == typeof(IHandledBy<>)
-                select iType.GetGenericArguments()[0]).ToArray();
-            var handlers = new List<IHandler>();
-            foreach (var t in typeArgs)
-                handlers.Add(HandlerFactory.Create(t));
-            return handlers;
-        }
+            List<IHandler> GetHandlers(Type type)
+            {
+                Type[] typeArgs = (
+                    from iType in type.GetInterfaces()
+                    where iType.IsGenericType
+                    && iType.GetGenericTypeDefinition() == typeof(IHandledBy<>)
+                    select iType.GetGenericArguments()[0]).ToArray();
+                var handlers = new List<IHandler>();
+                foreach (var t in typeArgs)
+                    handlers.Add(HandlerFactory.Create(t));
+                return handlers;
+            }
 
-        private string GetCheckpointName(Type type)
-        {
-            return type.Name.Replace("Projection", "");
-        }
+            ProjectionInfo GetProjectionInfo(Type type)
+            {
+                return new ProjectionInfo {
+                    Name = GetProjectionName(type),
+                    SubscriptionStreamName = GetSubscriptionStreamName(type)
+                };
+            }
 
-        private ISubscription CreateSubscription(IProjection proj)
-        {
-            var subscription = SubscriptionFactory.Create();
-            subscription.StreamName = GetStreamName(proj.GetType());
-            subscription.EventAppearedCallback = proj.Project;
-            return subscription;
-        }
+                string GetProjectionName(Type type)
+                {
+                    return type.Name.Replace("Projection", "");
+                }
 
-        private string GetStreamName(Type type)
+                string GetSubscriptionStreamName(Type type)
+                {
+                    var attrInfo = type.GetCustomAttribute(typeof(SubscribesToStream)) as SubscribesToStream;
+                    return attrInfo.Name;
+                }
+
+        class ProjectionInfo
         {
-            var attrInfo = type.GetCustomAttribute(typeof(SubscribesToStream)) as SubscribesToStream;
-            return attrInfo.Name;
+            public string Name { get; set; }
+            public string SubscriptionStreamName { get; set; }
         }
     }
 }

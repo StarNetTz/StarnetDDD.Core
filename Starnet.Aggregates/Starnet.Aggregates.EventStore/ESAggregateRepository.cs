@@ -7,30 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Starnet.Aggregates.GetEventStore
+namespace Starnet.Aggregates.EventStore
 {
-    public class GESAggregateRepository : IAggregateRepository
+    public class ESAggregateRepository : IAggregateRepository
     {
-        private const string EventClrTypeHeader = "EventClrTypeName";
-        private const string AggregateClrTypeHeader = "AggregateClrTypeName";
-        private const string CommitIdHeader = "CommitId";
-        private const int WritePageSize = 500;
-        private const int ReadPageSize = 500;
+        const string EventClrTypeHeader = "EventClrTypeName";
+        const string AggregateClrTypeHeader = "AggregateClrTypeName";
+        const string CommitIdHeader = "CommitId";
+        const int WritePageSize = 500;
+        const int ReadPageSize = 500;
 
-        private readonly IEventStoreConnection EventStoreConnection;
-        private static readonly JsonSerializerSettings SerializerSettings;
+        readonly IEventStoreConnection EventStoreConnection;
+        readonly JsonSerializerSettings SerializerSettings;
 
-        static GESAggregateRepository()
+        public ESAggregateRepository(IEventStoreConnection eventStoreConnection)
         {
             SerializerSettings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
-        }
-
-        public GESAggregateRepository(IEventStoreConnection eventStoreConnection)
-        {
             EventStoreConnection = eventStoreConnection;
         }
 
-        private static object DeserializeEvent(byte[] metadata, byte[] data)
+        object DeserializeEvent(byte[] metadata, byte[] data)
         {
             var eventClrTypeName = JObject.Parse(Encoding.UTF8.GetString(metadata)).Property(EventClrTypeHeader).Value;
             return JsonConvert.DeserializeObject(Encoding.UTF8.GetString(data), Type.GetType((string)eventClrTypeName), SerializerSettings);
@@ -41,7 +37,7 @@ namespace Starnet.Aggregates.GetEventStore
             await SaveAggregate(aggregate, Guid.NewGuid(), (d) => { });
         }
 
-        private async Task SaveAggregate(IAggregate aggregate, Guid commitId, Action<IDictionary<string, object>> updateHeaders)
+        async Task SaveAggregate(IAggregate aggregate, Guid commitId, Action<IDictionary<string, object>> updateHeaders)
         {
             var commitHeaders = new Dictionary<string, object>
             {
@@ -57,13 +53,10 @@ namespace Starnet.Aggregates.GetEventStore
             var eventsToSave = newEvents.Select(e => ToEventData(e, commitHeaders)).ToList();
 
             if (eventsToSave.Count < WritePageSize)
-            {
                 await EventStoreConnection.AppendToStreamAsync(streamName, expectedVersion, eventsToSave);
-            }
             else
             {
                 var transaction = await EventStoreConnection.StartTransactionAsync(streamName, expectedVersion);
-
                 var position = 0;
                 while (position < eventsToSave.Count)
                 {
@@ -71,14 +64,13 @@ namespace Starnet.Aggregates.GetEventStore
                     await transaction.WriteAsync(pageEvents);
                     position += WritePageSize;
                 }
-
                 await transaction.CommitAsync();
             }
 
             aggregate.Changes.Clear();
         }
 
-        private static EventData ToEventData(dynamic evnt, IDictionary<string, object> headers)
+        EventData ToEventData(dynamic evnt, IDictionary<string, object> headers)
         {
             var data = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(evnt, SerializerSettings));
             var eventHeaders = new Dictionary<string, object>(headers)

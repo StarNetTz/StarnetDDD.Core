@@ -6,25 +6,26 @@ using System.Threading.Tasks;
 
 namespace Starnet.Projections
 {
-    public abstract class Projection : IProjection
+    public class Projection : IProjection
     {
         public string Name { get; set; }
+        public string SubscriptionStreamName { get; set; }
         public ISubscription Subscription { get; set; }
         public IEnumerable<IHandler> Handlers { get; set; }
         public ICheckpointWriter CheckpointWriter { get; set; }
-        public IFailureNotifier FailureNotifier { get; set; }
-        public Checkpoint Checkpoint { get; set; }
         private static Logger Logger = LogManager.GetCurrentClassLogger();
 
+        public Checkpoint Checkpoint { get; set; }
+       
         public async Task Project(object e, long c)
         {
             try
             {
                 await HandleEvent(e, c);
             }
-            catch (AggregateException ex)
+            catch (AggregateException aex)
             {
-                await ReportFailure(ex);
+                Logger.Error(aex);
                 throw;
             }
         }
@@ -43,20 +44,6 @@ namespace Starnet.Projections
                 tasks.Add(d.Handle(e, c));
             tasks.Add(CheckpointWriter.Write(Checkpoint));
             return tasks.ToArray();
-        }
-
-        private async Task ReportFailure(AggregateException ex)
-        {
-            Logger.Info(ex);
-            await FailureNotifier.Notify(new FailureMessage { Message = CreateMessageBody(ex), Subject = $"Projection {Name} bombed!" });
-        }
-
-        private static string CreateMessageBody(AggregateException ex)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (var ie in ex.InnerExceptions)
-                sb.AppendLine(ie.Message);
-            return sb.ToString(); ;
         }
 
         public async Task Start()

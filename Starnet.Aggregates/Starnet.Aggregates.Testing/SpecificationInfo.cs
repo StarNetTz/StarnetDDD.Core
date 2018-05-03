@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace Starnet.Aggregates.Testing
+﻿namespace Starnet.Aggregates.Testing
 {
     public class SpecificationInfo<TCommand, TEvent>
     {

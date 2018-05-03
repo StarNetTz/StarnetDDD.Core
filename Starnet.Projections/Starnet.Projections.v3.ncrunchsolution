@@ -1,6 +1,12 @@
 ﻿<SolutionConfiguration>
   <Settings>
     <AllowParallelTestExecution>False</AllowParallelTestExecution>
+    <MetricsExclusionList>
+      <Value>Starnet.Projections.Tests\Starnet.Projections.Tests.csproj\GESTests</Value>
+      <Value>Starnet.Projections\Starnet.Projections.csproj\GES</Value>
+      <Value>Common\EventStoreTestDataGenerator.cs:Starnet.Projections.Tests\Starnet.Projections.Tests.csproj</Value>
+      <Value>Stubs\StubEventStoreConnectionFactory.cs:Starnet.Projections.Tests\Starnet.Projections.Tests.csproj</Value>
+    </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>
 </SolutionConfiguration>

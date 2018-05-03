@@ -6,7 +6,7 @@ namespace Starnet.Projections
 {
     public class InMemorySubscription : ISubscription
     {
-        private Dictionary<long, object> EventStream = new Dictionary<long, object>();
+        Dictionary<long, object> EventStream = new Dictionary<long, object>();
 
         public string StreamName { get; set; }
 
