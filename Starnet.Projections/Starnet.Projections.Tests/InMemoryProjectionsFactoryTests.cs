@@ -41,14 +41,14 @@ namespace Starnet.Projections.Tests
             Assert.That(proj.Checkpoint.Value, Is.EqualTo(2));
         }
 
-        private void PreloadProjectionsSubscription(IProjection proj)
-        {
-            var sub = proj.Subscription as InMemorySubscription;
-            sub.LoadEvents(
-               new TestEvent() { Id = "1", SomeValue = "Manchester - Sloboda" },
-               new TestEvent() { Id = "2", SomeValue = "Manchester - Sloboda City" }
-               );
-        }
+            void PreloadProjectionsSubscription(IProjection proj)
+            {
+                var sub = proj.Subscription as InMemorySubscription;
+                sub.LoadEvents(
+                   new TestEvent() { Id = "1", SomeValue = "Manchester - Sloboda" },
+                   new TestEvent() { Id = "2", SomeValue = "Manchester - Sloboda City" }
+                   );
+            }
 
         [Test]
         public async Task can_create_failing_projection_and_project()

@@ -1,25 +1,26 @@
 ﻿using NUnit.Framework;
 using SimpleInjector;
+using System;
 using System.Threading.Tasks;
 
-namespace Starnet.Projections.Tests
+namespace Starnet.Projections.ES.IntegrationTests
 {
     [TestFixture]
-    class GESProjectionsFactoryTests
+    class ESProjectionsFactoryTests
     {
         readonly Container Container;
         ProjectionsFactory ProjectionsFactory;
 
-        public GESProjectionsFactoryTests()
+        public ESProjectionsFactoryTests()
         {
             Container = new Container();
 
             Container.Register<IHandlerFactory, StubHandlerFactory>();
-          
+
             Container.Register<ICheckpointReader, StubCheckpointReader>();
             Container.Register<ICheckpointWriterFactory, StubCheckpointWriterFactory>();
-            Container.Register<IEventStoreConnectionFactory>(() => new StubEventStoreConnectionFactory());
-            Container.Register<ISubscriptionFactory, GESSubscriptionFactory>();
+            Container.Register<IESConnectionFactory>(() => new StubESConnectionFactory());
+            Container.Register<ISubscriptionFactory, ESSubscriptionFactory>();
             Container.Register<IProjectionsFactory, ProjectionsFactory>();
             Container.Verify();
         }
@@ -42,9 +43,9 @@ namespace Starnet.Projections.Tests
             Assert.That(proj.Checkpoint.Value, Is.GreaterThan(0));
         }
 
-        private async Task PreloadProjectionsSubscription()
+        async Task PreloadProjectionsSubscription()
         {
-            await new EventStoreTestDataGenerator().WriteEventsToStore(2);
+            await new ESDataGenerator().WriteEventsToStore(2);
         }
     }
 }
