@@ -5,7 +5,7 @@ namespace Starnet.Aggregates.Tests
     internal class PersonAggregateState : AggregateState
     {
 
-        private string Name { get; set; }
+        string Name { get; set; }
 
         protected override void DelegateWhenToConcreteClass(object ev)
         {

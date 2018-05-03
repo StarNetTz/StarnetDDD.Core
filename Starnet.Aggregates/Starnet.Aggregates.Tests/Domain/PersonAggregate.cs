@@ -4,7 +4,7 @@ namespace Starnet.Aggregates.Tests
 {
     internal class PersonAggregate : Aggregate
     {
-        private PersonAggregateState State;
+        PersonAggregateState State;
 
         public PersonAggregate(PersonAggregateState state) : base(state)
         {

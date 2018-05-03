@@ -20,7 +20,7 @@ namespace Starnet.Aggregates
 
         protected ConcurrentDictionary<string, List<object>> DataStore = new ConcurrentDictionary<string, List<object>>();
 
-        private static void PerformConcurrencyCheck(IAggregate agg, List<object> events)
+        static void PerformConcurrencyCheck(IAggregate agg, List<object> events)
         {
             var originalVersion = agg.Version - agg.Changes.Count;
             if (events.Count != originalVersion)

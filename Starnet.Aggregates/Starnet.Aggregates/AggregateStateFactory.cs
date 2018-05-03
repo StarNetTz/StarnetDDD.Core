@@ -6,7 +6,7 @@ namespace Starnet.Aggregates
 {
     public class AggregateStateFactory
     {
-        private static Dictionary<Type, Type> LookupTable;
+        static Dictionary<Type, Type> LookupTable;
 
         static AggregateStateFactory()
         {

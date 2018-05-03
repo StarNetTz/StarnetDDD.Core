@@ -38,12 +38,12 @@ namespace Starnet.Aggregates.Tests
             await When((dynamic)command);
         }
 
-        private async Task When(CreatePerson c)
+        async Task When(CreatePerson c)
         {
             await CreateAgg(c.Id, agg => agg.Create(c));
         }
 
-        private async Task When(RenamePerson c)
+        async Task When(RenamePerson c)
         {
             await ChangeAgg(c.Id, agg => agg.Rename(c));
         }

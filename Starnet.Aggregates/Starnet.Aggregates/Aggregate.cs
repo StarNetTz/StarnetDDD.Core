@@ -4,7 +4,7 @@ namespace Starnet.Aggregates
 {
     public abstract class Aggregate : IAggregate
     {
-        private IAggregateState State;
+        IAggregateState State;
         public List<object> Changes { get; private set; }
 
         public string Id

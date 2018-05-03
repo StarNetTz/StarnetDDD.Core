@@ -2,7 +2,7 @@
 {
     internal class PersonAggregate : Aggregate
     {
-        private PersonAggregateState State;
+        PersonAggregateState State;
 
         public PersonAggregate(PersonAggregateState state) : base(state)
         {
@@ -23,7 +23,7 @@
     internal class PersonAggregateState : AggregateState
     {
 
-        private string Name { get; set; }
+        string Name { get; set; }
 
         protected override void DelegateWhenToConcreteClass(object ev)
         {

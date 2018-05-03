@@ -52,7 +52,7 @@ namespace Starnet.Aggregates.Tests
             Assert.That(p.Version, Is.EqualTo(3));
         }
 
-        private async Task CreateUpdatedAggregate(string aggId, int nrOfUpdates)
+        async Task CreateUpdatedAggregate(string aggId, int nrOfUpdates)
         {
             var p = new PersonAggregate(new PersonAggregateState());
             p.Create(new CreatePerson() { Id = aggId, Name = "0" });
@@ -75,25 +75,24 @@ namespace Starnet.Aggregates.Tests
             Assert.That(async () => await Repository.StoreAsync(loadedAggregate), Throws.Exception.TypeOf<AggregateConcurrencyException>());
         }
 
-        private async Task OutOfSessionUpdate(string id)
+        async Task OutOfSessionUpdate(string id)
         {
             var agg = await Repository.GetAsync<PersonAggregate>(id);
             agg.Rename(new RenamePerson() { Id = id, Name = "Renamed out of session" });
             await Repository.StoreAsync(agg);
         }
 
-        private void InSessionUpdate(PersonAggregate agg)
+        void InSessionUpdate(PersonAggregate agg)
         {
             var cmd = new RenamePerson() { Id = agg.Id, Name = "Renamed in session" };
             agg.Rename(cmd);
         }
 
-        private PersonAggregate CreatePersonAggregate(string id, string name)
+        PersonAggregate CreatePersonAggregate(string id, string name)
         {
             var agg = new PersonAggregate(new PersonAggregateState());
             agg.Create(new CreatePerson() { Id = id, Name = name });
             return agg;
         }
     }
-
 }
