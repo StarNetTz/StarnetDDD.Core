@@ -1,13 +1,14 @@
 ﻿using EventStore.ClientAPI;
 using NUnit.Framework;
+using System;
 using System.Threading.Tasks;
 
-namespace Starnet.Projections.Tests
+namespace Starnet.Projections.ES.IntegrationTests
 {
     [TestFixture]
-    class GESSubscriptionTests
+    class ESSubscriptionTests
     {
-        GESSubscription Subscription;
+        ESSubscription Subscription;
 
         long Checkpoint = 0;
         object LastEvent = null;
@@ -29,7 +30,7 @@ namespace Starnet.Projections.Tests
 
         private void ConfigureSubscription()
         {
-            Subscription = new GESSubscription(EventStoreConnection.Create(EventStoreConnectionSettings.TcpEndpoint));
+            Subscription = new ESSubscription(EventStoreConnection.Create(ESConnectionConfig.TcpEndpoint));
             Subscription.StreamName = "$ce-Match";
             Subscription.EventAppearedCallback = EventAppeared;
             Subscription.Start(0).Wait();
@@ -38,7 +39,7 @@ namespace Starnet.Projections.Tests
         [Test]
         public async Task can_write_events_to_event_store_and_project_them()
         {
-            await new EventStoreTestDataGenerator().WriteEventsToStore(2);
+            await new ESDataGenerator().WriteEventsToStore(2);
             await Task.Delay(500);
             AssertThatEventsProjected();
         }

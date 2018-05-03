@@ -6,6 +6,8 @@
       <Value>Starnet.Projections\Starnet.Projections.csproj\GES</Value>
       <Value>Common\EventStoreTestDataGenerator.cs:Starnet.Projections.Tests\Starnet.Projections.Tests.csproj</Value>
       <Value>Stubs\StubEventStoreConnectionFactory.cs:Starnet.Projections.Tests\Starnet.Projections.Tests.csproj</Value>
+      <Value>Starnet.Projections.ES\Starnet.Projections.ES.csproj</Value>
+      <Value>Starnet.Projections.ES.IntegrationTests\Starnet.Projections.ES.IntegrationTests.csproj</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>

@@ -1,23 +1,23 @@
-﻿using System;
-using EventStore.ClientAPI;
+﻿using EventStore.ClientAPI;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Starnet.Projections.Tests
+namespace Starnet.Projections.ES.IntegrationTests
 {
-    public class EventStoreTestDataGenerator
+    public class ESDataGenerator
     {
         private const string AggregateClrTypeHeader = "AggregateClrTypeName";
         private const string CommitIdHeader = "CommitId";
 
         public async Task WriteEventsToStore(int nrOfEvents)
         {
-            var cnn = EventStoreConnection.Create(EventStoreConnectionSettings.TcpEndpoint);
-            cnn.ConnectAsync().Wait();
+            var cnn = EventStoreConnection.Create(ESConnectionConfig.TcpEndpoint);
+            await cnn.ConnectAsync();
             for (int i = 0; i < nrOfEvents; i++)
             {
                 var id = $"Match-{Guid.NewGuid()}";

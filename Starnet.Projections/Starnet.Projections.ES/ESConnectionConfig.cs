@@ -1,18 +1,19 @@
-﻿using EventStore.ClientAPI.SystemData;
-using Microsoft.Extensions.Configuration;
-using System.IO;
+﻿using Microsoft.Extensions.Configuration;
+using EventStore.ClientAPI.SystemData;
+using System;
 using System.Net;
+using System.IO;
 
-namespace Starnet.Projections
+namespace Starnet.Projections.ES
 {
-    public class EventStoreConnectionSettings
+    public class ESConnectionConfig
     {
         public static UserCredentials UserCredentials { get; set; }
         public static IPEndPoint HttpEndpoint { get; set; }
         public static IPEndPoint TcpEndpoint { get; set; }
         public static IConfiguration Configuration { get; set; }
 
-        static EventStoreConnectionSettings()
+        static ESConnectionConfig()
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
