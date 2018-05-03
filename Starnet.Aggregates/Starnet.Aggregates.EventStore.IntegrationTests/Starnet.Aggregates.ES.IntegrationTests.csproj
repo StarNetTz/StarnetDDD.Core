@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Starnet.Aggregates.EventStore\Starnet.Aggregates.EventStore.csproj" />
+    <ProjectReference Include="..\Starnet.Aggregates.EventStore\Starnet.Aggregates.ES.csproj" />
     <ProjectReference Include="..\Starnet.Aggregates\Starnet.Aggregates.csproj" />
   </ItemGroup>
 

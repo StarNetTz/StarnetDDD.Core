@@ -7,6 +7,8 @@
       <Value>Starnet.Aggregates.EventStore.IntegrationTests\Starnet.Aggregates.EventStore.IntegrationTests.csproj</Value>
       <Value>Starnet.Aggregates.EventStore.Tests\Starnet.Aggregates.EventStore.Tests.csproj</Value>
       <Value>Starnet.Aggregates.EventStore\Starnet.Aggregates.EventStore.csproj</Value>
+      <Value>Starnet.Aggregates.EventStore\Starnet.Aggregates.ES.csproj</Value>
+      <Value>Starnet.Aggregates.EventStore.IntegrationTests\Starnet.Aggregates.ES.IntegrationTests.csproj</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>

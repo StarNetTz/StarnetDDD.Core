@@ -5,7 +5,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Starnet.Aggregates.EventStore.Tests
+namespace Starnet.Aggregates.ES.Tests
 {
     [TestFixture]
     class ESAggregateRepositoryTests

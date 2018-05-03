@@ -1,4 +1,4 @@
-﻿namespace Starnet.Aggregates.EventStore.Tests
+﻿namespace Starnet.Aggregates.ES.Tests
 {
     internal class PersonAggregate : Aggregate
     {
