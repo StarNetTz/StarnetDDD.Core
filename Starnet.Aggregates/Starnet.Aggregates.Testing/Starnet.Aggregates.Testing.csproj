@@ -6,8 +6,9 @@
     <Company>Starnet d.o.o.</Company>
     <Copyright>Copyright © 2018 StarNet d.o.o.</Copyright>
     <Description>Lightweight DDD framework, BDD style testing support</Description>
-    <FileVersion>0.0.0.0</FileVersion>
-    <AssemblyVersion>0.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
