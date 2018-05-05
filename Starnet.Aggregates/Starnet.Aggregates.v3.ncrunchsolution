@@ -9,6 +9,7 @@
       <Value>Starnet.Aggregates.EventStore\Starnet.Aggregates.EventStore.csproj</Value>
       <Value>Starnet.Aggregates.EventStore\Starnet.Aggregates.ES.csproj</Value>
       <Value>Starnet.Aggregates.EventStore.IntegrationTests\Starnet.Aggregates.ES.IntegrationTests.csproj</Value>
+      <Value>ObjectComparer.cs:Starnet.Aggregates.Testing\Starnet.Aggregates.Testing.csproj</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>

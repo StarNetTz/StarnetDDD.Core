@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Authors>Zvjezdan Tomicevic</Authors>
+    <Company>Starnet d.o.o.</Company>
+    <Copyright>Copyright © 2018 StarNet d.o.o.</Copyright>
+    <Description>Lightweight DDD framework, BDD style testing support</Description>
+    <FileVersion>1.0.0.1</FileVersion>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,12 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Starnet.Aggregates\Starnet.Aggregates.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Starnet.ObjectComparer">
-      <HintPath>..\lib\Starnet.ObjectComparer.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
