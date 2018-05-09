@@ -107,10 +107,10 @@ namespace Starnet.Aggregates.ES.Tests
         {
             var id = $"persons-{Guid.NewGuid()}";
             await InitializeAggregate(id);
-            var loadedAggregate = await Repository.GetAsync<PersonAggregate>(id);
-            await UpdateAggOutOfThisTransaction(id);
-            UpdateAggInThisTransaction(loadedAggregate);
-            Assert.That(async () => { await Repository.StoreAsync(loadedAggregate); }, Throws.Exception.TypeOf<WrongExpectedVersionException>());
+            var agg = await Repository.GetAsync<PersonAggregate>(id);
+            await UpdateAggregateOutOfTransaction(id);
+            UpdateAggregate(agg);
+            Assert.That(async () => { await Repository.StoreAsync(agg); }, Throws.Exception.TypeOf<WrongExpectedVersionException>());
         }
 
             async Task InitializeAggregate(string id)
@@ -118,14 +118,14 @@ namespace Starnet.Aggregates.ES.Tests
                 await Repository.StoreAsync(CreatePersonAggregate(id, "Zeko"));
             }
 
-            async Task UpdateAggOutOfThisTransaction(string id)
+            async Task UpdateAggregateOutOfTransaction(string id)
             {
                 var agg = await Repository.GetAsync<PersonAggregate>(id);
                 agg.Rename(new RenamePerson() { Id = id, Name = "new value" });
                 await Repository.StoreAsync(agg);
             }
 
-            void UpdateAggInThisTransaction(PersonAggregate agg)
+            void UpdateAggregate(PersonAggregate agg)
             {
                 var cmd = new RenamePerson() { Id = agg.Id, Name = "new value" };
                 agg.Rename(cmd);
