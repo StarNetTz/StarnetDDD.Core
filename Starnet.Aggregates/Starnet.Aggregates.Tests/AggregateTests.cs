@@ -2,7 +2,6 @@
 
 namespace Starnet.Aggregates.Tests
 {
-    [TestFixture]
     class AggregateTests
     {
         PersonAggregate Person;

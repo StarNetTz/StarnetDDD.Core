@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 
 namespace Starnet.Aggregates.Tests
 {
-    [TestFixture]
     class BDDTests : _ServiceSpec
     {
         const string AggregateId = "persons-1";
