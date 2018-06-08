@@ -51,7 +51,7 @@ namespace Starnet.Projections.Tests
             }
 
         [Test]
-        public async Task can_create_failing_projection_and_project()
+        public async Task failing_projection_throws_an_exception()
         {
             var proj = await ProjectionsFactory.Create<FailingProjection>();
             PreloadFailingProjectionsSubscription(proj);
