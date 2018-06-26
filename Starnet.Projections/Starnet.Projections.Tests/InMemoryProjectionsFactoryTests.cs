@@ -3,6 +3,7 @@ using NUnit.Framework;
 using SimpleInjector;
 using System.Reflection;
 using System.Threading.Tasks;
+using Starnet.Projections.Testing;
 
 namespace Starnet.Projections.Tests
 {
@@ -15,10 +16,12 @@ namespace Starnet.Projections.Tests
         public InMemoryProjectionsFactoryTests()
         {
             Container = new Container();
-            Container.Register<IHandlerFactory, StubHandlerFactory>();
+            Container.Register<IHandlerFactory, DIHandlerFactory>();
             Container.Register<ICheckpointReader, StubCheckpointReader>();
             Container.Register<ICheckpointWriterFactory, StubCheckpointWriterFactory>();
+            Container.Register<ICheckpointWriter, StubCheckpointWriter>();
             Container.Register<ISubscriptionFactory, InMemorySubscriptionFactory>();
+            Container.Register<INoSqlStore, InMemoryProjectionsStore>();
             Container.Register<IProjectionsFactory, ProjectionsFactory>();
         
             Container.Verify();

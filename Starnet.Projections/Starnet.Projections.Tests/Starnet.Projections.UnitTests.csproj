@@ -1,19 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Castle.Core" Version="4.2.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
-    <PackageReference Include="Moq" Version="4.8.2" />
+    <PackageReference Include="Castle.Core" Version="4.3.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2" />
+    <PackageReference Include="Moq" Version="4.8.3" />
     <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
-    <PackageReference Include="SimpleInjector" Version="4.2.2" />
+    <PackageReference Include="SimpleInjector" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Starnet.Projections.Testing\Starnet.Projections.Testing.csproj" />
     <ProjectReference Include="..\Starnet.Projections\Starnet.Projections.csproj" />
   </ItemGroup>
 

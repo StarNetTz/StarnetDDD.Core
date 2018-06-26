@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleInjector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -8,22 +9,12 @@ namespace Starnet.Projections
 {
     public class ProjectionsFactory : IProjectionsFactory
     {
-        protected readonly ICheckpointReader CheckpointReader;
-        protected readonly ICheckpointWriterFactory CheckpointWriterFactory;
-        protected readonly ISubscriptionFactory SubscriptionFactory;
-        protected readonly IHandlerFactory HandlerFactory;
+        readonly Container Container;
 
-        public ProjectionsFactory(
-            ICheckpointReader checkpointReader,
-            ICheckpointWriterFactory checkpointWriterFactory,
-            ISubscriptionFactory subscriptionFactory,
-            IHandlerFactory denromalizerFactory
-            )
+
+        public ProjectionsFactory(Container container)
         {
-            CheckpointReader = checkpointReader;
-            CheckpointWriterFactory = checkpointWriterFactory;
-            SubscriptionFactory = subscriptionFactory;
-            HandlerFactory = denromalizerFactory;
+            Container = container;
         }
 
         public async Task<IList<IProjection>> Create(Assembly projectionsAssembly)
@@ -48,8 +39,11 @@ namespace Starnet.Projections
             var proj = new Projection();
             proj.Name = pi.Name;
             proj.SubscriptionStreamName = pi.SubscriptionStreamName;
-            proj.Checkpoint = await CheckpointReader.Read($"Checkpoints-{proj.Name}");
-            proj.CheckpointWriter = await CheckpointWriterFactory.Create();
+            ICheckpointReader cr = Container.GetInstance<ICheckpointReader>();
+            proj.Checkpoint = await cr.Read($"Checkpoints-{proj.Name}");
+
+            ICheckpointWriter cw = Container.GetInstance<ICheckpointWriter>();
+            proj.CheckpointWriter = cw;
             proj.Subscription = CreateSubscription(proj);
             proj.Handlers = GetHandlers(type);
             return proj;
@@ -57,7 +51,7 @@ namespace Starnet.Projections
 
             ISubscription CreateSubscription(Projection proj)
             {
-                var subscription = SubscriptionFactory.Create();
+                var subscription = Container.GetInstance<ISubscriptionFactory>().Create();
                 subscription.StreamName = proj.SubscriptionStreamName;
                 subscription.EventAppearedCallback = proj.Project;
                 return subscription;
@@ -72,7 +66,7 @@ namespace Starnet.Projections
                     select iType.GetGenericArguments()[0]).ToArray();
                 var handlers = new List<IHandler>();
                 foreach (var t in typeArgs)
-                    handlers.Add(HandlerFactory.Create(t));
+                    handlers.Add(Container.GetInstance<IHandlerFactory>().Create(t));
                 return handlers;
             }
 

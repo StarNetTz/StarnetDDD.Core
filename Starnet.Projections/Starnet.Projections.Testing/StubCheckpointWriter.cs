@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
-namespace Starnet.Projections.Tests
+namespace Starnet.Projections.Testing
 {
     public class StubCheckpointWriter : ICheckpointWriter
     {
