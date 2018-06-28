@@ -2,8 +2,6 @@
 using Starnet.Projections.Testing;
 using Starnet.Projections.Tests;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Starnet.Projections.UnitTests
@@ -16,7 +14,7 @@ namespace Starnet.Projections.UnitTests
         [SetUp]
         public void SetUp()
         {
-            Id = CreateId();
+            Id = $"Company-{Guid.NewGuid()}";
         }
 
         [Test]
@@ -24,11 +22,6 @@ namespace Starnet.Projections.UnitTests
         {
             await Given(new TestEvent() { Id = Id, SomeValue = "123" });
             await Expect(new TestModel() { Id = Id, SomeValue = "123" });
-        }
-
-        private string CreateId()
-        {
-            return $"Company-{Guid.NewGuid()}";
         }
     }
 }

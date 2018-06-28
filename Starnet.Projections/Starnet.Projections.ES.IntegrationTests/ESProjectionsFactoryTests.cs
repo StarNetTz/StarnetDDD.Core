@@ -18,8 +18,8 @@ namespace Starnet.Projections.ES.IntegrationTests
             Container.Register<IHandlerFactory, StubHandlerFactory>();
 
             Container.Register<ICheckpointReader, StubCheckpointReader>();
-            Container.Register<ICheckpointWriterFactory, StubCheckpointWriterFactory>();
-            Container.Register<IESConnectionFactory>(() => new StubESConnectionFactory());
+            Container.Register<ICheckpointWriter, StubCheckpointWriter>();
+           
             Container.Register<ISubscriptionFactory, ESSubscriptionFactory>();
             Container.Register<IProjectionsFactory, ProjectionsFactory>();
             Container.Verify();
@@ -34,6 +34,7 @@ namespace Starnet.Projections.ES.IntegrationTests
         [Test]
         public async Task can_create_test_projection_and_project()
         {
+           
             var proj = await ProjectionsFactory.Create<TestProjection>();
             await PreloadProjectionsSubscription();
 

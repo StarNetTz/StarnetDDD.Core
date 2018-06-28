@@ -35,13 +35,4 @@ namespace Starnet.Projections.ES.IntegrationTests
             return Task.FromResult(new StubCheckpointWriter() as ICheckpointWriter);
         }
     }
-
-    public class StubESConnectionFactory : IESConnectionFactory
-    {
-        public IEventStoreConnection Create()
-        {
-            var Connection = EventStoreConnection.Create(ESConnectionConfig.TcpEndpoint);
-            return Connection;
-        }
-    }
 }

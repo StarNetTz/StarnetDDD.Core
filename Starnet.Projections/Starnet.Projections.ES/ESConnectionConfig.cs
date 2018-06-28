@@ -12,6 +12,7 @@ namespace Starnet.Projections.ES
         public static IPEndPoint HttpEndpoint { get; set; }
         public static IPEndPoint TcpEndpoint { get; set; }
         public static IConfiguration Configuration { get; set; }
+        public static String ConnectionString { get; set; }
 
         static ESConnectionConfig()
         {
@@ -26,6 +27,7 @@ namespace Starnet.Projections.ES
             int tcpPort = int.Parse(Configuration["EventStore:Tcp_port"]);
             HttpEndpoint = new IPEndPoint(serverAddres, httpPort);
             TcpEndpoint = new IPEndPoint(serverAddres, tcpPort);
+            ConnectionString = Configuration["EventStore:ConnectionString"];
         }
     }
 }
