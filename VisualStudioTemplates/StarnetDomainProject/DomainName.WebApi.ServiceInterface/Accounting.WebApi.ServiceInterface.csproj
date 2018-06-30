@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ServiceStack" Version="5.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\$ext_projectname$.PL\$ext_projectname$.PL.csproj" />
+    <ProjectReference Include="..\$ext_projectname$.ReadModel.Queries\$ext_projectname$.ReadModel.Queries.csproj" />
+    <ProjectReference Include="..\$ext_projectname$.ReadModel\$ext_projectname$.ReadModel.csproj" />
+    <ProjectReference Include="..\$ext_projectname$.WebApi.ServiceModel\$ext_projectname$.WebApi.ServiceModel.csproj" />
+  </ItemGroup>
+
+</Project>

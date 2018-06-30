@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<license type="Commercial" DeploymentType="SaaS/Internal Use" Quantity="1" Edition="Standard" Applications="NServiceBus" RenewalType="Subscription" expiration="2019-04-30" id="601913bf-80c7-42c0-a51b-70aef1e8a441">
+  <name>StarNet d.o.o.</name>
+  <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+    <SignedInfo>
+      <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+      <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+      <Reference URI="">
+        <Transforms>
+          <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+        </Transforms>
+        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <DigestValue>Hgrp+VjLW2qF+2odlSjzFdmAJPg=</DigestValue>
+      </Reference>
+    </SignedInfo>
+    <SignatureValue>SKK+UAEvUEs5KdQaw2gQDHkPMC5ePUD3szkDda1Tr9tNmdPlFrg4ULkIqNehZwVkN/SssM+PLRBB9/KXTPzQUDSTa5uZWLxHDu3UhviLdfsk5XADGQ7Fr4xJmV5RMCFKTkHFMHXXmiQHgMVmfdEwyxNrQvGn9SGbr1EPFABzIZo=</SignatureValue>
+  </Signature>
+</license>

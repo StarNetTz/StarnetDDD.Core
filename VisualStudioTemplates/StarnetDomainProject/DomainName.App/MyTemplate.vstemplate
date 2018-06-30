@@ -1,0 +1,27 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>DomainName.App</Name>
+    <Description>Domain application</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>DomainName.App</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>__TemplateIcon.ico</Icon>
+    <CreateInPlace>true</CreateInPlace>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="Accounting.App.csproj" File="Accounting.App.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="true" TargetFileName="ApplicationServiceExtractor.cs">ApplicationServiceExtractor.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="appsettings.json">appsettings.json</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Host.cs">Host.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="license.xml">license.xml</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Program.cs">Program.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="RegisterCompanyHandler.cs">RegisterCompanyHandler.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

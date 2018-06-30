@@ -1,0 +1,48 @@
+<VSTemplate Version="2.0.0" Type="ProjectGroup" 
+    xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+    <TemplateData>
+        <Name>Starnet DDD</Name>
+        <Description>Starnet DDD template</Description>
+        <Icon>Icon.ico</Icon>
+        <ProjectType>CSharp</ProjectType>
+    </TemplateData>
+    <TemplateContent>
+        <ProjectCollection>
+            <SolutionFolder Name="01_PublishedLanguage">
+                <ProjectTemplateLink ProjectName="$projectname$.PL">Domain.PL\MyTemplate.vstemplate</ProjectTemplateLink>
+            </SolutionFolder>
+             <SolutionFolder Name="02_WriteModel">
+                <SolutionFolder Name="Application">
+                    <ProjectTemplateLink ProjectName="$projectname$.App" CopyParameters="true">DomainName.App\MyTemplate.vstemplate</ProjectTemplateLink>
+                </SolutionFolder>
+                <SolutionFolder Name="Domain">
+                    <ProjectTemplateLink ProjectName="$projectname$.Domain" CopyParameters="true">DomainName.Domain\MyTemplate.vstemplate</ProjectTemplateLink>
+                    <ProjectTemplateLink ProjectName="$projectname$.Domain.Tests" CopyParameters="true">DomainName.Domain.Tests\MyTemplate.vstemplate</ProjectTemplateLink>
+                </SolutionFolder>
+            </SolutionFolder>
+            <SolutionFolder Name="03_ReadModel">
+                <SolutionFolder Name="Application">
+                    <ProjectTemplateLink ProjectName="$projectname$.ReadModel.App" CopyParameters="true">DomainName.ReadModel.App\MyTemplate.vstemplate</ProjectTemplateLink>
+                </SolutionFolder>
+                <SolutionFolder Name="Model">
+                    <ProjectTemplateLink ProjectName="$projectname$.ReadModel" CopyParameters="true">DomainName.ReadModel\MyTemplate.vstemplate</ProjectTemplateLink>
+                </SolutionFolder>
+                <SolutionFolder Name="Projections">
+                    <ProjectTemplateLink ProjectName="$projectname$.ReadModel.Projections" CopyParameters="true">DomainName.ReadModel.Projections\MyTemplate.vstemplate</ProjectTemplateLink>
+                    <ProjectTemplateLink ProjectName="$projectname$.ReadModel.Projections.Tests" CopyParameters="true">DomainName.ReadModel.Projections.Tests\MyTemplate.vstemplate</ProjectTemplateLink>
+                </SolutionFolder>
+                <SolutionFolder Name="Queries">
+                    <ProjectTemplateLink ProjectName="$projectname$.ReadModel.Queries" CopyParameters="true">DomainName.ReadModel.Queries\MyTemplate.vstemplate</ProjectTemplateLink>
+                    <ProjectTemplateLink ProjectName="$projectname$.ReadModel.Queries.Tests" CopyParameters="true">DomainName.ReadModel.Queries.Tests\MyTemplate.vstemplate</ProjectTemplateLink>
+                </SolutionFolder>
+            </SolutionFolder>
+            <SolutionFolder Name="04_Api">
+                <ProjectTemplateLink ProjectName="$projectname$.WebApi" CopyParameters="true">DomainName.WebApi\MyTemplate.vstemplate</ProjectTemplateLink>
+                <ProjectTemplateLink ProjectName="$projectname$.WebApi.Infrastructure" CopyParameters="true">DomainName.WebApi.Infrastructure\MyTemplate.vstemplate</ProjectTemplateLink>
+                <ProjectTemplateLink ProjectName="$projectname$.WebApi.ServiceInterface" CopyParameters="true">DomainName.WebApi.ServiceInterface\MyTemplate.vstemplate</ProjectTemplateLink>
+                <ProjectTemplateLink ProjectName="$projectname$.WebApi.ServiceModel" CopyParameters="true">DomainName.WebApi.ServiceModel\MyTemplate.vstemplate</ProjectTemplateLink>
+                <ProjectTemplateLink ProjectName="$projectname$.WebApi.Tests" CopyParameters="true">DomainName.WebApi.Tests\MyTemplate.vstemplate</ProjectTemplateLink>
+            </SolutionFolder>
+        </ProjectCollection>
+    </TemplateContent>
+</VSTemplate>

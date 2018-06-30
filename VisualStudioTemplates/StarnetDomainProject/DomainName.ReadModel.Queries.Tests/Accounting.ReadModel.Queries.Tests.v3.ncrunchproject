@@ -1,0 +1,10 @@
+﻿<ProjectConfiguration>
+  <Settings>
+    <IgnoredTests>
+      <FixtureTestSelector>
+        <FixtureName>Accounting.ReadModel.Queries.Tests.FindCompaniesQueryIntegrationTests</FixtureName>
+      </FixtureTestSelector>
+    </IgnoredTests>
+    <IgnoreThisComponentCompletely>False</IgnoreThisComponentCompletely>
+  </Settings>
+</ProjectConfiguration>

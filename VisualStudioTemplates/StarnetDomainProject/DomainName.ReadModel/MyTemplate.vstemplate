@@ -1,0 +1,27 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>DomainName.ReadModel</Name>
+    <Description>Domains read model</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>DomainName.ReadModel</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>__TemplateIcon.ico</Icon>
+    <CreateInPlace>true</CreateInPlace>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="Accounting.ReadModel.csproj" File="Accounting.ReadModel.csproj" ReplaceParameters="true">
+      <Folder Name="Company" TargetFolderName="Company">
+        <ProjectItem ReplaceParameters="true" TargetFileName="Company.cs">Company.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="IFindCompaniesQuery.cs">IFindCompaniesQuery.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="PaginatedResult.cs">PaginatedResult.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="SmartShearchQueryRequest.cs">SmartShearchQueryRequest.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

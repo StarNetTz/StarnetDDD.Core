@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2" />
+    <PackageReference Include="NUnit" Version="3.10.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
+    <PackageReference Include="Starnet.Projections" Version="1.0.4" />
+    <PackageReference Include="Starnet.Projections.Testing" Version="1.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\$ext_projectname$.PL\$ext_projectname$.PL.csproj" />
+    <ProjectReference Include="..\$ext_projectname$.ReadModel.Projections\$ext_projectname$.ReadModel.Projections.csproj" />
+    <ProjectReference Include="..\$ext_projectname$.ReadModel\$ext_projectname$.ReadModel.csproj" />
+  </ItemGroup>
+
+</Project>

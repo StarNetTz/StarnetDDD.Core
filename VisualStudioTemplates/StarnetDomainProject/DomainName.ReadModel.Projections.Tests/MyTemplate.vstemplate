@@ -1,0 +1,24 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>DomainName.ReadModel.Projections.Tests</Name>
+    <Description>Domain projections definitions tests</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>DomainName.ReadModel.Projections.Tests</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>__TemplateIcon.ico</Icon>
+    <CreateInPlace>true</CreateInPlace>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="Accounting.ReadModel.Projections.Tests.csproj" File="Accounting.ReadModel.Projections.Tests.csproj" ReplaceParameters="true">
+      <Folder Name="CompanyProjectionTests" TargetFolderName="CompanyProjectionTests">
+        <ProjectItem ReplaceParameters="true" TargetFileName="CompanyRegisteredTests.cs">CompanyRegisteredTests.cs</ProjectItem>
+      </Folder>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

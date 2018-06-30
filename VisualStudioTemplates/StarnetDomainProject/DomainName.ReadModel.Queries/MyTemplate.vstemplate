@@ -1,0 +1,26 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>DomainName.ReadModel.Queries</Name>
+    <Description>Domain read model query implementations</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>DomainName.ReadModel.Queries</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>__TemplateIcon.ico</Icon>
+    <CreateInPlace>true</CreateInPlace>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="Accounting.ReadModel.Queries.csproj" File="Accounting.ReadModel.Queries.csproj" ReplaceParameters="true">
+      <Folder Name="CompanyQueries" TargetFolderName="CompanyQueries">
+        <ProjectItem ReplaceParameters="true" TargetFileName="FindCompaniesQuery.cs">FindCompaniesQuery.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="QueryResult.cs">QueryResult.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="RavenDocumentStoreFactory.cs">RavenDocumentStoreFactory.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

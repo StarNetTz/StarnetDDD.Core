@@ -1,0 +1,32 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>DomainName.WebApi.ServiceModel</Name>
+    <Description>&lt;No description available&gt;</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>DomainName.WebApi.ServiceModel</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>__TemplateIcon.ico</Icon>
+    <CreateInPlace>true</CreateInPlace>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="Accounting.WebApi.ServiceModel.csproj" File="Accounting.WebApi.ServiceModel.csproj" ReplaceParameters="true">
+      <Folder Name="Commands" TargetFolderName="Commands">
+        <ProjectItem ReplaceParameters="true" TargetFileName="CompanyCommands.cs">CompanyCommands.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Queries" TargetFolderName="Queries">
+        <ProjectItem ReplaceParameters="true" TargetFileName="FindCompanies.cs">FindCompanies.cs</ProjectItem>
+      </Folder>
+      <Folder Name="Types" TargetFolderName="Types">
+        <ProjectItem ReplaceParameters="true" TargetFileName=".gitignore">.gitignore</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Address.cs">Address.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Hello.cs">Hello.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>
