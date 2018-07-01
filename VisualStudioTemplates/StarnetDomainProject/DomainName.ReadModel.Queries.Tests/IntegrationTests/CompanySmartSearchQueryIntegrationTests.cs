@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 
 namespace $safeprojectname$.IntegrationTests
 {
-    class FindCompaniesQueryIntegrationTests : QueryIntegrationTestBase
+    class CompanySmartSearchQueryIntegrationTests : QueryIntegrationTestBase
     {
         [Test]
         public async Task CanExecute()
         {
-            var qry = new FindCompaniesQuery(DocumentStore);
+            var qry = new CompanySmartSearchQuery(DocumentStore);
             var res = await qry.Execute(new SmartShearchQueryRequest { Qry = "*", CurrentPage = 0, PageSize = 1 });
         }
     }

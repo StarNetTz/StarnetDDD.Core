@@ -1,7 +1,4 @@
 ﻿using $ext_projectname$.PL;
-using System;
-using System.Threading.Tasks;
-
 namespace $safeprojectname$
 {
     public class Company

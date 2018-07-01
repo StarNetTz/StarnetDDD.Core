@@ -10,9 +10,9 @@ namespace $safeprojectname$.QueryServices
 {
     public class CompanyQueryService : Service
     {
-        readonly IFindCompaniesQuery Query;
+        readonly ICompanySmartSearchQuery Query;
 
-        public CompanyQueryService(IFindCompaniesQuery query)
+        public CompanyQueryService(ICompanySmartSearchQuery query)
         {
             Query = query;
         }

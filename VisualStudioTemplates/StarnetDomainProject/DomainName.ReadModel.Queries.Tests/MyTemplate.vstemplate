@@ -17,12 +17,12 @@
   <TemplateContent>
     <Project TargetFileName="Accounting.ReadModel.Queries.Tests.csproj" File="Accounting.ReadModel.Queries.Tests.csproj" ReplaceParameters="true">
       <Folder Name="IntegrationTests" TargetFolderName="IntegrationTests">
-        <ProjectItem ReplaceParameters="true" TargetFileName="FindCompaniesQueryTests.cs">FindCompaniesQueryTests.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CompanySmartSearchQueryIntegrationTests.cs">CompanySmartSearchQueryIntegrationTests.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="QueryIntegrationTestBase.cs">QueryIntegrationTestBase.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="RavenDbIntegrationTests.cs">RavenDbIntegrationTests.cs</ProjectItem>
       </Folder>
       <Folder Name="UnitTests" TargetFolderName="UnitTests">
-        <ProjectItem ReplaceParameters="true" TargetFileName="FindCompaniesQueryUnitTests.cs">FindCompaniesQueryUnitTests.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CompanySmartSearchQueryUnitTests.cs">CompanySmartSearchQueryUnitTests.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="MyRavenDBLocator.cs">MyRavenDBLocator.cs</ProjectItem>
       </Folder>
       <ProjectItem ReplaceParameters="false" TargetFileName="Accounting.ReadModel.Queries.Tests.v3.ncrunchproject">Accounting.ReadModel.Queries.Tests.v3.ncrunchproject</ProjectItem>

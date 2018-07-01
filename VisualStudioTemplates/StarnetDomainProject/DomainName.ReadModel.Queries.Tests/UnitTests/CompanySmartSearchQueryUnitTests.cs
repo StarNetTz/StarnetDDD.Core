@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace $safeprojectname$.UnitTests
 {
-    class FindCompaniesQueryUnitTests : RavenTestDriver<MyRavenDBLocator>
+    class CompanySmartSearchQueryUnitTests : RavenTestDriver<MyRavenDBLocator>
     {
         IDocumentStore DocumentStore;
 
-        public FindCompaniesQueryUnitTests()
+        public CompanySmartSearchQueryUnitTests()
         {
             DocumentStore = GetDocumentStore();
             CreateTestDocuments();
@@ -36,8 +36,16 @@ namespace $safeprojectname$.UnitTests
         [Test]
         public async Task CanExecute()
         {
-            var qry = new FindCompaniesQuery(DocumentStore);
+            var qry = new CompanySmartSearchQuery(DocumentStore);
             var res = await qry.Execute(new SmartShearchQueryRequest { Qry = "*", CurrentPage = 0, PageSize = 10 });
+            Assert.That(res.Data.Count, Is.EqualTo(2));
+        }
+
+        [Test]
+        public async Task OverflownQueryReturnsFirstPage()
+        {
+            var qry = new CompanySmartSearchQuery(DocumentStore);
+            var res = await qry.Execute(new SmartShearchQueryRequest { Qry = "*", CurrentPage = 100, PageSize = 10 });
             Assert.That(res.Data.Count, Is.EqualTo(2));
         }      
     }

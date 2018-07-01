@@ -64,7 +64,7 @@ namespace $safeprojectname$
             var ravenConfig = new RavenConfig { Urls = Configuration["RavenDb:Urls"].Split(';'), CertificateFilePassword = Configuration["RavenDb:CertificatePassword"], CertificateFilePath = Configuration["RavenDb:CertificatePath"], DatabaseName = Configuration["RavenDb:DatabaseName"] };
             var docStore = new RavenDocumentStoreFactory().CreateDocumentStore(ravenConfig);
             container.Register(docStore);
-            container.RegisterAutoWiredAs<FindCompaniesQuery, IFindCompaniesQuery>();
+            container.RegisterAutoWiredAs<CompanySmartSearchQuery, ICompanySmartSearchQuery>();
             container.RegisterAutoWiredAs<TimeProvider, ITimeProvider>();
             container.RegisterAutoWiredAs<NSBus, IMessageBus>();
 

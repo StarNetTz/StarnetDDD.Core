@@ -2,7 +2,7 @@
 
 namespace $safeprojectname$
 {
-    public interface IFindCompaniesQuery
+    public interface ICompanySmartSearchQuery
     {
         Task<PaginatedResult<Company>> Execute(ISmartSearchQueryRequest qry);
     }

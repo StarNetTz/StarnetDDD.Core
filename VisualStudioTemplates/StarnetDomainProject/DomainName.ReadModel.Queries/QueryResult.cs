@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace $safeprojectname$
 {
-    class QueryResult<T>
+    public class QueryResult<T>
     {
         public List<T> Data { get; set; }
 

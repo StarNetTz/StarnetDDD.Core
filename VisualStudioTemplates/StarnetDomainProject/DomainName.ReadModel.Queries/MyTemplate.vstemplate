@@ -17,9 +17,10 @@
   <TemplateContent>
     <Project TargetFileName="Accounting.ReadModel.Queries.csproj" File="Accounting.ReadModel.Queries.csproj" ReplaceParameters="true">
       <Folder Name="CompanyQueries" TargetFolderName="CompanyQueries">
-        <ProjectItem ReplaceParameters="true" TargetFileName="FindCompaniesQuery.cs">FindCompaniesQuery.cs</ProjectItem>
-        <ProjectItem ReplaceParameters="true" TargetFileName="QueryResult.cs">QueryResult.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CompanySmartSearchQuery.cs">CompanySmartSearchQuery.cs</ProjectItem>
       </Folder>
+       <ProjectItem ReplaceParameters="true" TargetFileName="QueryResult.cs">QueryResult.cs</ProjectItem>
+       <ProjectItem ReplaceParameters="true" TargetFileName="SmartSearchQuery.cs">SmartSearchQuery.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="RavenDocumentStoreFactory.cs">RavenDocumentStoreFactory.cs</ProjectItem>
     </Project>
   </TemplateContent>
