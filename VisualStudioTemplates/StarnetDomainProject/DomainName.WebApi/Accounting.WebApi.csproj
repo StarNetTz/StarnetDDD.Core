@@ -13,6 +13,7 @@
     <PackageReference Include="RavenDB.Client" Version="4.0.5" />
     <PackageReference Include="ServiceStack" Version="5.1.0" />
     <PackageReference Include="ServiceStack.HttpClient.Core" Version="5.1.0" />
+    <PackageReference Include="SimpleInjector" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>

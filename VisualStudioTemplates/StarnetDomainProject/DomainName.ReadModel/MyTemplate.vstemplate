@@ -1,7 +1,7 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
     <Name>DomainName.ReadModel</Name>
-    <Description>Domains read model</Description>
+    <Description>&lt;No description available&gt;</Description>
     <ProjectType>CSharp</ProjectType>
     <ProjectSubType>
     </ProjectSubType>
@@ -20,6 +20,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="Company.cs">Company.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="ICompanySmartSearchQuery.cs">ICompanySmartSearchQuery.cs</ProjectItem>
       </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="IQueryById.cs">IQueryById.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="PaginatedResult.cs">PaginatedResult.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="SmartShearchQueryRequest.cs">SmartShearchQueryRequest.cs</ProjectItem>
     </Project>

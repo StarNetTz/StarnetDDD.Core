@@ -47,6 +47,14 @@ namespace $safeprojectname$.UnitTests
             var qry = new CompanySmartSearchQuery(DocumentStore);
             var res = await qry.Execute(new SmartShearchQueryRequest { Qry = "*", CurrentPage = 100, PageSize = 10 });
             Assert.That(res.Data.Count, Is.EqualTo(2));
-        }      
+        }
+
+        [Test]
+        public async Task CanGetCompanyById()
+        {
+            var q = new QueryById<Company>(DocumentStore);
+            var cmp = await q.GetById("Companies-1");
+            Assert.That(cmp.Name, Is.EqualTo("Slime Ltd"));
+        }
     }
 }

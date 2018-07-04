@@ -22,10 +22,7 @@
       <Folder Name="Queries" TargetFolderName="Queries">
         <ProjectItem ReplaceParameters="true" TargetFileName="FindCompanies.cs">FindCompanies.cs</ProjectItem>
       </Folder>
-      <Folder Name="Types" TargetFolderName="Types">
-        <ProjectItem ReplaceParameters="true" TargetFileName=".gitignore">.gitignore</ProjectItem>
-        <ProjectItem ReplaceParameters="true" TargetFileName="Address.cs">Address.cs</ProjectItem>
-      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Address.cs">Address.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Hello.cs">Hello.cs</ProjectItem>
     </Project>
   </TemplateContent>

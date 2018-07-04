@@ -16,8 +16,20 @@
   </TemplateData>
   <TemplateContent>
     <Project TargetFileName="Accounting.WebApi.Tests.csproj" File="Accounting.WebApi.Tests.csproj" ReplaceParameters="true">
-      <ProjectItem ReplaceParameters="true" TargetFileName="IntegrationTest.cs">IntegrationTest.cs</ProjectItem>
-      <ProjectItem ReplaceParameters="true" TargetFileName="UnitTest.cs">UnitTest.cs</ProjectItem>
+      <Folder Name="IntegrationTests" TargetFolderName="IntegrationTests">
+        <ProjectItem ReplaceParameters="true" TargetFileName="IntegrationTest.cs">IntegrationTest.cs</ProjectItem>
+      </Folder>
+      <Folder Name="UnitTests" TargetFolderName="UnitTests">
+        <Folder Name="CommandServicesUnitTests" TargetFolderName="CommandServicesUnitTests">
+          <ProjectItem ReplaceParameters="true" TargetFileName="CommandServiceTestBase.cs">CommandServiceTestBase.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="CompanyCommandServiceUnitTests.cs">CompanyCommandServiceUnitTests.cs</ProjectItem>
+        </Folder>
+        <Folder Name="QueryServiceUnitTests" TargetFolderName="QueryServiceUnitTests">
+          <ProjectItem ReplaceParameters="true" TargetFileName="CompanyQueryServiceTests.cs">CompanyQueryServiceTests.cs</ProjectItem>
+        </Folder>
+        <ProjectItem ReplaceParameters="true" TargetFileName="UnitTest.cs">UnitTest.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="SimpleInjectorIocAdapter.cs">SimpleInjectorIocAdapter.cs</ProjectItem>
     </Project>
   </TemplateContent>
 </VSTemplate>

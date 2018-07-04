@@ -9,18 +9,18 @@ namespace $safeprojectname$
     {
         public async Task Send(object message)
         {
-            await NSBusSingleton.$ext_projectname$AppEndpointInstance.Send(message);
+            await NSBusSingleton.AccountingAppEndpointInstance.Send(message);
         }
     }
 
     class NSBusSingleton
     {
-        public static IEndpointInstance $ext_projectname$AppEndpointInstance;
+        public static IEndpointInstance AccountingAppEndpointInstance;
 
         static NSBusSingleton()
         {
 
-            $ext_projectname$AppEndpointInstance = Endpoint.Start(CreateEndpointConfiguration()).GetAwaiter().GetResult();
+            AccountingAppEndpointInstance = Endpoint.Start(CreateEndpointConfiguration()).GetAwaiter().GetResult();
         }
 
             static EndpointConfiguration CreateEndpointConfiguration()
@@ -36,14 +36,14 @@ namespace $safeprojectname$
                 var routing = transport.Routing();
                 routing.RouteToEndpoint(
                     assembly: typeof(PL.Commands.RegisterCompany).Assembly,
-                    destination: config["NSBus:$ext_projectname$AppEndpointName"]);
+                    destination: config["NSBus:AccountingAppEndpointName"]);
 
                 var conventions = endpointConfiguration.Conventions();
                 conventions.DefiningCommandsAs(
                     type =>
                     {
                         return (
-                        (type.Namespace == "$ext_projectname$.PL.Commands")
+                        (type.Namespace == "Accounting.PL.Commands")
                         );
                     });
 

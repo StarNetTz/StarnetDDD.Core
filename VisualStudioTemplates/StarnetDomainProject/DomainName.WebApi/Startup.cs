@@ -4,12 +4,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Funq;
 using ServiceStack;
-using ServiceStack.Configuration;
 using $safeprojectname$.ServiceInterface;
 using $ext_projectname$.ReadModel;
 using $ext_projectname$.ReadModel.Queries;
 using $safeprojectname$.Infrastructure;
 using ServiceStack.Validation;
+using ServiceStack.Auth;
+using ServiceStack.Caching;
 
 namespace $safeprojectname$
 {
@@ -43,7 +44,8 @@ namespace $safeprojectname$
     {
         public IConfiguration Configuration { get; }
 
-        public AppHost(IConfiguration configuration) : base("$safeprojectname$", typeof(MyServices).Assembly) {
+        public AppHost(IConfiguration configuration) : base("Betting.WebApi", typeof(MyServices).Assembly)
+        {
 
             Configuration = configuration;
         }
@@ -61,14 +63,45 @@ namespace $safeprojectname$
                 DefaultRedirectPath = "/metadata",
                 DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), false)
             });
-            var ravenConfig = new RavenConfig { Urls = Configuration["RavenDb:Urls"].Split(';'), CertificateFilePassword = Configuration["RavenDb:CertificatePassword"], CertificateFilePath = Configuration["RavenDb:CertificatePath"], DatabaseName = Configuration["RavenDb:DatabaseName"] };
-            var docStore = new RavenDocumentStoreFactory().CreateDocumentStore(ravenConfig);
-            container.Register(docStore);
-            container.RegisterAutoWiredAs<CompanySmartSearchQuery, ICompanySmartSearchQuery>();
-            container.RegisterAutoWiredAs<TimeProvider, ITimeProvider>();
-            container.RegisterAutoWiredAs<NSBus, IMessageBus>();
+
+            container.Adapter = new SimpleInjectorIocAdapter(SetupSimpleInjectorContainer());
+
 
             Plugins.Add(new ValidationFeature());
+            Plugins.Add(new CorsFeature(allowCredentials: true, allowedHeaders: "Content-Type, Authorization", allowOriginWhitelist: GetOriginWhiteList()));
+            Plugins.Add(new AuthFeature(() => new AuthUserSession(),
+                new IAuthProvider[] {
+                new JwtAuthProvider(AppSettings) {
+                    AuthKeyBase64 = Configuration["Jwt:Key"],
+                    RequireSecureConnection = false, //dev configuration
+                    EncryptPayload = false, //dev configuration
+                    HashAlgorithm = "HS256"
+                }
+            }));
+
+        }
+
+        SimpleInjector.Container SetupSimpleInjectorContainer()
+        {
+            var simpleContainer = new SimpleInjector.Container();
+            simpleContainer.Register(() => CreateRavenDbDocumentStore(), SimpleInjector.Lifestyle.Singleton);
+            simpleContainer.Register<ICompanySmartSearchQuery, CompanySmartSearchQuery>();
+            simpleContainer.Register<ITimeProvider, TimeProvider>();
+            simpleContainer.Register<IMessageBus, NSBus>();
+            simpleContainer.Register<ICacheClient>(() => new MemoryCacheClient());
+            simpleContainer.Register(typeof(IQueryById<>), typeof(QueryById<>));
+            return simpleContainer;
+        }
+
+        Raven.Client.Documents.IDocumentStore CreateRavenDbDocumentStore()
+        {
+            var ravenConfig = new RavenConfig { Urls = Configuration["RavenDb:Urls"].Split(';'), CertificateFilePassword = Configuration["RavenDb:CertificatePassword"], CertificateFilePath = Configuration["RavenDb:CertificatePath"], DatabaseName = Configuration["RavenDb:DatabaseName"] };
+            return new RavenDocumentStoreFactory().CreateDocumentStore(ravenConfig);
+        }
+
+        string[] GetOriginWhiteList()
+        {
+            return Configuration["CORS:Whitelist"].Split(';');
         }
     }
 }
