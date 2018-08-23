@@ -1,7 +1,5 @@
 ﻿using NUnit.Framework;
 using SimpleInjector;
-using System;
-using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
 namespace Starnet.Projections.Testing
@@ -10,9 +8,15 @@ namespace Starnet.Projections.Testing
        where T : class, IProjection
        where TModel : class
     {
-        readonly Container Container;
+        public Container Container { get; set; }
+
         public IProjectionsStore ProjectionsStore { get; set; }
-        readonly ProjectionsFactory ProjectionsFactory;
+        ProjectionsFactory ProjectionsFactory;
+
+        protected virtual void ConfigureContainer(Container container)
+        {
+
+        }
 
         public ProjectionSpecification()
         {
@@ -24,11 +28,10 @@ namespace Starnet.Projections.Testing
             Container.Register<IHandlerFactory, DIHandlerFactory>();
             Container.Register<ISubscriptionFactory, InMemorySubscriptionFactory>();
             Container.Register<IProjectionsFactory, ProjectionsFactory>();
-            Container.Verify();
-
+            ConfigureContainer(Container);
             ProjectionsFactory = Container.GetInstance<ProjectionsFactory>();
             ProjectionsStore = Container.GetInstance<INoSqlStore>();
-
+            Container.Verify();
         }
 
         public async Task Given(params object[] args)
@@ -38,6 +41,8 @@ namespace Starnet.Projections.Testing
             s.LoadEvents(args);
             await p.Start();
         }
+
+
 
         public async Task Expect(object model)
         {
