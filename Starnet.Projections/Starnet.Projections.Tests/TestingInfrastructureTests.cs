@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SimpleInjector;
 using Starnet.Projections.Testing;
 using Starnet.Projections.Tests;
 using System;
@@ -7,9 +8,14 @@ using System.Threading.Tasks;
 namespace Starnet.Projections.UnitTests
 {
     [TestFixture]
-    public class CompanyTests : ProjectionSpecification<TestProjection, TestModel>
+    public class ProjectionSpecificationTests : ProjectionSpecification<TestProjection, TestModel>
     {
         string Id;
+
+        protected override void ConfigureContainer(Container container)
+        {
+            container.Register<ITimeProvider, MockTimeProvider>();
+        }
 
         [SetUp]
         public void SetUp()
