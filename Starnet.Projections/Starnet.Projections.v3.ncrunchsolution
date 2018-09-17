@@ -8,6 +8,10 @@
       <Value>Stubs\StubEventStoreConnectionFactory.cs:Starnet.Projections.Tests\Starnet.Projections.Tests.csproj</Value>
       <Value>Starnet.Projections.ES\Starnet.Projections.ES.csproj</Value>
       <Value>Starnet.Projections.ES.IntegrationTests\Starnet.Projections.ES.IntegrationTests.csproj</Value>
+      <Value>InMemoryProjectionsStore.cs:Starnet.Projections.Testing\Starnet.Projections.Testing.csproj</Value>
+      <Value>ObjectComparer.cs:Starnet.Projections.Testing\Starnet.Projections.Testing.csproj</Value>
+      <Value>Starnet.Projections.RavenDb\Starnet.Projections.RavenDb.csproj</Value>
+      <Value>StubCheckpointWriterFactory.cs:Starnet.Projections.Testing\Starnet.Projections.Testing.csproj</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>

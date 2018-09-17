@@ -4,6 +4,7 @@ using SimpleInjector;
 using System.Reflection;
 using System.Threading.Tasks;
 using Starnet.Projections.Testing;
+using Starnet.Projections.UnitTests;
 
 namespace Starnet.Projections.Tests
 {
@@ -23,7 +24,7 @@ namespace Starnet.Projections.Tests
             Container.Register<ISubscriptionFactory, InMemorySubscriptionFactory>();
             Container.Register<INoSqlStore, InMemoryProjectionsStore>();
             Container.Register<IProjectionsFactory, ProjectionsFactory>();
-        
+            Container.Register<ITimeProvider, MockTimeProvider>();
             Container.Verify();
         }
 
