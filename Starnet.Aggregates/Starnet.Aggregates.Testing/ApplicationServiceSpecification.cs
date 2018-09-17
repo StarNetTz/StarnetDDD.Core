@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Starnet.Aggregates.Testing
 {
     //ncrunch: no coverage start
-    public abstract class ApplicationServiceSpecification<TCommand, TEvent> : IListSpecifications<TCommand, TEvent>
+    public abstract class ApplicationServiceSpecification<TCommand, TEvent> : List<TCommand, TEvent>
     {
         bool ThenWasCalled = false;
         readonly List<TEvent> GivenEvents = new List<TEvent>();

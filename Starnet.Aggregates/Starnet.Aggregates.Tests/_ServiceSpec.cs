@@ -1,4 +1,5 @@
 ﻿using Starnet.Aggregates.Testing;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -6,6 +7,8 @@ namespace Starnet.Aggregates.Tests
 {
     internal class _ServiceSpec : ApplicationServiceSpecification<ICommand, IEvent>
     {
+        internal List<object> PublishedEvents { get; set; }
+
         protected override async Task<IEvent[]> ExecuteCommand(IEvent[] given, ICommand cmd)
         {
             var repository = new BDDAggregateRepository();
@@ -13,6 +16,7 @@ namespace Starnet.Aggregates.Tests
             var svc = new PersonAggregateApplicationService(repository);
             await svc.Execute(cmd);
             var arr = (repository.Appended != null) ? repository.Appended.Cast<IEvent>().ToArray() : null;
+            PublishedEvents = svc.PublishedEvents;
             return arr ?? new IEvent[0];
         }
     }

@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using static Starnet.Aggregates.InMemoryAggregateRepository;
 
@@ -55,9 +56,9 @@ namespace Starnet.Aggregates.Tests
         async Task CreateUpdatedAggregate(string aggId, int nrOfUpdates)
         {
             var p = new PersonAggregate(new PersonAggregateState());
-            p.Create(new CreatePerson() { Id = aggId, Name = "0" });
+            p.Create(new CreatePerson() { Id = aggId, Name = "0" }, new List<object>());
             for (int i = 0; i < nrOfUpdates; i++)
-                p.Rename(new RenamePerson() { Id = aggId, Name = $"Name {i + 1}" });
+                p.Rename(new RenamePerson() { Id = aggId, Name = $"Name {i + 1}" }, new List<object>());
             await Repository.StoreAsync(p);
         }
 
@@ -78,20 +79,20 @@ namespace Starnet.Aggregates.Tests
         async Task OutOfSessionUpdate(string id)
         {
             var agg = await Repository.GetAsync<PersonAggregate>(id);
-            agg.Rename(new RenamePerson() { Id = id, Name = "Renamed out of session" });
+            agg.Rename(new RenamePerson() { Id = id, Name = "Renamed out of session" }, new List<object>());
             await Repository.StoreAsync(agg);
         }
 
         void InSessionUpdate(PersonAggregate agg)
         {
             var cmd = new RenamePerson() { Id = agg.Id, Name = "Renamed in session" };
-            agg.Rename(cmd);
+            agg.Rename(cmd, new List<object>());
         }
 
         PersonAggregate CreatePersonAggregate(string id, string name)
         {
             var agg = new PersonAggregate(new PersonAggregateState());
-            agg.Create(new CreatePerson() { Id = id, Name = name });
+            agg.Create(new CreatePerson() { Id = id, Name = name }, new List<object>());
             return agg;
         }
     }
