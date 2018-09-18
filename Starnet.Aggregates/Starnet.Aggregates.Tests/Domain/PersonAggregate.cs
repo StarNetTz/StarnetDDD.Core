@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Starnet.Aggregates.Tests
 {
@@ -12,20 +11,23 @@ namespace Starnet.Aggregates.Tests
             State = state;
         }
 
-        internal void Create(CreatePerson cmd, List<object> publishedEvents)
+        internal List<object> Create(CreatePerson cmd)
         {
+            var publishedEvents = new List<object>();
             var e = new PersonCreated() { Id = cmd.Id, Name = cmd.Name };
             Apply(e);
+           
             publishedEvents.Add(e);
+            return publishedEvents;
         }
 
-        internal void Rename(RenamePerson cmd, List<object> publishedEvents)
+        internal List<object> Rename(RenamePerson cmd)
         {
             if (string.IsNullOrEmpty(cmd.Name))
                 throw DomainError.Named("InvalidPersonName", "Name cannot be null, empty or whitespace!");
             var e = new PersonRenamed() { Id = cmd.Id, Name = cmd.Name };
             Apply(e);
-            publishedEvents.Add(e);
+            return new List<object>();
         }
     }
 }

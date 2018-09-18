@@ -5,7 +5,6 @@ namespace Starnet.Aggregates
 {
     public interface IApplicationService
     {
-        Task Execute(object command);
-        List<object> PublishedEvents { get; }
+        Task<List<object>> Execute(object command);
     }
 }

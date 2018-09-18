@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace Starnet.Aggregates.Tests
 {
@@ -24,8 +23,7 @@ namespace Starnet.Aggregates.Tests
         [Test]
         public void can_create_person()
         {
-            var publishedEvents = new List<object>();
-            Person.Create(new CreatePerson() { Id = "1", Name = "Zvjezdan" }, publishedEvents);
+            var publishedEvents =  Person.Create(new CreatePerson() { Id = "1", Name = "Zvjezdan" });
             AssertPersonCreated(Person);
             Assert.That(publishedEvents.Count, Is.EqualTo(1));
         }
@@ -42,9 +40,9 @@ namespace Starnet.Aggregates.Tests
         [Test]
         public void can_rename_person()
         {
-            Person.Create(new CreatePerson() { Id = "1", Name = "Zvjezdan" }, new List<object>());
+            Person.Create(new CreatePerson() { Id = "1", Name = "Zvjezdan" });
 
-            Person.Rename(new RenamePerson() { Id = "1", Name = "Muriz" }, new List<object>());
+            Person.Rename(new RenamePerson() { Id = "1", Name = "Muriz" });
 
             AssertPersonRenamed(Person);
         }
@@ -60,8 +58,8 @@ namespace Starnet.Aggregates.Tests
         [Test]
         public void rename_with_invalid_name_throws_domain_error()
         {
-            Person.Create(new CreatePerson() { Id = "1", Name = "Zvjezdan" }, new List<object>());
-            var exception = Assert.Throws<DomainError>(() => { Person.Rename(new RenamePerson() { Id = "1", Name = "" }, new List<object>()); });
+            Person.Create(new CreatePerson() { Id = "1", Name = "Zvjezdan" });
+            var exception = Assert.Throws<DomainError>(() => { Person.Rename(new RenamePerson() { Id = "1", Name = "" }); });
             Assert.That(exception.Name, Is.EqualTo("InvalidPersonName"));
         }
 

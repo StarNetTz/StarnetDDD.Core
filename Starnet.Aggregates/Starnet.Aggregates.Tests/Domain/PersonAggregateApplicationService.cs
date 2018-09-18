@@ -18,37 +18,39 @@ namespace Starnet.Aggregates.Tests
             PublishedEvents = new List<object>();
         }
 
-        async Task ChangeAgg(string id, Action<PersonAggregate> usingThisMethod)
+        async Task<List<object>> ChangeAgg(string id, Func<PersonAggregate, List<object>> usingThisMethod)
         {
             var agg = await AggRepository.GetAsync<PersonAggregate>(id);
-            usingThisMethod(agg);
+            var publishedEvents = usingThisMethod(agg);
             await AggRepository.StoreAsync(agg);
+            return publishedEvents;
         }
 
-        async Task CreateAgg(string id, Action<PersonAggregate> usingThisMethod)
+        async Task<List<object>> CreateAgg(string id, Func<PersonAggregate, List<object>> usingThisMethod)
         {
             var agg = await AggRepository.GetAsync<PersonAggregate>(id);
             if (agg != null)
                 throw DomainError.Named("AggregateAlreadyExists", string.Empty);
             agg = new PersonAggregate(new PersonAggregateState());
-            usingThisMethod(agg);
+            var publishedEvents = usingThisMethod(agg);
             await AggRepository.StoreAsync(agg);
+            return publishedEvents;
 
         }
 
-        public async Task Execute(object command)
+        public async Task<List<object>> Execute(object command)
         {
-            await When((dynamic)command);
+            return await When((dynamic)command);
         }
 
-        async Task When(CreatePerson c)
+        async Task<List<object>> When(CreatePerson c)
         {
-            await CreateAgg(c.Id, agg => agg.Create(c, PublishedEvents));
+            return await CreateAgg(c.Id, agg => agg.Create(c));
         }
 
-        async Task When(RenamePerson c)
+        async Task<List<object>> When(RenamePerson c)
         {
-            await ChangeAgg(c.Id, agg => agg.Rename(c, PublishedEvents));
+            return await ChangeAgg(c.Id, agg => agg.Rename(c));
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Starnet.Aggregates.Testing
         TCommand WhenCommand;
         readonly List<TEvent> ThenEvents = new List<TEvent>();
 
-        protected abstract Task<TEvent[]> ExecuteCommand(TEvent[] store, TCommand cmd);
+        protected abstract Task<ExecuteCommandResult<TEvent>> ExecuteCommand(TEvent[] store, TCommand cmd);
 
         public void Given(params TEvent[] g)
         {
@@ -29,19 +29,31 @@ namespace Starnet.Aggregates.Testing
 
         public async Task Expect(params TEvent[] g)
         {
+            await Expect(g.ToList(), new List<TEvent>());
+        }
+
+        public async Task Expect(List<TEvent> producedEvents, List<TEvent> publishedEvents)
+        {
             ThenWasCalled = true;
-            ThenEvents.AddRange(g);
+            ThenEvents.AddRange(producedEvents);
 
-            TEvent[] actual;
+            
             var givenEvents = GivenEvents.ToArray();
-            actual = await ExecuteCommand(givenEvents, WhenCommand);
+            var res = await ExecuteCommand(givenEvents, WhenCommand);
+            TEvent[] actualProduced = res.ProducedEvents;
+            TEvent[] actualPublished = res.PublishedEvents;
 
-            var results = CompareAssert(ThenEvents.ToArray(), actual).ToArray();
+            var producedEventsResults = CompareAssert(ThenEvents.ToArray(), actualProduced).ToArray();
+            PrintResults(producedEventsResults);
 
-            PrintResults(results);
+            var publishedEventsResults = CompareAssert(publishedEvents.ToArray(), actualPublished).ToArray();
+            PrintResults(publishedEventsResults);
 
-            if (results.Any(r => r.Failure != null))
-                Assert.Fail("Specification failed");
+            if (producedEventsResults.Any(r => r.Failure != null))
+                Assert.Fail("Specification failed on produced events");
+
+            if (publishedEventsResults.Any(r => r.Failure != null))
+                Assert.Fail("Specification failed on published events");
         }
 
         protected static void PrintResults(ICollection<ExpectResult> exs)
@@ -144,6 +156,20 @@ namespace Starnet.Aggregates.Testing
         {
             throw new NotImplementedException();
         }
+
+        public static List<TEvent> ToEventList(TEvent ev)
+        {
+            return new List<TEvent>() { ev };
+        }
+
+        public static List<TEvent> NoProducedEvents { get { return new List<TEvent>(); } }
+        public static List<TEvent> NoPublishedEvents { get { return new List<TEvent>(); } }
+    }
+
+    public class ExecuteCommandResult<TEvent>
+    {
+        public TEvent[] ProducedEvents { get; set; }
+        public TEvent[] PublishedEvents { get; set; }
     }
     //ncrunch: no coverage end
 }

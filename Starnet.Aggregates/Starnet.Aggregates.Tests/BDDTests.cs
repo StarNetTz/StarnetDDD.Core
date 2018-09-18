@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Starnet.Aggregates.Tests
@@ -12,7 +13,10 @@ namespace Starnet.Aggregates.Tests
             var id = $"Persons-{Guid.NewGuid()}";
             Given();
             When(new CreatePerson() { Id = id, Name = "Kemo" });
-            await Expect(new PersonCreated() { Id = id, Name = "Kemo" });
+            var ev = new PersonCreated() { Id = id, Name = "Kemo" };
+            var expectedProducedEvents = ToEventList(ev);
+            var expectedPublishedEvents = expectedProducedEvents;
+            await Expect(expectedProducedEvents, expectedPublishedEvents);
         }
 
         [Test]
@@ -22,7 +26,6 @@ namespace Starnet.Aggregates.Tests
             Given(new PersonCreated() { Id = id, Name = "Kemo" });
             When(new RenamePerson() { Id = id, Name = "Munib" });
             await Expect(new PersonRenamed() { Id = id, Name = "Munib" });
-            Assert.That(PublishedEvents.Count, Is.EqualTo(1));
         }
 
         [Test]
