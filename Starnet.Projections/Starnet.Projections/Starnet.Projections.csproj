@@ -6,8 +6,8 @@
     <Company>StarNet</Company>
     <Description>Lightweight DDD framework</Description>
     <Copyright>Copyright © 2018 StarNet d.o.o.</Copyright>
-    <AssemblyVersion>1.0.5.0</AssemblyVersion>
-    <Version>1.0.5</Version>
+    <AssemblyVersion>1.0.6.0</AssemblyVersion>
+    <Version>1.0.6</Version>
   </PropertyGroup>
 
   <ItemGroup>

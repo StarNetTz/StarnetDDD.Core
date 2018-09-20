@@ -25,6 +25,8 @@ namespace Starnet.Projections
             }
             catch (AggregateException aex)
             {
+                var trace = $"Projection {Name} on stream {SubscriptionStreamName} failed on checkpoint {c} while trying to project {e.GetType().FullName}";
+                Logger.Error(trace);
                 Logger.Error(aex);
                 throw;
             }
