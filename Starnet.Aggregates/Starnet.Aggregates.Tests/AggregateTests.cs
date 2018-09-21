@@ -23,8 +23,9 @@ namespace Starnet.Aggregates.Tests
         [Test]
         public void can_create_person()
         {
-            Person.Create(new CreatePerson() { Id = "1", Name = "Zvjezdan" });
+            var publishedEvents =  Person.Create(new CreatePerson() { Id = "1", Name = "Zvjezdan" });
             AssertPersonCreated(Person);
+            Assert.That(publishedEvents.Count, Is.EqualTo(1));
         }
 
             static void AssertPersonCreated(PersonAggregate person)

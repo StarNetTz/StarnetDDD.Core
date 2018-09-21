@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Starnet.Aggregates.Testing
 {
-    public interface IListSpecifications<TCommand, TEvent>
+    public interface List<TCommand, TEvent>
     {
         IEnumerable<SpecificationInfo<TCommand, TEvent>> ListSpecifications();
     }
