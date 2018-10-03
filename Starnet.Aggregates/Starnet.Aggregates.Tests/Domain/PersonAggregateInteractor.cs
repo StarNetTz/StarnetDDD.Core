@@ -4,15 +4,15 @@ using System.Threading.Tasks;
 
 namespace Starnet.Aggregates.Tests
 {
-    public interface IPersonAggregateApplicationService : IApplicationService { }
+    public interface IPersonAggregateInteractor : IInteractor { }
 
-    public class PersonAggregateApplicationService : IPersonAggregateApplicationService
+    public class PersonAggregateInteractor : IPersonAggregateInteractor
     {
         readonly IAggregateRepository AggRepository;
 
         public List<object> PublishedEvents { get; internal set; }
 
-        public PersonAggregateApplicationService(IAggregateRepository aggRepository)
+        public PersonAggregateInteractor(IAggregateRepository aggRepository)
         {
             AggRepository = aggRepository;
             PublishedEvents = new List<object>();

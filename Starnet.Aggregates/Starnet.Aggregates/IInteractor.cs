@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Starnet.Aggregates
 {
-    public interface IApplicationService
+    public interface IInteractor
     {
         Task<List<object>> Execute(object command);
     }
