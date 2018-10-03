@@ -6,6 +6,7 @@ namespace Starnet.Aggregates
     {
         IAggregateState State;
         public List<object> Changes { get; private set; }
+        public List<object> PublishedEvents { get; private set; }
 
         public string Id
         {
@@ -27,6 +28,7 @@ namespace Starnet.Aggregates
         {
             State = state;
             Changes = new List<object>();
+            PublishedEvents = new List<object>();
         }
 
         protected void Apply(object @event)

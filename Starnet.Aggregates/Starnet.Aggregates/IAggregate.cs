@@ -9,5 +9,6 @@ namespace Starnet.Aggregates
         int Version { get; }
 
         List<object> Changes { get; }
+        List<object> PublishedEvents { get; }
     }
 }
