@@ -5,6 +5,7 @@ namespace Starnet.Aggregates
 {
     public interface IInteractor
     {
-        Task<List<object>> Execute(object command);
+        Task Execute(object command);
+        List<object> GetPublishedEvents();
     }
 }
