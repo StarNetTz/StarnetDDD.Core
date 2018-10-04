@@ -6,21 +6,13 @@ namespace Starnet.Aggregates.Tests
 {
     public interface IPersonAggregateInteractor : IInteractor { }
 
-    public class PersonAggregateInteractor : IPersonAggregateInteractor
+    public class PersonAggregateInteractor : Interactor, IPersonAggregateInteractor
     {
         readonly IAggregateRepository AggRepository;
-
-        List<object> PublishedEvents { get; set; }
-
-        public List<object> GetPublishedEvents()
-        {
-            return PublishedEvents;
-        }
 
         public PersonAggregateInteractor(IAggregateRepository aggRepository)
         {
             AggRepository = aggRepository;
-            PublishedEvents = new List<object>();
         }
 
         async Task ChangeAgg(string id, Action<PersonAggregate> usingThisMethod)
@@ -42,7 +34,7 @@ namespace Starnet.Aggregates.Tests
             await AggRepository.StoreAsync(agg);
         }
 
-        public async Task Execute(object command)
+        public override async Task Execute(object command)
         {
             await When((dynamic)command);
         }
