@@ -37,7 +37,7 @@ namespace Starnet.Projections.ES.IntegrationTests
             var container = new Container();
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddNLog(new NLogProviderOptions { CaptureMessageTemplates = true, CaptureMessageProperties = true });
-            NLog.LogManager.LoadConfiguration("nlog.config");
+            LogManager.LoadConfiguration("nlog.config");
             container.Register<ILoggerFactory>(() => loggerFactory, Lifestyle.Singleton);
 
             container.Register<JSProjectionsFactory>();

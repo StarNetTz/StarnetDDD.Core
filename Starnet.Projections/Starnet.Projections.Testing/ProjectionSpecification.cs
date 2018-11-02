@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SimpleInjector;
+using System;
 using System.Threading.Tasks;
 
 namespace Starnet.Projections.Testing
@@ -13,10 +14,7 @@ namespace Starnet.Projections.Testing
         public IProjectionsStore ProjectionsStore { get; set; }
         ProjectionsFactory ProjectionsFactory;
 
-        protected virtual void ConfigureContainer(Container container)
-        {
-
-        }
+        protected virtual void ConfigureContainer(Container container) {}
 
         public ProjectionSpecification()
         {
@@ -42,15 +40,13 @@ namespace Starnet.Projections.Testing
             await p.Start();
         }
 
-
-
         public async Task Expect(object model)
         {
             var id = ExtractIdFromObject(model);
             var actual = await ProjectionsStore.LoadAsync<TModel>(id);
             var diff = ObjectComparer.FindDifferences(model, actual);
             if (!string.IsNullOrEmpty(diff))
-                Assert.Fail(diff);
+                throw new AssertionException(diff);
         }
 
         private static string ExtractIdFromObject(object model)

@@ -22,9 +22,11 @@ namespace Starnet.Projections.ES.IntegrationTests
 
             void ConfigureSubscription()
             {
-                Subscription = new ESSubscription(EventStoreConnection.Create(ESConnectionConfig.TcpEndpoint));
-                Subscription.StreamName = "$ce-Match";
-                Subscription.EventAppearedCallback = EventAppeared;
+                Subscription = new ESSubscription(EventStoreConnection.Create(ESConnectionConfig.TcpEndpoint))
+                {
+                    StreamName = "$ce-Match",
+                    EventAppearedCallback = EventAppeared
+                };
                 Subscription.Start(0).Wait();
             }
 

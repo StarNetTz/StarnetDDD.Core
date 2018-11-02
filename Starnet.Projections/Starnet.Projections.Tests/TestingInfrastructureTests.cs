@@ -14,6 +14,7 @@ namespace Starnet.Projections.UnitTests
 
         protected override void ConfigureContainer(Container container)
         {
+            base.ConfigureContainer(container);
             container.Register<ITimeProvider, MockTimeProvider>();
         }
 
@@ -28,6 +29,21 @@ namespace Starnet.Projections.UnitTests
         {
             await Given(new TestEvent() { Id = Id, SomeValue = "123" });
             await Expect(new TestModel() { Id = Id, SomeValue = "123" });
+        }
+
+
+        [Test]
+        public void unexpected_result_throws_assertion_exception()
+        {
+            Assert.That(ExecuteFailingTest(), Throws.InstanceOf<AssertionException>());
+        }
+
+        private NUnit.Framework.Constraints.ActualValueDelegate<Task> ExecuteFailingTest()
+        {
+            return async () =>
+            {
+                await Given(new TestEvent() { Id = Id, SomeValue = "123" });
+                await Expect(new TestModel() { Id = Id, SomeValue = "1234" });};
         }
     }
 }

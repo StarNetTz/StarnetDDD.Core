@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Starnet.Projections.Tests
+﻿namespace Starnet.Projections.Tests
 {
     public class TestModel
     {

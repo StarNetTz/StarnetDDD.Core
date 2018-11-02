@@ -34,7 +34,6 @@ namespace Starnet.Projections.ES.IntegrationTests
         [Test]
         public async Task can_create_test_projection_and_project()
         {
-           
             var proj = await ProjectionsFactory.Create<TestProjection>();
             await PreloadProjectionsSubscription();
 
