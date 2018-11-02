@@ -36,16 +36,14 @@ namespace Starnet.Projections.ES.IntegrationTests
             await cnn.AppendToStreamAsync(streamName, -1, eventsToSave);
         }
 
-        private static EventData ToEventData(dynamic evnt, IDictionary<string, object> headers)
+        static EventData ToEventData(dynamic evnt, IDictionary<string, object> headers)
         {
             var SerializerSettings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
 
             var data = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(evnt, SerializerSettings));
 
             var eventHeaders = new Dictionary<string, object>(headers) {
-                {
-                    "EventClrTypeName", evnt.GetType().AssemblyQualifiedName
-                }
+                { "EventClrTypeName", evnt.GetType().AssemblyQualifiedName }
             };
             var metadata = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(eventHeaders, SerializerSettings));
             var typeName = evnt.GetType().Name;

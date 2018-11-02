@@ -1,14 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Moq;
-using NUnit.Framework;
-using SimpleInjector;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using NLog;
 using NLog.Extensions.Logging;
+using NUnit.Framework;
+using SimpleInjector;
+using System.Threading.Tasks;
 
 namespace Starnet.Projections.ES.IntegrationTests
 {

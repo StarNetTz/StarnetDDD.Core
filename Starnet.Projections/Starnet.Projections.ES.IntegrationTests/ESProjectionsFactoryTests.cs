@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using SimpleInjector;
-using System;
 using System.Threading.Tasks;
 
 namespace Starnet.Projections.ES.IntegrationTests

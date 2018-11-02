@@ -1,7 +1,6 @@
 ﻿using NLog;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Starnet.Projections
@@ -23,23 +22,23 @@ namespace Starnet.Projections
             {
                 await HandleEvent(e, c);
             }
-            catch (AggregateException aex)
+            catch (AggregateException ex)
             {
                 var trace = $"Projection {Name} on stream {SubscriptionStreamName} failed on checkpoint {c} while trying to project {e.GetType().FullName}";
                 Logger.Error(trace);
-                Logger.Error(aex);
+                Logger.Error(ex);
                 throw;
             }
         }
 
-        private Task HandleEvent(object e, long c)
+        Task HandleEvent(object e, long c)
         {
             Checkpoint.Value = c;
             Task.WaitAll(StartHandlingTasks(e, c));
             return Task.CompletedTask;
         }
 
-        private Task[] StartHandlingTasks(object e, long c)
+        Task[] StartHandlingTasks(object e, long c)
         {
             List<Task> tasks = new List<Task>();
             foreach (var d in Handlers)

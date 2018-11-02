@@ -11,7 +11,6 @@ namespace Starnet.Projections
     {
         readonly Container Container;
 
-
         public ProjectionsFactory(Container container)
         {
             Container = container;
@@ -49,6 +48,26 @@ namespace Starnet.Projections
             return proj;
         }
 
+            ProjectionInfo GetProjectionInfo(Type type)
+            {
+                return new ProjectionInfo
+                {
+                    Name = GetProjectionName(type),
+                    SubscriptionStreamName = GetSubscriptionStreamName(type)
+                };
+            }
+
+                string GetProjectionName(Type type)
+                {
+                    return type.Name.Replace("Projection", "");
+                }
+
+                string GetSubscriptionStreamName(Type type)
+                {
+                    var attrInfo = type.GetCustomAttribute(typeof(SubscribesToStream)) as SubscribesToStream;
+                    return attrInfo.Name;
+                }
+
             ISubscription CreateSubscription(Projection proj)
             {
                 var subscription = Container.GetInstance<ISubscriptionFactory>().Create();
@@ -69,25 +88,6 @@ namespace Starnet.Projections
                     handlers.Add(Container.GetInstance<IHandlerFactory>().Create(t));
                 return handlers;
             }
-
-            ProjectionInfo GetProjectionInfo(Type type)
-            {
-                return new ProjectionInfo {
-                    Name = GetProjectionName(type),
-                    SubscriptionStreamName = GetSubscriptionStreamName(type)
-                };
-            }
-
-                string GetProjectionName(Type type)
-                {
-                    return type.Name.Replace("Projection", "");
-                }
-
-                string GetSubscriptionStreamName(Type type)
-                {
-                    var attrInfo = type.GetCustomAttribute(typeof(SubscribesToStream)) as SubscribesToStream;
-                    return attrInfo.Name;
-                }
 
         class ProjectionInfo
         {
