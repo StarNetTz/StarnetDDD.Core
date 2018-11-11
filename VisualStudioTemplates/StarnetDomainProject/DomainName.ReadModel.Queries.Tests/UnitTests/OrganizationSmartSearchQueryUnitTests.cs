@@ -4,7 +4,7 @@ using Raven.Client.Documents.Indexes;
 using Raven.TestDriver;
 using System.Threading.Tasks;
 
-namespace $safeprojectname$.ReadModel.Queries.Tests.UnitTests
+namespace $safeprojectname$.UnitTests
 {
     class OrganizationSmartSearchQueryUnitTests : RavenTestDriver
     {

@@ -16,7 +16,7 @@
   </TemplateData>
   <TemplateContent>
     <Project TargetFileName="DomainName.WebApi.Infrastructure.csproj" File="DomainName.WebApi.Infrastructure.csproj" ReplaceParameters="true">
-      <ProjectItem ReplaceParameters="false" TargetFileName="Domain.WebApi.Infrastructure.v3.ncrunchproject">Domain.WebApi.Infrastructure.v3.ncrunchproject</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DomainName.WebApi.Infrastructure.v3.ncrunchproject">DomainName.WebApi.Infrastructure.v3.ncrunchproject</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="NSBusSingleton.cs">NSBusSingleton.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="TimeProvider.cs">TimeProvider.cs</ProjectItem>
     </Project>
