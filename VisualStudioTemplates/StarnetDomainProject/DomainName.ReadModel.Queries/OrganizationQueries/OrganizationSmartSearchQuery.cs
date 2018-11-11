@@ -10,7 +10,7 @@ namespace $safeprojectname$
     {
         public OrganizationSmartSearchQuery(IDocumentStore documentStore) : base(documentStore) { }
 
-        protected override async Task<QueryResult<Organization>> Search(ISmartSearchQueryRequest qry)
+        protected override async Task<QueryResult<Organization>> SearchAsync(ISmartSearchQueryRequest qry)
         {
             QueryResult<Organization> retVal = new QueryResult<Organization>();
             QueryStatistics statsRef = new QueryStatistics();
@@ -35,11 +35,11 @@ namespace $safeprojectname$
         public Organizations_Smart_Search()
         {
             AddMap<Organization>(companies => from c in companies
-                                         select new
-                                         {
-                                             c.Id,
-                                             c.Name
-                                         });
+                                              select new
+                                              {
+                                                  c.Id,
+                                                  c.Name
+                                              });
 
             Index(x => x.Name, FieldIndexing.Search);
         }

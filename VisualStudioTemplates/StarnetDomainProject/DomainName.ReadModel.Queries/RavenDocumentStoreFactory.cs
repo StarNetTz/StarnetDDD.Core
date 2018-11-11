@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace $safeprojectname$
 {
-       public class RavenConfig
+    public class RavenConfig
     {
         public string[] Urls { get; set; }
         public string DatabaseName { get; set; }

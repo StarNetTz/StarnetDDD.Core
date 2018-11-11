@@ -20,7 +20,9 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationCommands.cs">OrganizationCommands.cs</ProjectItem>
       </Folder>
       <Folder Name="Queries" TargetFolderName="Queries">
+        <ProjectItem ReplaceParameters="true" TargetFileName="FilterTypeahead.cs">FilterTypeahead.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="FindOrganizations.cs">FindOrganizations.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="GetLookup.cs">GetLookup.cs</ProjectItem>
       </Folder>
       <ProjectItem ReplaceParameters="true" TargetFileName="Address.cs">Address.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Hello.cs">Hello.cs</ProjectItem>

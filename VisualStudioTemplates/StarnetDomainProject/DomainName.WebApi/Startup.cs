@@ -87,6 +87,8 @@ namespace $safeprojectname$
             simpleContainer.Register(() => CreateRavenDbDocumentStore(), SimpleInjector.Lifestyle.Singleton);
             simpleContainer.Register<IOrganizationSmartSearchQuery, OrganizationSmartSearchQuery>();
             simpleContainer.Register<ITimeProvider, TimeProvider>();
+            simpleContainer.Register<ITypeaheadSmartSearchQuery, TypeaheadSmartSearchQuery>();
+            simpleContainer.Register<IDatabaseInitializer, DatabaseInitializer>();
             simpleContainer.Register<IMessageBus, NSBus>();
             simpleContainer.Register<ICacheClient>(() => new MemoryCacheClient());
             simpleContainer.Register(typeof(IQueryById<>), typeof(QueryById<>));

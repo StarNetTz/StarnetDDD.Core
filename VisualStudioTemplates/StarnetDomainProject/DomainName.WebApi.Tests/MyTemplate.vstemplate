@@ -25,8 +25,10 @@
           <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationCommandServiceTests.cs">OrganizationCommandServiceTests.cs</ProjectItem>
         </Folder>
         <Folder Name="QueryServiceUnitTests" TargetFolderName="QueryServiceUnitTests">
+          <ProjectItem ReplaceParameters="true" TargetFileName="LookupsServiceTests.cs">LookupsServiceTests.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationQueryServiceTests.cs">OrganizationQueryServiceTests.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="StubQueryById.cs">StubQueryById.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="TypeaheadsServiceTests.cs">TypeaheadsServiceTests.cs</ProjectItem>
         </Folder>
         <ProjectItem ReplaceParameters="true" TargetFileName="UnitTest.cs">UnitTest.cs</ProjectItem>
       </Folder>

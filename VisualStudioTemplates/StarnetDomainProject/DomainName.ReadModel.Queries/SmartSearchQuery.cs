@@ -15,14 +15,14 @@ namespace $safeprojectname$
 
         public async Task<PaginatedResult<T>> Execute(ISmartSearchQueryRequest qry)
         {
-            QueryResult<T> qResult = await Search(qry);
+            QueryResult<T> qResult = await SearchAsync(qry);
             var resp = CreateResponse(qry, qResult);
             if (CurrentPageIsOverflown(resp))
                 return await Execute(new SmartShearchQueryRequest() { Qry = qry.Qry, CurrentPage = 0, PageSize = qry.PageSize });
             return resp;
         }
 
-        protected abstract Task<QueryResult<T>> Search(ISmartSearchQueryRequest qry);
+        protected abstract Task<QueryResult<T>> SearchAsync(ISmartSearchQueryRequest qry);
 
         protected PaginatedResult<T> CreateResponse(ISmartSearchQueryRequest request, QueryResult<T> qr)
         {

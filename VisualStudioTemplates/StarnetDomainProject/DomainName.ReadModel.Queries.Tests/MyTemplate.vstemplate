@@ -23,6 +23,7 @@
       </Folder>
       <Folder Name="UnitTests" TargetFolderName="UnitTests">
         <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationSmartSearchQueryUnitTests.cs">OrganizationSmartSearchQueryUnitTests.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="TypeaheadSmartSearchQueryUnitTests.cs">TypeaheadSmartSearchQueryUnitTests.cs</ProjectItem>
       </Folder>
       <ProjectItem ReplaceParameters="false" TargetFileName="DomainName.ReadModel.Queries.Tests.v3.ncrunchproject">DomainName.ReadModel.Queries.Tests.v3.ncrunchproject</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="appsettings.json">appsettings.json</ProjectItem>

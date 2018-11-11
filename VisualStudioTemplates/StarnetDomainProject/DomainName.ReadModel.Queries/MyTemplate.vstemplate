@@ -19,6 +19,9 @@
       <Folder Name="OrganizationQueries" TargetFolderName="OrganizationQueries">
         <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationSmartSearchQuery.cs">OrganizationSmartSearchQuery.cs</ProjectItem>
       </Folder>
+      <Folder Name="TypeaheadQueries" TargetFolderName="TypeaheadQueries">
+        <ProjectItem ReplaceParameters="true" TargetFileName="TypeaheadSmartSearchQuery.cs">TypeaheadSmartSearchQuery.cs</ProjectItem>
+      </Folder>
       <ProjectItem ReplaceParameters="true" TargetFileName="QueryById.cs">QueryById.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="QueryResult.cs">QueryResult.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="RavenDocumentStoreFactory.cs">RavenDocumentStoreFactory.cs</ProjectItem>

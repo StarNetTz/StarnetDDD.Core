@@ -29,7 +29,9 @@
         </Folder>
       </Folder>
       <Folder Name="QueryServices" TargetFolderName="QueryServices">
+        <ProjectItem ReplaceParameters="true" TargetFileName="LookupsService.cs">LookupsService.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationQueryService.cs">OrganizationQueryService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="TypeAheadsService.cs">TypeAheadsService.cs</ProjectItem>
       </Folder>
       <ProjectItem ReplaceParameters="true" TargetFileName="MyServices.cs">MyServices.cs</ProjectItem>
     </Project>
