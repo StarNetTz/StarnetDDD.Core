@@ -1,7 +1,7 @@
 <VSTemplate Version="2.0.0" Type="ProjectGroup" 
     xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
     <TemplateData>
-        <Name>Starnet DDD Test2</Name>
+        <Name>Starnet DDD</Name>
         <Description>Starnet DDD template</Description>
         <Icon>Icon.ico</Icon>
         <ProjectType>CSharp</ProjectType>
