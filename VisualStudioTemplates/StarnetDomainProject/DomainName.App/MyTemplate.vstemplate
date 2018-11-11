@@ -11,17 +11,18 @@
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
-    <Icon>__TemplateIcon.ico</Icon>
     <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="Accounting.App.csproj" File="Accounting.App.csproj" ReplaceParameters="true">
+    <Project TargetFileName="DomainName.App.csproj" File="DomainName.App.csproj" ReplaceParameters="true">
       <ProjectItem ReplaceParameters="true" TargetFileName="ApplicationServiceExtractor.cs">ApplicationServiceExtractor.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="appsettings.json">appsettings.json</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Dockerfile">Dockerfile</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Domain.App.v3.ncrunchproject">Domain.App.v3.ncrunchproject</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Host.cs">Host.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="license.xml">license.xml</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Program.cs">Program.cs</ProjectItem>
-      <ProjectItem ReplaceParameters="true" TargetFileName="RegisterCompanyHandler.cs">RegisterCompanyHandler.cs</ProjectItem>
     </Project>
   </TemplateContent>
 </VSTemplate>

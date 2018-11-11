@@ -4,6 +4,7 @@ using SimpleInjector;
 using Starnet.Projections;
 using Starnet.Projections.ES;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace $safeprojectname$
 {
@@ -16,23 +17,22 @@ namespace $safeprojectname$
             Logger = logger;
         }
 
-        public void Start(Container container)
+        public async Task Start(Container container)
         {
             var jsProjectionsFactory = container.GetInstance<JSProjectionsFactory>();
-            jsProjectionsFactory.CreateProjections().Wait();
+            await jsProjectionsFactory.CreateProjections();
             var projectionsFactory = container.GetInstance<ProjectionsFactory>();
-            var projections = projectionsFactory.Create(Assembly.GetAssembly(typeof(CompanyProjection))).Result;
+            var projections = await projectionsFactory.Create(Assembly.GetAssembly(typeof(OrganizationProjection)));
 
             foreach (var p in projections)
             {
                 Logger.LogInformation($"Starting {p.GetType().Name} on stream {p.Subscription.StreamName}.");
-                p.Start();
+                await p.Start();
             }
         }
 
-        public void Stop()
-        {
-
+        public Task  Stop() {
+            return Task.CompletedTask;
         }
     }
 }

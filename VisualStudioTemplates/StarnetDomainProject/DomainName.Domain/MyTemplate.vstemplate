@@ -11,15 +11,15 @@
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
     <Icon>__TemplateIcon.ico</Icon>
-	  <CreateInPlace>true</CreateInPlace>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="Accounting.Domain.csproj" File="Accounting.Domain.csproj" ReplaceParameters="true">
-      <Folder Name="Company" TargetFolderName="Company">
-        <ProjectItem ReplaceParameters="true" TargetFileName="CompanyAggregate.cs">CompanyAggregate.cs</ProjectItem>
-        <ProjectItem ReplaceParameters="true" TargetFileName="CompanyAggregateState.cs">CompanyAggregateState.cs</ProjectItem>
-        <ProjectItem ReplaceParameters="true" TargetFileName="CompanyApplicationService.cs">CompanyApplicationService.cs</ProjectItem>
+    <Project TargetFileName="DomainName.Domain.csproj" File="DomainName.Domain.csproj" ReplaceParameters="true">
+      <Folder Name="Organization" TargetFolderName="Organization">
+        <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationAggregate.cs">OrganizationAggregate.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationAggregateState.cs">OrganizationAggregateState.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationInteractor.cs">OrganizationInteractor.cs</ProjectItem>
       </Folder>
     </Project>
   </TemplateContent>

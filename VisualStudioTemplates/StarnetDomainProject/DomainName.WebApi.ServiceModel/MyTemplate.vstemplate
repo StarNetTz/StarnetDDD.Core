@@ -11,16 +11,16 @@
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
-    <Icon>__TemplateIcon.ico</Icon>
     <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="Accounting.WebApi.ServiceModel.csproj" File="Accounting.WebApi.ServiceModel.csproj" ReplaceParameters="true">
+    <Project TargetFileName="DomainName.WebApi.ServiceModel.csproj" File="DomainName.WebApi.ServiceModel.csproj" ReplaceParameters="true">
       <Folder Name="Commands" TargetFolderName="Commands">
-        <ProjectItem ReplaceParameters="true" TargetFileName="CompanyCommands.cs">CompanyCommands.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationCommands.cs">OrganizationCommands.cs</ProjectItem>
       </Folder>
       <Folder Name="Queries" TargetFolderName="Queries">
-        <ProjectItem ReplaceParameters="true" TargetFileName="FindCompanies.cs">FindCompanies.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="FindOrganizations.cs">FindOrganizations.cs</ProjectItem>
       </Folder>
       <ProjectItem ReplaceParameters="true" TargetFileName="Address.cs">Address.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Hello.cs">Hello.cs</ProjectItem>

@@ -11,14 +11,14 @@
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
-    <Icon>__TemplateIcon.ico</Icon>
     <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="Accounting.ReadModel.csproj" File="Accounting.ReadModel.csproj" ReplaceParameters="true">
-      <Folder Name="Company" TargetFolderName="Company">
-        <ProjectItem ReplaceParameters="true" TargetFileName="Company.cs">Company.cs</ProjectItem>
-        <ProjectItem ReplaceParameters="true" TargetFileName="ICompanySmartSearchQuery.cs">ICompanySmartSearchQuery.cs</ProjectItem>
+    <Project TargetFileName="DomainName.ReadModel.csproj" File="DomainName.ReadModel.csproj" ReplaceParameters="true">
+      <Folder Name="Organization" TargetFolderName="Organization">
+        <ProjectItem ReplaceParameters="true" TargetFileName="IOrganizationSmartSearchQuery.cs">IOrganizationSmartSearchQuery.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Organization.cs">Organization.cs</ProjectItem>
       </Folder>
       <ProjectItem ReplaceParameters="true" TargetFileName="IQueryById.cs">IQueryById.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="PaginatedResult.cs">PaginatedResult.cs</ProjectItem>

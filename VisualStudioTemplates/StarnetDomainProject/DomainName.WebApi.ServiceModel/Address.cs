@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace $safeprojectname$
+﻿namespace $safeprojectname$
 {
     public class Address
     {

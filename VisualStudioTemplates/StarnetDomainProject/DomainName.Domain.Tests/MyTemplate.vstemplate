@@ -11,14 +11,14 @@
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
-    <Icon>__TemplateIcon.ico</Icon>
     <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="Accounting.Domain.Tests.csproj" File="Accounting.Domain.Tests.csproj" ReplaceParameters="true">
-      <Folder Name="CompanyTests" TargetFolderName="CompanyTests">
+    <Project TargetFileName="DomainName.Domain.Tests.csproj" File="DomainName.Domain.Tests.csproj" ReplaceParameters="true">
+      <Folder Name="OrganizationTests" TargetFolderName="OrganizationTests">
         <ProjectItem ReplaceParameters="true" TargetFileName="_ServiceSpec.cs">_ServiceSpec.cs</ProjectItem>
-        <ProjectItem ReplaceParameters="true" TargetFileName="RegisterCompanyTests.cs">RegisterCompanyTests.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="RegisterOrganizationTests.cs">RegisterOrganizationTests.cs</ProjectItem>
       </Folder>
     </Project>
   </TemplateContent>

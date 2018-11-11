@@ -11,21 +11,22 @@
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
-    <Icon>__TemplateIcon.ico</Icon>
     <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="Accounting.WebApi.Tests.csproj" File="Accounting.WebApi.Tests.csproj" ReplaceParameters="true">
+    <Project TargetFileName="DomainName.WebApi.Tests.csproj" File="DomainName.WebApi.Tests.csproj" ReplaceParameters="true">
       <Folder Name="IntegrationTests" TargetFolderName="IntegrationTests">
         <ProjectItem ReplaceParameters="true" TargetFileName="IntegrationTest.cs">IntegrationTest.cs</ProjectItem>
       </Folder>
       <Folder Name="UnitTests" TargetFolderName="UnitTests">
         <Folder Name="CommandServicesUnitTests" TargetFolderName="CommandServicesUnitTests">
           <ProjectItem ReplaceParameters="true" TargetFileName="CommandServiceTestBase.cs">CommandServiceTestBase.cs</ProjectItem>
-          <ProjectItem ReplaceParameters="true" TargetFileName="CompanyCommandServiceUnitTests.cs">CompanyCommandServiceUnitTests.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationCommandServiceTests.cs">OrganizationCommandServiceTests.cs</ProjectItem>
         </Folder>
         <Folder Name="QueryServiceUnitTests" TargetFolderName="QueryServiceUnitTests">
-          <ProjectItem ReplaceParameters="true" TargetFileName="CompanyQueryServiceTests.cs">CompanyQueryServiceTests.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationQueryServiceTests.cs">OrganizationQueryServiceTests.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="StubQueryById.cs">StubQueryById.cs</ProjectItem>
         </Folder>
         <ProjectItem ReplaceParameters="true" TargetFileName="UnitTest.cs">UnitTest.cs</ProjectItem>
       </Folder>
