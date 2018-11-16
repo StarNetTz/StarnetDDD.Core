@@ -31,11 +31,11 @@ namespace Starnet.Projections
             }
         }
 
-        Task HandleEvent(object e, long c)
+        async Task HandleEvent(object e, long c)
         {
             Checkpoint.Value = c;
             Task.WaitAll(StartHandlingTasks(e, c));
-            return Task.CompletedTask;
+            await CheckpointWriter.Write(Checkpoint);
         }
 
         Task[] StartHandlingTasks(object e, long c)
@@ -43,7 +43,6 @@ namespace Starnet.Projections
             List<Task> tasks = new List<Task>();
             foreach (var d in Handlers)
                 tasks.Add(d.Handle(e, c));
-            tasks.Add(CheckpointWriter.Write(Checkpoint));
             return tasks.ToArray();
         }
 
