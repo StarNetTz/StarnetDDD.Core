@@ -1,9 +1,7 @@
-﻿using $ext_projectname$.Domain.Company;
-using EventStore.ClientAPI;
+﻿using EventStore.ClientAPI;
 using Microsoft.Extensions.Configuration;
 using NServiceBus;
 using NServiceBus.Logging;
-using Starnet.Aggregates;
 using Starnet.Aggregates.ES;
 using System;
 using System.Threading.Tasks;
@@ -49,7 +47,7 @@ namespace $safeprojectname$
             });
             var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
             transport.UseConventionalRoutingTopology();
-          
+
             transport.ConnectionString(config["RabbitMQ:ConnectionString"]);
 
 
@@ -66,11 +64,11 @@ namespace $safeprojectname$
             return endpointConfiguration;
         }
 
-            static void RegisterDomainApplicationservices(NServiceBus.ObjectBuilder.IConfigureComponents reg)
-            {
-                foreach (var type in ApplicationServiceExtractor.GetApplicationServiceClassTypes())
-                    reg.ConfigureComponent(type, DependencyLifecycle.SingleInstance);
-            }
+        static void RegisterDomainApplicationservices(NServiceBus.ObjectBuilder.IConfigureComponents reg)
+        {
+            foreach (var type in ApplicationServiceExtractor.GetApplicationServiceClassTypes())
+                reg.ConfigureComponent(type, DependencyLifecycle.SingleInstance);
+        }
 
         ESAggregateRepository CreateEventStoreAggregateRepository()
         {

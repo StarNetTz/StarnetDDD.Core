@@ -1,4 +1,5 @@
-﻿using $ext_projectname$.ReadModel.Queries;
+﻿using $ext_projectname$.ReadModel.Projections.ES;
+using $ext_projectname$.ReadModel.Queries;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
@@ -22,12 +23,22 @@ namespace $safeprojectname$
         {
             Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", true, true).Build();
             Container = CreateDIContainer();
+            await CreateEventStoreProjections();
             Console.CancelKeyPress += CancelKeyPress;
             AppDomain.CurrentDomain.ProcessExit += ProcessExit;
             var srv = Container.GetInstance<ServiceInstance>();
-            srv.Start(Container);
+            await srv.Start(Container);
             await Console.Out.WriteLineAsync("Press Ctrl+C to exit...");
             await semaphore.WaitAsync();
+        }
+
+        async static Task CreateEventStoreProjections()
+        {
+            var fact = Container.GetInstance<JSProjectionsFactory>();
+            var defs = EventStoreProjectionDefinitions.CreateEventStoreProjectionSources();
+            foreach (var v in defs)
+                fact.Projections.Add(v.Key, v.Value);
+            await fact.CreateProjections();
         }
 
         static void CancelKeyPress(object sender, ConsoleCancelEventArgs e)
@@ -56,7 +67,7 @@ namespace $safeprojectname$
             Container.Register<IHandlerFactory, DIHandlerFactory>();
             Container.Register<ISubscriptionFactory, ESSubscriptionFactory>();
             Container.Register<IProjectionsFactory, ProjectionsFactory>();
-            
+
             Container.Verify();
 
             return Container;
@@ -75,6 +86,6 @@ namespace $safeprojectname$
             {
                 var docStore = new RavenDocumentStoreFactory().CreateDocumentStore(RavenConfig.FromConfiguration(Configuration));
                 Container.Register(() => docStore, Lifestyle.Singleton);
-            }    
+            }
     }
 }

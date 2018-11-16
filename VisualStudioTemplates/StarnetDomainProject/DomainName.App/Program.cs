@@ -23,15 +23,15 @@ namespace $safeprojectname$
             await semaphore.WaitAsync();
         }
 
-            static void CancelKeyPress(object sender, ConsoleCancelEventArgs e)
-            {
-                e.Cancel = true;
-                semaphore.Release();
-            }
+        static void CancelKeyPress(object sender, ConsoleCancelEventArgs e)
+        {
+            e.Cancel = true;
+            semaphore.Release();
+        }
 
-            static void ProcessExit(object sender, EventArgs e)
-            {
-                semaphore.Release();
-            }
+        static void ProcessExit(object sender, EventArgs e)
+        {
+            semaphore.Release();
+        }
     }
 }

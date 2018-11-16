@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.3.0" />
+    <PackageReference Include="SimpleInjector" Version="4.4.0" />
+    <PackageReference Include="Starnet.Projections" Version="1.0.13" />
+    <PackageReference Include="Starnet.Projections.ES" Version="1.0.13" />
+    <PackageReference Include="Starnet.Projections.RavenDb" Version="1.0.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\$ext_projectname$.ReadModel.Projections.ES\$ext_projectname$.ReadModel.Projections.ES.csproj" />
+    <ProjectReference Include="..\$ext_projectname$.ReadModel.Projections\$ext_projectname$.ReadModel.Projections.csproj" />
+    <ProjectReference Include="..\$ext_projectname$.ReadModel.Queries\$ext_projectname$.ReadModel.Queries.csproj" />
+    <ProjectReference Include="..\$ext_projectname$.ReadModel\$ext_projectname$.ReadModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="starnetAuthApp.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -18,7 +18,7 @@ namespace $safeprojectname$
         [OneTimeSetUp]
         public void ConfigureAppHost()
         {
-            AppHost = new BasicAppHost(typeof(CompanyService).Assembly)
+            AppHost = new BasicAppHost(typeof(OrganizationService).Assembly)
             {
                 TestMode = true,
                 ConfigureContainer = container =>

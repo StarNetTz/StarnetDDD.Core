@@ -27,7 +27,7 @@ namespace $safeprojectname$
                 store.Certificate = new X509Certificate2(conf.CertificateFilePath, conf.CertificateFilePassword);
             store.Database = conf.DatabaseName;
             store.Initialize();
-            IndexCreation.CreateIndexes(typeof(Companies_Smart_Search).Assembly, store);
+            IndexCreation.CreateIndexes(typeof(OrganizationSmartSearchQuery).Assembly, store);
             return store;
         }
     }

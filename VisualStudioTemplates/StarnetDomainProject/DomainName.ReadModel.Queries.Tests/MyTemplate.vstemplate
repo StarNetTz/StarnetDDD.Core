@@ -15,17 +15,17 @@
     <CreateInPlace>true</CreateInPlace>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="Accounting.ReadModel.Queries.Tests.csproj" File="Accounting.ReadModel.Queries.Tests.csproj" ReplaceParameters="true">
+    <Project TargetFileName="DomainName.ReadModel.Queries.Tests.csproj" File="DomainName.ReadModel.Queries.Tests.csproj" ReplaceParameters="true">
       <Folder Name="IntegrationTests" TargetFolderName="IntegrationTests">
-        <ProjectItem ReplaceParameters="true" TargetFileName="CompanySmartSearchQueryIntegrationTests.cs">CompanySmartSearchQueryIntegrationTests.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationSmartSearchQueryIntegrationTests.cs">OrganizationSmartSearchQueryIntegrationTests.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="QueryIntegrationTestBase.cs">QueryIntegrationTestBase.cs</ProjectItem>
         <ProjectItem ReplaceParameters="true" TargetFileName="RavenDbIntegrationTests.cs">RavenDbIntegrationTests.cs</ProjectItem>
       </Folder>
       <Folder Name="UnitTests" TargetFolderName="UnitTests">
-        <ProjectItem ReplaceParameters="true" TargetFileName="CompanySmartSearchQueryUnitTests.cs">CompanySmartSearchQueryUnitTests.cs</ProjectItem>
-        <ProjectItem ReplaceParameters="true" TargetFileName="MyRavenDBLocator.cs">MyRavenDBLocator.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationSmartSearchQueryUnitTests.cs">OrganizationSmartSearchQueryUnitTests.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="TypeaheadSmartSearchQueryUnitTests.cs">TypeaheadSmartSearchQueryUnitTests.cs</ProjectItem>
       </Folder>
-      <ProjectItem ReplaceParameters="false" TargetFileName="Accounting.ReadModel.Queries.Tests.v3.ncrunchproject">Accounting.ReadModel.Queries.Tests.v3.ncrunchproject</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DomainName.ReadModel.Queries.Tests.v3.ncrunchproject">DomainName.ReadModel.Queries.Tests.v3.ncrunchproject</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="appsettings.json">appsettings.json</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="NLog.config">NLog.config</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="starnetAuthApp.pfx">starnetAuthApp.pfx</ProjectItem>

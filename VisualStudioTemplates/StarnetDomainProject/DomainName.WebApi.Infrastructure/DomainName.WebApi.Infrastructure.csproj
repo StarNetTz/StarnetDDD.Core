@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
+    <PackageReference Include="NServiceBus" Version="7.1.4" />
+    <PackageReference Include="NServiceBus.RabbitMQ" Version="5.0.1" />
+    <PackageReference Include="ServiceStack.HttpClient.Core" Version="5.4.0" />
+    <PackageReference Include="Starnet.ISO" Version="1.0.4" />
+    <PackageReference Include="Starnet.ISO.Models" Version="1.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\$ext_projectname$.PL\$ext_projectname$.PL.csproj" />
+    <ProjectReference Include="..\$ext_projectname$.WebApi.ServiceInterface\$ext_projectname$.WebApi.ServiceInterface.csproj" />
+    <ProjectReference Include="..\$ext_projectname$.WebApi.ServiceModel\$ext_projectname$.WebApi.ServiceModel.csproj" />
+  </ItemGroup>
+
+</Project>

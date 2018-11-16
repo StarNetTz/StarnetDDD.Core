@@ -11,12 +11,12 @@
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
-    <Icon>__TemplateIcon.ico</Icon>
     <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="Accounting.ReadModel.Projections.csproj" File="Accounting.ReadModel.Projections.csproj" ReplaceParameters="true">
-      <ProjectItem ReplaceParameters="true" TargetFileName="CompanyProjection.cs">CompanyProjection.cs</ProjectItem>
+    <Project TargetFileName="DomainName.ReadModel.Projections.csproj" File="DomainName.ReadModel.Projections.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationProjection.cs">OrganizationProjection.cs</ProjectItem>
     </Project>
   </TemplateContent>
 </VSTemplate>

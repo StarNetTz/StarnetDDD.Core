@@ -11,25 +11,27 @@
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
-    <Icon>__TemplateIcon.ico</Icon>
     <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="Accounting.WebApi.ServiceInterface.csproj" File="Accounting.WebApi.ServiceInterface.csproj" ReplaceParameters="true">
+    <Project TargetFileName="DomainName.WebApi.ServiceInterface.csproj" File="DomainName.WebApi.ServiceInterface.csproj" ReplaceParameters="true">
       <Folder Name="CommandServices" TargetFolderName="CommandServices">
-        <Folder Name="CompanyService" TargetFolderName="CompanyService">
-          <ProjectItem ReplaceParameters="true" TargetFileName="AddressValidator.cs">AddressValidator.cs</ProjectItem>
-          <ProjectItem ReplaceParameters="true" TargetFileName="CompanyServices.cs">CompanyServices.cs</ProjectItem>
-        </Folder>
         <Folder Name="Infrastructure" TargetFolderName="Infrastructure">
           <ProjectItem ReplaceParameters="true" TargetFileName="DomainCommandService.cs">DomainCommandService.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="IIdentityProvider.cs">IIdentityProvider.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="IMessageBus.cs">IMessageBus.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="ITimeProvider.cs">ITimeProvider.cs</ProjectItem>
         </Folder>
+        <Folder Name="OrganizationService" TargetFolderName="OrganizationService">
+          <ProjectItem ReplaceParameters="true" TargetFileName="AddressValidator.cs">AddressValidator.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationService.cs">OrganizationService.cs</ProjectItem>
+        </Folder>
       </Folder>
       <Folder Name="QueryServices" TargetFolderName="QueryServices">
-        <ProjectItem ReplaceParameters="true" TargetFileName="CompanyQueryService.cs">CompanyQueryService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="LookupsService.cs">LookupsService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="OrganizationQueryService.cs">OrganizationQueryService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="TypeAheadsService.cs">TypeAheadsService.cs</ProjectItem>
       </Folder>
       <ProjectItem ReplaceParameters="true" TargetFileName="MyServices.cs">MyServices.cs</ProjectItem>
     </Project>

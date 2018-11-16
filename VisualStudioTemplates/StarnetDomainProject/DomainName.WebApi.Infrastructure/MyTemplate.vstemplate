@@ -11,11 +11,13 @@
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
-    <Icon>__TemplateIcon.ico</Icon>
     <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="Accounting.WebApi.Infrastructure.csproj" File="Accounting.WebApi.Infrastructure.csproj" ReplaceParameters="true">
+    <Project TargetFileName="DomainName.WebApi.Infrastructure.csproj" File="DomainName.WebApi.Infrastructure.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="true" TargetFileName="DatabaseInitializer.cs">DatabaseInitializer.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="DomainName.WebApi.Infrastructure.v3.ncrunchproject">DomainName.WebApi.Infrastructure.v3.ncrunchproject</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="NSBusSingleton.cs">NSBusSingleton.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="TimeProvider.cs">TimeProvider.cs</ProjectItem>
     </Project>
