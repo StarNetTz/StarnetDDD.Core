@@ -11,4 +11,9 @@ namespace Starnet.Projections
             Name = name;
         }
     }
+
+    [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
+    public class InactiveProjection : Attribute
+    {
+    }
 }

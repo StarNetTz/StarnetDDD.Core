@@ -22,7 +22,13 @@ namespace Starnet.Projections
             var ret = new List<IProjection>();
             var types = projectionsAssembly.GetTypes().Where(p => type.IsAssignableFrom(p)).ToList();
             foreach (var t in types)
+            {
+                var attrInfo = t.GetCustomAttribute(typeof(InactiveProjection)) as InactiveProjection;
+                if (attrInfo != null)
+                    continue;
                 ret.Add(await Create(t));
+            }
+               
             return ret;
         }
 

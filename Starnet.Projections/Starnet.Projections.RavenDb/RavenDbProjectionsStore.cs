@@ -1,5 +1,6 @@
 ﻿using Raven.Client.Documents;
-using System;
+
+
 using System.Threading.Tasks;
 
 namespace Starnet.Projections.RavenDb
@@ -44,6 +45,26 @@ namespace Starnet.Projections.RavenDb
             using (var s = DocumentStore.OpenAsyncSession())
             {
                 await s.StoreAsync(doc);
+                await s.SaveChangesAsync();
+            }
+        }
+
+        public async Task StoreInUnitOfWorkAsync(params object[] docs)
+        {
+            using (var s = DocumentStore.OpenAsyncSession())
+            {
+                foreach (var d in docs)
+                    await s.StoreAsync(d);
+                await s.SaveChangesAsync();
+            }
+        }
+
+        public async Task StoreInUnitOfWorkAsync<T>(params T[] docs)
+        {
+            using (var s = DocumentStore.OpenAsyncSession())
+            {
+                foreach (var d in docs)
+                    await s.StoreAsync(d);
                 await s.SaveChangesAsync();
             }
         }

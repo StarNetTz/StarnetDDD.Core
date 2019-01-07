@@ -35,5 +35,17 @@ namespace Starnet.Projections.Testing
             Store[id] = doc;
             return Task.CompletedTask;
         }
+
+        public async Task StoreInUnitOfWorkAsync(params object[] docs)
+        {
+           foreach (var d in docs)
+                await StoreAsync(d);
+        }
+
+        public async Task StoreInUnitOfWorkAsync<T>(params T[] docs)
+        {
+            foreach (var d in docs)
+                await StoreAsync<T>(d);
+        }
     }
 }
