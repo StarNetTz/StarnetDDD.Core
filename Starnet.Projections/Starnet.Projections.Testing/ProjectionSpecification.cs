@@ -4,16 +4,15 @@ using System.Threading.Tasks;
 
 namespace Starnet.Projections.Testing
 {
-    public class ProjectionSpecification<T, TModel>
-       where T : class, IProjection
-       where TModel : class
+    public class ProjectionSpecification<TProjection>
+      where TProjection : class, IProjection
     {
         public Container Container { get; set; }
 
         public IProjectionsStore ProjectionsStore { get; set; }
         ProjectionsFactory ProjectionsFactory;
 
-        protected virtual void ConfigureContainer(Container container) {}
+        protected virtual void ConfigureContainer(Container container) { }
 
         public ProjectionSpecification()
         {
@@ -33,13 +32,13 @@ namespace Starnet.Projections.Testing
 
         public async Task Given(params object[] args)
         {
-            var p = await ProjectionsFactory.Create<T>();
+            var p = await ProjectionsFactory.Create<TProjection>();
             var s = p.Subscription as InMemorySubscription;
             s.LoadEvents(args);
             await p.Start();
         }
 
-        public async Task Expect(object model)
+        public async Task Expect<TModel>(TModel model) where TModel : class
         {
             var id = ExtractIdFromObject(model);
             var actual = await ProjectionsStore.LoadAsync<TModel>(id);

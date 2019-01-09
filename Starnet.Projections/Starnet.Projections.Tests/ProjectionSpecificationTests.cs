@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Starnet.Projections.UnitTests
 {
     [TestFixture]
-    public class ProjectionSpecificationTests : ProjectionSpecification<TestProjection, TestModel>
+    public class ProjectionSpecificationTests : ProjectionSpecification<TestProjection>
     {
         string Id;
 
