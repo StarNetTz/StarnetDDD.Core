@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SimpleInjector;
+using System;
 using System.Threading.Tasks;
 
 namespace Starnet.Projections.Testing
@@ -49,7 +50,23 @@ namespace Starnet.Projections.Testing
 
         private static string ExtractIdFromObject(object model)
         {
-            return model.GetType().GetProperty("Id").GetValue(model, null) as string;
+            var id = model.GetType().GetProperty("Id").GetValue(model, null);
+            ValidateIdType(id);
+            return id.ToString();
+        }
+
+        static void ValidateIdType(object id)
+        {
+            switch (id)
+            {
+                case string s:
+                case int i:
+                case long l:
+                case Guid g:
+                    return;
+                default:
+                    throw new ArgumentException("Unsopported Id type!");
+            }
         }
     }
 }

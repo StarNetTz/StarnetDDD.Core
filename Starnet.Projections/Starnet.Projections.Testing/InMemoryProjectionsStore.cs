@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
 namespace Starnet.Projections.Testing
@@ -17,8 +18,9 @@ namespace Starnet.Projections.Testing
 
         public Task StoreAsync(object doc)
         {
-            var id = doc.GetType().GetProperty("Id").GetValue(doc, null) as string;
-            Store[id] = doc;
+            var id = doc.GetType().GetProperty("Id").GetValue(doc, null);
+            ValidateIdType(id);
+            Store[id.ToString()] = doc;
             return Task.CompletedTask;
         }
 
@@ -31,9 +33,24 @@ namespace Starnet.Projections.Testing
 
         public Task StoreAsync<T>(T doc)
         {
-            var id = doc.GetType().GetProperty("Id").GetValue(doc, null) as string;
-            Store[id] = doc;
+            var id = doc.GetType().GetProperty("Id").GetValue(doc, null);
+            ValidateIdType(id);
+            Store[id.ToString()] = doc;
             return Task.CompletedTask;
+        }
+
+        void ValidateIdType(object id)
+        {
+            switch (id)
+            {
+                case string s:
+                case int i:
+                case long l:
+                case Guid g:
+                    return;
+                default:
+                    throw new ArgumentException("Unsopported Id type!");
+            }
         }
 
         public async Task StoreInUnitOfWorkAsync(params object[] docs)
