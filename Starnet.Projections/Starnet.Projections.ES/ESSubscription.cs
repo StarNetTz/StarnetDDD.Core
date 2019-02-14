@@ -11,6 +11,7 @@ namespace Starnet.Projections.ES
     public class ESSubscription : ISubscription
     {
         private static Logger Logger = LogManager.GetCurrentClassLogger();
+        long CurrentCheckpoint = 0;
 
         public string StreamName { get; set; }
 
@@ -31,6 +32,7 @@ namespace Starnet.Projections.ES
 
         public async Task EventAppeared(EventStoreCatchUpSubscription subscription, ResolvedEvent @event)
         {
+            CurrentCheckpoint = @event.OriginalEventNumber;
             var ev = TryDeserializeEvent(@event.Event.Metadata, @event.Event.Data);
             await EventAppearedCallback(ev, @event.OriginalEventNumber + 1);
         }
@@ -54,10 +56,47 @@ namespace Starnet.Projections.ES
         public async Task Start(long fromCheckpoint)
         {
             await Connection.ConnectAsync();
-            bool useVerboseMode = false;
-            CatchUpSubscriptionSettings settings = new CatchUpSubscriptionSettings(500, 500, useVerboseMode, true);
+            //bool useVerboseMode = false;
+            //bool resloveLinkTos = true;
+            //Default CatchUpSubscriptionSettings settings = new CatchUpSubscriptionSettings(10000, 500, useVerboseMode, resloveLinkTos);
             long? eventstoreCheckpoint = (fromCheckpoint == 0) ? null : (long?)(fromCheckpoint - 1);
-            Subscription = Connection.SubscribeToStreamFrom(StreamName, eventstoreCheckpoint, settings, EventAppeared);
+            Subscription = Connection.SubscribeToStreamFrom(StreamName, eventstoreCheckpoint, CatchUpSubscriptionSettings.Default, EventAppeared, LiveProcessingStarted,SubscriptionDropped);
         }
+
+        void LiveProcessingStarted(EventStoreCatchUpSubscription obj)
+        {
+            Logger.Trace($"LiveProcessingStarted on stream {StreamName}");
+        }
+
+        void SubscriptionDropped(EventStoreCatchUpSubscription projection, SubscriptionDropReason subscriptionDropReason, Exception exception)
+        {
+
+            Subscription.Stop();
+
+            switch (subscriptionDropReason)
+            {
+                case SubscriptionDropReason.UserInitiated:
+                    Console.WriteLine($"{projection} projection stopped by user.");
+                    break;
+                case SubscriptionDropReason.SubscribingError:
+                case SubscriptionDropReason.ServerError:
+                case SubscriptionDropReason.ConnectionClosed:
+                case SubscriptionDropReason.CatchUpError:
+                case SubscriptionDropReason.ProcessingQueueOverflow:
+                case SubscriptionDropReason.EventHandlerException:
+                    Logger.Error($"{StreamName} projection stopped because of a transient error ({subscriptionDropReason}). ");
+                    Logger.Error($"Exception Detail:  {exception}");
+                    Logger.Error("Attempting to restart...");
+                    // Re-build your subscription in here
+                    //Task.Run(() => Start(CurrentCheckpoint));
+                    break;
+                default:
+                    Logger.Error("Your subscription gg");
+                    Logger.Error($"Exception Detail:  {exception}");
+                    break;
+            }
+        }
+
+        
     }
 }

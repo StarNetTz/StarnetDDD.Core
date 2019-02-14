@@ -24,6 +24,6 @@ namespace Starnet.Projections.Tests
             var doc = new TestModel { Id = e.Id, SomeValue = e.SomeValue };
             var time = TimeProvider.GetUtcNow();
             await Store.StoreAsync(doc);
-        }
+        } 
     }
 }
