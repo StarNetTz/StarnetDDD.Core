@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <Version>3.0.3</Version>
+    <Version>3.0.4</Version>
     <Authors>Zvjezdan Tomicevic</Authors>
     <Company>StarnetZvjezdan Tomicevic</Company>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>

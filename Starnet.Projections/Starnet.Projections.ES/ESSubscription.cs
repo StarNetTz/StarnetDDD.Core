@@ -83,12 +83,14 @@ namespace Starnet.Projections.ES
                 case SubscriptionDropReason.ConnectionClosed:
                 case SubscriptionDropReason.CatchUpError:
                 case SubscriptionDropReason.ProcessingQueueOverflow:
-                case SubscriptionDropReason.EventHandlerException:
                     Logger.Error($"{StreamName} projection stopped because of a transient error ({subscriptionDropReason}). ");
                     Logger.Error($"Exception Detail:  {exception}");
                     Logger.Error("Attempting to restart...");
-                    // Re-build your subscription in here
-                    //Task.Run(() => Start(CurrentCheckpoint));
+                    Task.Run(() => Start(CurrentCheckpoint));
+                    break;
+                case SubscriptionDropReason.EventHandlerException:
+                    Logger.Error("EventHandlerException");
+                    Logger.Error($"Exception Detail:  {exception}");
                     break;
                 default:
                     Logger.Error("Your subscription gg");
