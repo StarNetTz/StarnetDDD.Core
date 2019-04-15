@@ -42,9 +42,9 @@ namespace Starnet.Projections.ES.IntegrationTests
             Assert.That(proj.Checkpoint.Value, Is.GreaterThan(0));
         }
 
-        async Task PreloadProjectionsSubscription()
-        {
-            await new ESDataGenerator().WriteEventsToStore(2);
-        }
+            async Task PreloadProjectionsSubscription()
+            {
+                await new ESDataGenerator().WriteEventsToStore(2);
+            }
     }
 }
