@@ -55,7 +55,7 @@ namespace Starnet.Projections.ES
 
         public async Task Start(long fromCheckpoint)
         {
-            await Connection.ConnectAsync();
+            await Connection.ConnectAsync().ConfigureAwait(false);
             //bool useVerboseMode = false;
             //bool resloveLinkTos = true;
             //Default CatchUpSubscriptionSettings settings = new CatchUpSubscriptionSettings(10000, 500, useVerboseMode, resloveLinkTos);
@@ -71,12 +71,11 @@ namespace Starnet.Projections.ES
         void SubscriptionDropped(EventStoreCatchUpSubscription projection, SubscriptionDropReason subscriptionDropReason, Exception exception)
         {
 
-            Subscription.Stop();
-
+            //Subscription.Stop();
             switch (subscriptionDropReason)
             {
                 case SubscriptionDropReason.UserInitiated:
-                    Console.WriteLine($"{projection} projection stopped by user.");
+                    Logger.Error($"{projection} projection stopped by user.");
                     break;
                 case SubscriptionDropReason.SubscribingError:
                 case SubscriptionDropReason.ServerError:
@@ -85,20 +84,17 @@ namespace Starnet.Projections.ES
                 case SubscriptionDropReason.ProcessingQueueOverflow:
                     Logger.Error($"{StreamName} projection stopped because of a transient error ({subscriptionDropReason}). ");
                     Logger.Error($"Exception Detail:  {exception}");
-                    Logger.Error("Attempting to restart...");
-                    Task.Run(() => Start(CurrentCheckpoint));
+                    //Task.Run(() => Start(CurrentCheckpoint));
                     break;
                 case SubscriptionDropReason.EventHandlerException:
                     Logger.Error("EventHandlerException");
                     Logger.Error($"Exception Detail:  {exception}");
                     break;
                 default:
-                    Logger.Error("Your subscription gg");
+                    Logger.Error("Dropped for generic reason:");
                     Logger.Error($"Exception Detail:  {exception}");
                     break;
             }
         }
-
-        
     }
 }

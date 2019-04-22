@@ -11,23 +11,6 @@ namespace Starnet.Projections.ES.IntegrationTests
     class JSProjectionsFactoryTests
     {
         [Test]
-        public async Task CanCreateProjectionUsingMicrosoftDI()
-        {
-            var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
-            var serviceProvider = serviceCollection.BuildServiceProvider();
-            var fact = serviceProvider.GetService<JSProjectionsFactory>();
-            fact.Projections.Add("AssociationsOverview", "fromStreams('$ce-Competitions').when({CompetitionAdded: function(s,e){linkTo('cp-AssociationsOverview', e);return s;},CompetitionRenamed: function(s,e){linkTo('cp-AssociationsOverview', e);return s;},CompetitionsAssociationChanged: function(s,e){linkTo('cp-AssociationsOverview', e);return s;},CompetitionsRankChanged: function(s,e){linkTo('cp-AssociationsOverview', e);return s;}})");
-            await fact.CreateProjections();
-        }
-
-            static void ConfigureServices(IServiceCollection services)
-            {
-                services.AddLogging(configure => configure.AddConsole())
-                        .AddTransient<JSProjectionsFactory>();
-            }
-
-        [Test]
         public async Task CanCreateProjectionUsingSimpleInjector()
         {
             var container = new Container();

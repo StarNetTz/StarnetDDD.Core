@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <Version>3.0.4</Version>
+    <Version>4.0.2</Version>
     <Authors>Zvjezdan Tomicevic</Authors>
     <Company>StarnetZvjezdan Tomicevic</Company>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EventStore.ClientAPI.NetCore" Version="4.1.1-rc" />
+    <PackageReference Include="EventStore.Client" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
