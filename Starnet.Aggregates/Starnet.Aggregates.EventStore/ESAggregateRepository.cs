@@ -1,4 +1,5 @@
 ﻿using EventStore.ClientAPI;
+using EventStore.ClientAPI.Exceptions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -34,7 +35,19 @@ namespace Starnet.Aggregates.ES
 
         public async Task StoreAsync(IAggregate aggregate)
         {
-            await SaveAggregate(aggregate, Guid.NewGuid(), (d) => { });
+            await TrySaveAggregate(aggregate);
+        }
+
+        async Task TrySaveAggregate(IAggregate aggregate)
+        {
+            try
+            {
+                await SaveAggregate(aggregate, Guid.NewGuid(), (d) => { });
+            }
+            catch (WrongExpectedVersionException ex)
+            {
+                throw new ConcurrencyException(ex.Message, ex);
+            }
         }
 
         async Task SaveAggregate(IAggregate aggregate, Guid commitId, Action<IDictionary<string, object>> updateHeaders)

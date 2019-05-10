@@ -110,7 +110,7 @@ namespace Starnet.Aggregates.ES.Tests
             var agg = await Repository.GetAsync<PersonAggregate>(id);
             await UpdateAggregateOutOfTransaction(id);
             UpdateAggregate(agg);
-            Assert.That(async () => { await Repository.StoreAsync(agg); }, Throws.Exception.TypeOf<WrongExpectedVersionException>());
+            Assert.That(async () => { await Repository.StoreAsync(agg); }, Throws.Exception.TypeOf<ConcurrencyException>());
         }
 
             async Task InitializeAggregate(string id)
