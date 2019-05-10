@@ -2,7 +2,7 @@
 
 namespace Starnet.Aggregates.Tests
 {
-    class ConcurrencyExceptionTEsts
+    class ConcurrencyExceptionTests
     {
         [Test]
         public void CanInstantiate()
