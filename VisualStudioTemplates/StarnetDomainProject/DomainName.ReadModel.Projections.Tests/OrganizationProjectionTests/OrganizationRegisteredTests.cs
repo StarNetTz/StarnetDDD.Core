@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace $safeprojectname$
 {
     [TestFixture]
-    public class OrganizationRegisteredTests : ProjectionSpecification<OrganizationProjection, Organization>
+    public class OrganizationRegisteredTests : ProjectionSpecification<OrganizationProjection>
     {
         string Id;
 
@@ -20,8 +20,8 @@ namespace $safeprojectname$
         [Test]
         public async Task can_project_event()
         {
-            await Given(new OrganizationRegistered() { Id = Id, Name = "Betting Shop Royal", Address = new PL.Address { Street = "My street", City = "My City", Country = "My Country", State = "TK", ZipCode = "75000" }});
-            await Expect(new Organization() { Id = Id, Name = "Betting Shop Royal", Address = new PL.Address { Street = "My street", City = "My City", Country = "My Country", State = "TK", ZipCode = "75000" }});
+            await Given(new OrganizationRegistered() { Id = Id, Name = "Betting Shop Royal", Address = new PL.Address { Street = "My street", City = "My City", Country = "My Country", State = "TK", ZipCode = "75000" } });
+            await Expect(new Organization() { Id = Id, Name = "Betting Shop Royal", Address = new PL.Address { Street = "My street", City = "My City", Country = "My Country", State = "TK", ZipCode = "75000" } });
         }
     }
 }

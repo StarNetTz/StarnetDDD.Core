@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NLog.Extensions.Logging" Version="1.3.0" />
-    <PackageReference Include="SimpleInjector" Version="4.4.0" />
-    <PackageReference Include="Starnet.Projections" Version="1.0.13" />
-    <PackageReference Include="Starnet.Projections.ES" Version="1.0.13" />
-    <PackageReference Include="Starnet.Projections.RavenDb" Version="1.0.13" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.5.1" />
+    <PackageReference Include="SimpleInjector" Version="4.6.0" />
+    <PackageReference Include="Starnet.Projections" Version="5.0.0" />
+    <PackageReference Include="Starnet.Projections.ES" Version="5.0.0" />
+    <PackageReference Include="Starnet.Projections.RavenDb" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
