@@ -44,7 +44,7 @@ namespace $safeprojectname$
     {
         public IConfiguration Configuration { get; }
 
-        public AppHost(IConfiguration configuration) : base("Betting.WebApi", typeof(MyServices).Assembly)
+        public AppHost(IConfiguration configuration) : base("$ext_projectname$.WebApi", typeof(MyServices).Assembly)
         {
 
             Configuration = configuration;
