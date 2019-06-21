@@ -6,13 +6,13 @@
     <Company>Starnet d.o.o.</Company>
     <Copyright>Copyright © 2018 StarNet d.o.o.</Copyright>
     <Description>Lightweight DDD framework, BDD style testing support</Description>
-    <FileVersion>5.0.0.0</FileVersion>
-    <AssemblyVersion>5.0.1.0</AssemblyVersion>
-    <Version>5.0.1</Version>
+    <FileVersion>5.0.2.0</FileVersion>
+    <AssemblyVersion>5.0.2.0</AssemblyVersion>
+    <Version>5.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.11.0" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
   </ItemGroup>
 
   <ItemGroup>
