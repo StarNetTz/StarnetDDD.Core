@@ -11,9 +11,9 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
     <PackageReference Include="NServiceBus" Version="7.1.9" />
     <PackageReference Include="NServiceBus.RabbitMQ" Version="5.1.2" />
-    <PackageReference Include="Starnet.Aggregates" Version="5.0.1" />
-    <PackageReference Include="Starnet.Aggregates.ES" Version="5.0.1" />
-    <PackageReference Include="Starnet.Projections" Version="5.0.0" />
+    <PackageReference Include="Starnet.Aggregates" Version="5.0.2" />
+    <PackageReference Include="Starnet.Aggregates.ES" Version="5.0.2" />
+    <PackageReference Include="Starnet.Projections" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
