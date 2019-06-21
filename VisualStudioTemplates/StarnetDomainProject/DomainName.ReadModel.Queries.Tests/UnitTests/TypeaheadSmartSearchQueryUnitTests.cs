@@ -10,22 +10,23 @@ namespace $safeprojectname$.UnitTests
     {
         IDocumentStore DocumentStore;
 
-        public TypeaheadSmartSearchQueryUnitTests()
+        [OneTimeSetUp]
+        public void Setup()
         {
             DocumentStore = GetDocumentStore();
             CreateTestDocuments();
             WaitForIndexing(DocumentStore);
         }
 
-            void CreateTestDocuments()
-            {
-                using (var s = DocumentStore.OpenSession())
-                {
-                    s.Store(new Organization { Id = "Organizations-1", Name = "Slime Ltd" });
-                    s.Store(new Organization { Id = "Organizations-2", Name = "Blood Inc." });
-                    s.SaveChanges();
-                }
-            }
+		void CreateTestDocuments()
+		{
+			using (var s = DocumentStore.OpenSession())
+			{
+				s.Store(new Organization { Id = "Organizations-1", Name = "Slime Ltd" });
+				s.Store(new Organization { Id = "Organizations-2", Name = "Blood Inc." });
+				s.SaveChanges();
+			}
+		}
 
         protected override  void SetupDatabase(IDocumentStore documentStore)
         {
