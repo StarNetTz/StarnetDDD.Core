@@ -9,9 +9,9 @@
   <ItemGroup>
     <PackageReference Include="NLog.Extensions.Logging" Version="1.5.1" />
     <PackageReference Include="SimpleInjector" Version="4.6.0" />
-    <PackageReference Include="Starnet.Projections" Version="5.0.0" />
-    <PackageReference Include="Starnet.Projections.ES" Version="5.0.0" />
-    <PackageReference Include="Starnet.Projections.RavenDb" Version="5.0.0" />
+    <PackageReference Include="Starnet.Projections" Version="5.0.2" />
+    <PackageReference Include="Starnet.Projections.ES" Version="5.0.2" />
+    <PackageReference Include="Starnet.Projections.RavenDb" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>

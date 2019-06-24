@@ -2,16 +2,15 @@
 using $ext_projectname$.PL.Events;
 using Starnet.Aggregates;
 
-
 namespace $safeprojectname$.Organization
 {
     public class OrganizationAggregate : Aggregate
     {
-        private OrganizationAggregateState OrganizationState;
+        private OrganizationAggregateState State;
 
         public OrganizationAggregate(OrganizationAggregateState state) : base(state)
         {
-            OrganizationState = state;
+			State = state;
         }
 
         internal void RegisterOrganization(RegisterOrganization c)

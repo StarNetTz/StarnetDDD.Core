@@ -9,7 +9,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
     <PackageReference Include="NServiceBus" Version="7.1.9" />
     <PackageReference Include="NServiceBus.RabbitMQ" Version="5.1.2" />
-    <PackageReference Include="ServiceStack.HttpClient.Core" Version="5.5.1" />
+    <PackageReference Include="ServiceStack.HttpClient.Core" Version="5.5.0" />
     <PackageReference Include="Starnet.ISO" Version="1.0.4" />
     <PackageReference Include="Starnet.ISO.Models" Version="1.0.4" />
   </ItemGroup>

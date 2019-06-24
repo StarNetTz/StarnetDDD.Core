@@ -8,8 +8,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.1" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
-    <PackageReference Include="Starnet.Projections" Version="5.0.0" />
-    <PackageReference Include="Starnet.Projections.Testing" Version="5.0.0" />
+    <PackageReference Include="Starnet.Projections" Version="5.0.2" />
+    <PackageReference Include="Starnet.Projections.Testing" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
