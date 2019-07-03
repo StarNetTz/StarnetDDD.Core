@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using Starnet.Aggregates.Tests.Domain.PL.Commands;
+using Starnet.Aggregates.Tests.Domain.PL.Events;
 
 namespace Starnet.Aggregates.Tests
 {

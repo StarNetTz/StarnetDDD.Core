@@ -20,13 +20,6 @@ namespace Starnet.Aggregates
 
         protected ConcurrentDictionary<string, List<object>> DataStore = new ConcurrentDictionary<string, List<object>>();
 
-        static void PerformConcurrencyCheck(IAggregate agg, List<object> events)
-        {
-            var originalVersion = agg.Version - agg.Changes.Count;
-            if (events.Count != originalVersion)
-                throw new AggregateConcurrencyException(agg.Id);
-        }
-
         protected List<object> LoadEvents(string key)
         {
             return (!DataStore.ContainsKey(key)) ? new List<object>() : DataStore[key];
@@ -65,5 +58,12 @@ namespace Starnet.Aggregates
             agg.Changes.Clear();
             return Task.CompletedTask;
         }
+
+            static void PerformConcurrencyCheck(IAggregate agg, List<object> events)
+            {
+                var originalVersion = agg.Version - agg.Changes.Count;
+                if (events.Count != originalVersion)
+                    throw new AggregateConcurrencyException(agg.Id);
+            }
     }
 }

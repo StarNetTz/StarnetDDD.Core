@@ -1,4 +1,7 @@
-﻿namespace Starnet.Aggregates.Tests
+﻿using Starnet.Aggregates.Tests.Domain.PL.Commands;
+using Starnet.Aggregates.Tests.Domain.PL.Events;
+
+namespace Starnet.Aggregates.Tests
 {
     internal class PersonAggregate : Aggregate
     {

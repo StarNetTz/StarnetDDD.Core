@@ -1,11 +1,13 @@
 ﻿using NUnit.Framework;
+using Starnet.Aggregates.Tests.Domain.PL.Commands;
+using Starnet.Aggregates.Tests.Domain.PL.Events;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Starnet.Aggregates.Tests
+namespace Starnet.Aggregates.Tests.PersonTests
 {
-    class BDDTests : _ServiceSpec
+    class CreatePersonTests : _ServiceSpec
     {
         [Test]
         public async Task can_create_person()
@@ -17,15 +19,6 @@ namespace Starnet.Aggregates.Tests
             var expectedProducedEvents = ToEventList(ev);
             var expectedPublishedEvents = expectedProducedEvents;
             await Expect(expectedProducedEvents, expectedPublishedEvents);
-        }
-
-        [Test]
-        public async Task can_rename_person()
-        {
-            var id = $"Persons-{Guid.NewGuid()}";
-            Given(new PersonCreated() { Id = id, Name = "Kemo" });
-            When(new RenamePerson() { Id = id, Name = "Munib" });
-            await Expect(new PersonRenamed() { Id = id, Name = "Munib" });
         }
 
         [Test]

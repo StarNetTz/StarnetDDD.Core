@@ -26,13 +26,7 @@ namespace Starnet.Aggregates.ES
             SerializerSettings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
             EventStoreConnection = eventStoreConnection;
         }
-
-        object DeserializeEvent(byte[] metadata, byte[] data)
-        {
-            var eventClrTypeName = JObject.Parse(Encoding.UTF8.GetString(metadata)).Property(EventClrTypeHeader).Value;
-            return JsonConvert.DeserializeObject(Encoding.UTF8.GetString(data), Type.GetType((string)eventClrTypeName), SerializerSettings);
-        }
-
+       
         public async Task StoreAsync(IAggregate aggregate)
         {
             await TrySaveAggregate(aggregate);
@@ -83,19 +77,19 @@ namespace Starnet.Aggregates.ES
             aggregate.Changes.Clear();
         }
 
-        EventData ToEventData(dynamic evnt, IDictionary<string, object> headers)
-        {
-            var data = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(evnt, SerializerSettings));
-            var eventHeaders = new Dictionary<string, object>(headers)
+            EventData ToEventData(dynamic evnt, IDictionary<string, object> headers)
             {
+                var data = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(evnt, SerializerSettings));
+                var eventHeaders = new Dictionary<string, object>(headers)
                 {
-                    EventClrTypeHeader, evnt.GetType().AssemblyQualifiedName
-                }
-            };
-            var metadata = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(eventHeaders, SerializerSettings));
-            var typeName = evnt.GetType().Name;
-            return new EventData(Guid.NewGuid(), typeName, true, data, metadata);
-        }
+                    {
+                        EventClrTypeHeader, evnt.GetType().AssemblyQualifiedName
+                    }
+                };
+                var metadata = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(eventHeaders, SerializerSettings));
+                var typeName = evnt.GetType().Name;
+                return new EventData(Guid.NewGuid(), typeName, true, data, metadata);
+            }
 
         public Task<TAggregate> GetAsync<TAggregate>(string id) where TAggregate : class, IAggregate
         {
@@ -138,5 +132,11 @@ namespace Starnet.Aggregates.ES
                 return null;
             return Activator.CreateInstance(aggregateType, instanceOfState) as TAggregate;
         }
+
+            object DeserializeEvent(byte[] metadata, byte[] data)
+            {
+                var eventClrTypeName = JObject.Parse(Encoding.UTF8.GetString(metadata)).Property(EventClrTypeHeader).Value;
+                return JsonConvert.DeserializeObject(Encoding.UTF8.GetString(data), Type.GetType((string)eventClrTypeName), SerializerSettings);
+            }
     }
 }

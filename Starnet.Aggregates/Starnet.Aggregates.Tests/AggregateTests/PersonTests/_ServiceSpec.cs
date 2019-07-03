@@ -1,8 +1,10 @@
 ﻿using Starnet.Aggregates.Testing;
+using Starnet.Aggregates.Tests.Domain.PL.Commands;
+using Starnet.Aggregates.Tests.Domain.PL.Events;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Starnet.Aggregates.Tests
+namespace Starnet.Aggregates.Tests.PersonTests
 {
     internal class _ServiceSpec : ApplicationServiceSpecification<ICommand, IEvent>
     {

@@ -31,13 +31,12 @@ namespace Starnet.Aggregates.Testing
         {
             await Expect(g.ToList(), new List<TEvent>());
         }
-
+        
         public async Task Expect(List<TEvent> producedEvents, List<TEvent> publishedEvents)
         {
             ThenWasCalled = true;
             ThenEvents.AddRange(producedEvents);
 
-            
             var givenEvents = GivenEvents.ToArray();
             var res = await ExecuteCommand(givenEvents, WhenCommand);
             TEvent[] actualProduced = res.ProducedEvents;
@@ -54,46 +53,6 @@ namespace Starnet.Aggregates.Testing
 
             if (publishedEventsResults.Any(r => r.Failure != null))
                 Assert.Fail("Specification failed on published events");
-        }
-
-        protected static void PrintResults(ICollection<ExpectResult> exs)
-        {
-            var results = exs.ToArray();
-            var failures = results.Where(f => f.Failure != null).ToArray();
-            if (!failures.Any())
-            {
-                Console.WriteLine();
-                Console.WriteLine("Results: [Passed]");
-                return;
-            }
-            Console.WriteLine();
-            Console.WriteLine("Results: [Failed]");
-
-            for (int i = 0; i < results.Length; i++)
-            {
-                PrintAdjusted(string.Format("  {0}. ", (i + 1)), results[i].Expectation);
-                PrintAdjusted("     ", results[i].Failure ?? "PASS");
-            }
-        }
-
-        static void PrintAdjusted(string adj, string text)
-        {
-            Console.Write(GetAdjusted(adj, text));
-        }
-
-        public async Task ExpectError(string name)
-        {
-            ThenWasCalled = true;
-            try
-            {
-                await ExecuteCommand(GivenEvents.ToArray(), WhenCommand);
-            }
-            catch (DomainError e)
-            {
-                if (e.Name.Equals(name))
-                    return;
-            }
-            Assert.Fail("Specification failed");
         }
 
         protected static IEnumerable<ExpectResult> CompareAssert(TEvent[] expected, TEvent[] actual)
@@ -124,6 +83,31 @@ namespace Starnet.Aggregates.Testing
             }
         }
 
+        protected static void PrintResults(ICollection<ExpectResult> exs)
+        {
+            var results = exs.ToArray();
+            var failures = results.Where(f => f.Failure != null).ToArray();
+            if (!failures.Any())
+            {
+                Console.WriteLine();
+                Console.WriteLine("Results: [Passed]");
+                return;
+            }
+            Console.WriteLine();
+            Console.WriteLine("Results: [Failed]");
+
+            for (int i = 0; i < results.Length; i++)
+            {
+                PrintAdjusted(string.Format("  {0}. ", (i + 1)), results[i].Expectation);
+                PrintAdjusted("     ", results[i].Failure ?? "PASS");
+            }
+        }
+
+        static void PrintAdjusted(string adj, string text)
+        {
+            Console.Write(GetAdjusted(adj, text));
+        }
+
         public static string GetAdjusted(string adj, string text)
         {
             var first = true;
@@ -135,6 +119,21 @@ namespace Starnet.Aggregates.Testing
                 first = false;
             }
             return builder.ToString();
+        }
+
+        public async Task ExpectError(string name)
+        {
+            ThenWasCalled = true;
+            try
+            {
+                await ExecuteCommand(GivenEvents.ToArray(), WhenCommand);
+            }
+            catch (DomainError e)
+            {
+                if (e.Name.Equals(name))
+                    return;
+            }
+            Assert.Fail("Specification failed");
         }
 
         [SetUp]
