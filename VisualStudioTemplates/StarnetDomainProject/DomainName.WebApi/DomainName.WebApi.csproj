@@ -11,8 +11,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.5" />
     <PackageReference Include="RavenDB.Client" Version="4.2.0" />
-    <PackageReference Include="ServiceStack" Version="5.5.1" />
-    <PackageReference Include="ServiceStack.HttpClient.Core" Version="5.5.1" />
+    <PackageReference Include="ServiceStack" Version="5.5.0" />
+    <PackageReference Include="ServiceStack.HttpClient.Core" Version="5.5.0" />
     <PackageReference Include="SimpleInjector" Version="4.6.0" />
   </ItemGroup>
 

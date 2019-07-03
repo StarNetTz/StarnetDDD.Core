@@ -10,7 +10,8 @@ namespace $safeprojectname$.UnitTests
     {
         IDocumentStore DocumentStore;
 
-        public OrganizationSmartSearchQueryUnitTests()
+        [OneTimeSetUp]
+        public void Setup()
         {
             DocumentStore = GetDocumentStore();
             CreateTestDocuments();

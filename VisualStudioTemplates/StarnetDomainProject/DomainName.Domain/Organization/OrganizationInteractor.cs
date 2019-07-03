@@ -9,19 +9,13 @@ namespace $safeprojectname$.Organization
 {
     public interface IOrganizationInteractor : IInteractor { }
 
-    public class OrganizationInteractor : IOrganizationInteractor
+    public class OrganizationInteractor : Interactor, IOrganizationInteractor
     {
         readonly IAggregateRepository AggRepository;
-        List<object> PublishedEvents { get; set; }
-        public List<object> GetPublishedEvents()
-        {
-            return PublishedEvents;
-        }
 
         public OrganizationInteractor(IAggregateRepository aggRepository)
         {
             AggRepository = aggRepository;
-            PublishedEvents = new List<object>();
         }
 
         async Task CreateAgg(string id, Action<OrganizationAggregate> usingThisMethod)
@@ -31,10 +25,11 @@ namespace $safeprojectname$.Organization
                 throw DomainError.Named("OrganizationAlreadyExists", string.Empty);
             agg = new OrganizationAggregate(new OrganizationAggregateState());
             usingThisMethod(agg);
+			PublishedEvents = agg.PublishedEvents;
             await AggRepository.StoreAsync(agg);
         }
 
-        public async Task Execute(object command)
+        public override async Task Execute(object command)
         {
             await When((dynamic)command);
         }
