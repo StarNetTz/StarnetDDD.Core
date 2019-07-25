@@ -22,7 +22,6 @@
 
     internal class PersonAggregateState : AggregateState
     {
-
         string Name { get; set; }
 
         protected override void DelegateWhenToConcreteClass(object ev)

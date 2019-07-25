@@ -35,10 +35,10 @@ namespace Starnet.Projections.UnitTests
         [Test]
         public void can_project_event1()
         {
-            Assert.That(async () =>
-            {
-                await Given(new TestEvent() { Id = Id, SomeValue = "123" });
-                await Expect(new TestModelWithUnsupportedIdType() { Id = 1, SomeValue = "123" }); }, Throws.ArgumentException);
+            Assert.That(async () => 
+                {
+                    await Given(new TestEvent() { Id = Id, SomeValue = "123" });
+                    await Expect(new TestModelWithUnsupportedIdType() { Id = 1, SomeValue = "123" });}, Throws.ArgumentException);
           
         }
 

@@ -15,7 +15,7 @@ namespace Starnet.Projections
         private static Logger Logger = LogManager.GetCurrentClassLogger();
 
         public Checkpoint Checkpoint { get; set; }
-       
+        
         public async Task Project(object e, long c)
         {
             try
@@ -31,20 +31,20 @@ namespace Starnet.Projections
             }
         }
 
-        async Task HandleEvent(object e, long c)
-        {
-            Checkpoint.Value = c;
-            Task.WaitAll(StartHandlingTasks(e, c));
-            await CheckpointWriter.Write(Checkpoint);
-        }
+            async Task HandleEvent(object e, long c)
+            {
+                Checkpoint.Value = c;
+                Task.WaitAll(StartHandlingTasks(e, c));
+                await CheckpointWriter.Write(Checkpoint);
+            }
 
-        Task[] StartHandlingTasks(object e, long c)
-        {
-            List<Task> tasks = new List<Task>();
-            foreach (var d in Handlers)
-                tasks.Add(d.Handle(e, c));
-            return tasks.ToArray();
-        }
+                Task[] StartHandlingTasks(object e, long c)
+                {
+                    List<Task> tasks = new List<Task>();
+                    foreach (var d in Handlers)
+                        tasks.Add(d.Handle(e, c));
+                    return tasks.ToArray();
+                }
 
         public async Task Start()
         {

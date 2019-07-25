@@ -8,7 +8,7 @@ namespace Starnet.Aggregates
         {
         }
 
-        public ConcurrencyException(string message, Exception inner) : base(message, inner )
+        public ConcurrencyException(string message, Exception inner) : base(message, inner)
         {
             
         }

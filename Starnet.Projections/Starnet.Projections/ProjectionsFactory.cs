@@ -28,7 +28,6 @@ namespace Starnet.Projections
                     continue;
                 ret.Add(await Create(t));
             }
-               
             return ret;
         }
 

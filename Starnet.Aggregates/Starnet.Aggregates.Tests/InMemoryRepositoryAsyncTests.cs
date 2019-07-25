@@ -41,8 +41,6 @@ namespace Starnet.Aggregates.Tests
             Assert.That(p.Changes, Is.Empty);
         }
 
-
-
         [Test]
         public async Task can_load_requested_version_of_aggregate()
         {

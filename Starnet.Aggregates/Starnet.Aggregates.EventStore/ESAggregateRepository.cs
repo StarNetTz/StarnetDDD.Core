@@ -32,64 +32,64 @@ namespace Starnet.Aggregates.ES
             await TrySaveAggregate(aggregate);
         }
 
-        async Task TrySaveAggregate(IAggregate aggregate)
-        {
-            try
+            async Task TrySaveAggregate(IAggregate aggregate)
             {
-                await SaveAggregate(aggregate, Guid.NewGuid(), (d) => { });
-            }
-            catch (WrongExpectedVersionException ex)
-            {
-                throw new ConcurrencyException(ex.Message, ex);
-            }
-        }
-
-        async Task SaveAggregate(IAggregate aggregate, Guid commitId, Action<IDictionary<string, object>> updateHeaders)
-        {
-            var commitHeaders = new Dictionary<string, object>
-            {
-                {CommitIdHeader, commitId},
-                {AggregateClrTypeHeader, aggregate.GetType().AssemblyQualifiedName}
-            };
-            updateHeaders(commitHeaders);
-
-            var streamName = aggregate.Id;
-            var newEvents = aggregate.Changes.Cast<object>().ToList();
-            var originalVersion = aggregate.Version - newEvents.Count;
-            var expectedVersion = originalVersion == 0 ? ExpectedVersion.NoStream : originalVersion - 1;
-            var eventsToSave = newEvents.Select(e => ToEventData(e, commitHeaders)).ToList();
-
-            if (eventsToSave.Count < WritePageSize)
-                await EventStoreConnection.AppendToStreamAsync(streamName, expectedVersion, eventsToSave);
-            else
-            {
-                var transaction = await EventStoreConnection.StartTransactionAsync(streamName, expectedVersion);
-                var position = 0;
-                while (position < eventsToSave.Count)
+                try
                 {
-                    var pageEvents = eventsToSave.Skip(position).Take(WritePageSize);
-                    await transaction.WriteAsync(pageEvents);
-                    position += WritePageSize;
+                    await SaveAggregate(aggregate, Guid.NewGuid(), (d) => { });
                 }
-                await transaction.CommitAsync();
-            }
-
-            aggregate.Changes.Clear();
-        }
-
-            EventData ToEventData(dynamic evnt, IDictionary<string, object> headers)
-            {
-                var data = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(evnt, SerializerSettings));
-                var eventHeaders = new Dictionary<string, object>(headers)
+                catch (WrongExpectedVersionException ex)
                 {
-                    {
-                        EventClrTypeHeader, evnt.GetType().AssemblyQualifiedName
-                    }
-                };
-                var metadata = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(eventHeaders, SerializerSettings));
-                var typeName = evnt.GetType().Name;
-                return new EventData(Guid.NewGuid(), typeName, true, data, metadata);
+                    throw new ConcurrencyException(ex.Message, ex);
+                }
             }
+
+                async Task SaveAggregate(IAggregate aggregate, Guid commitId, Action<IDictionary<string, object>> updateHeaders)
+                {
+                    var commitHeaders = new Dictionary<string, object>
+                    {
+                        {CommitIdHeader, commitId},
+                        {AggregateClrTypeHeader, aggregate.GetType().AssemblyQualifiedName}
+                    };
+                    updateHeaders(commitHeaders);
+
+                    var streamName = aggregate.Id;
+                    var newEvents = aggregate.Changes.Cast<object>().ToList();
+                    var originalVersion = aggregate.Version - newEvents.Count;
+                    var expectedVersion = originalVersion == 0 ? ExpectedVersion.NoStream : originalVersion - 1;
+                    var eventsToSave = newEvents.Select(e => ToEventData(e, commitHeaders)).ToList();
+
+                    if (eventsToSave.Count < WritePageSize)
+                        await EventStoreConnection.AppendToStreamAsync(streamName, expectedVersion, eventsToSave);
+                    else
+                    {
+                        var transaction = await EventStoreConnection.StartTransactionAsync(streamName, expectedVersion);
+                        var position = 0;
+                        while (position < eventsToSave.Count)
+                        {
+                            var pageEvents = eventsToSave.Skip(position).Take(WritePageSize);
+                            await transaction.WriteAsync(pageEvents);
+                            position += WritePageSize;
+                        }
+                        await transaction.CommitAsync();
+                    }
+
+                    aggregate.Changes.Clear();
+                }
+
+                    EventData ToEventData(dynamic evnt, IDictionary<string, object> headers)
+                    {
+                        var data = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(evnt, SerializerSettings));
+                        var eventHeaders = new Dictionary<string, object>(headers)
+                        {
+                            {
+                                EventClrTypeHeader, evnt.GetType().AssemblyQualifiedName
+                            }
+                        };
+                        var metadata = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(eventHeaders, SerializerSettings));
+                        var typeName = evnt.GetType().Name;
+                        return new EventData(Guid.NewGuid(), typeName, true, data, metadata);
+                    }
 
         public Task<TAggregate> GetAsync<TAggregate>(string id) where TAggregate : class, IAggregate
         {
@@ -116,7 +116,8 @@ namespace Starnet.Aggregates.ES
                 if (currentSlice.Status == SliceReadStatus.StreamNotFound)
                     break;
 
-                if (currentSlice.Status == SliceReadStatus.StreamDeleted) break;
+                if (currentSlice.Status == SliceReadStatus.StreamDeleted)
+                    break;
 
                 sliceStart = currentSlice.NextEventNumber;
 

@@ -1,6 +1,4 @@
 ﻿using Raven.Client.Documents;
-
-
 using System.Threading.Tasks;
 
 namespace Starnet.Projections.RavenDb
