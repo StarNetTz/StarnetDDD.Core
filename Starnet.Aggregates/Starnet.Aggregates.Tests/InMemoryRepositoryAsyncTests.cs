@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using static Starnet.Aggregates.InMemoryAggregateRepository;
 
@@ -41,8 +40,6 @@ namespace Starnet.Aggregates.Tests
             Assert.That(p.Changes, Is.Empty);
         }
 
-
-
         [Test]
         public async Task can_load_requested_version_of_aggregate()
         {
@@ -62,9 +59,8 @@ namespace Starnet.Aggregates.Tests
             await Repository.StoreAsync(p);
         }
 
-
         [Test]
-        public async Task concurrent_updates_cause_AggregateConcurrencyException()
+        public async Task concurrent_updates_throw_AggregateConcurrencyException()
         {
             var id = "21";
             await Repository.StoreAsync(CreatePersonAggregate(id, "Mujo"));

@@ -44,41 +44,37 @@ namespace Starnet.Aggregates.Testing
             TEvent[] actualPublished = res.PublishedEvents;
 
             var producedEventsResults = CompareAssert(ThenEvents.ToArray(), actualProduced).ToArray();
-            PrintResults(producedEventsResults);
+            var producedResults = GetFormattedResults(producedEventsResults);
+            Console.Write(producedResults);
 
             var publishedEventsResults = CompareAssert(publishedEvents.ToArray(), actualPublished).ToArray();
-            PrintResults(publishedEventsResults);
+            var publishedResults = GetFormattedResults(publishedEventsResults);
+            Console.Write(publishedResults);
 
             if (producedEventsResults.Any(r => r.Failure != null))
-                Assert.Fail("Specification failed on produced events");
+                Assert.Fail($"Specification failed on produced events:\n{producedResults}");
 
             if (publishedEventsResults.Any(r => r.Failure != null))
-                Assert.Fail("Specification failed on published events");
+                Assert.Fail($"Specification failed on published events:\n{publishedResults}");
         }
 
-        protected static void PrintResults(ICollection<ExpectResult> exs)
+        protected static string GetFormattedResults(ICollection<ExpectResult> exs)
         {
             var results = exs.ToArray();
             var failures = results.Where(f => f.Failure != null).ToArray();
             if (!failures.Any())
-            {
-                Console.WriteLine();
-                Console.WriteLine("Results: [Passed]");
-                return;
-            }
-            Console.WriteLine();
-            Console.WriteLine("Results: [Failed]");
+                return "\nResults: [Passed]";
+
+            var sb = new StringBuilder();
+            sb.Append("\nResults: [Failed]");
+           
 
             for (int i = 0; i < results.Length; i++)
             {
-                PrintAdjusted(string.Format("  {0}. ", (i + 1)), results[i].Expectation);
-                PrintAdjusted("     ", results[i].Failure ?? "PASS");
+                sb.AppendLine(GetAdjusted(string.Format("  {0}. ", (i + 1)), results[i].Expectation));
+                sb.AppendLine(GetAdjusted("     ", results[i].Failure ?? "PASS"));
             }
-        }
-
-        static void PrintAdjusted(string adj, string text)
-        {
-            Console.Write(GetAdjusted(adj, text));
+            return sb.ToString();
         }
 
         public async Task ExpectError(string name)
@@ -93,7 +89,7 @@ namespace Starnet.Aggregates.Testing
                 if (e.Name.Equals(name))
                     return;
             }
-            Assert.Fail("Specification failed");
+            Assert.Fail($"Specification failed on expected error: {name}");
         }
 
         protected static IEnumerable<ExpectResult> CompareAssert(TEvent[] expected, TEvent[] actual)
