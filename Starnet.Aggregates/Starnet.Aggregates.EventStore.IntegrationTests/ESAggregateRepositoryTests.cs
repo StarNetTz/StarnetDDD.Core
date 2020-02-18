@@ -38,8 +38,8 @@ namespace Starnet.Aggregates.ES.Tests
             var id = $"persons-{Guid.NewGuid()}";
             await CreateAndStoreAggregate(id);
 
-            var loadedAggregate = await Repository.GetAsync<PersonAggregate>(id);
-            Assert.That(loadedAggregate.Version, Is.EqualTo(1));
+            var agg = await Repository.GetAsync<PersonAggregate>(id);
+            Assert.That(agg.Version, Is.EqualTo(1));
         }
 
         [Test]
