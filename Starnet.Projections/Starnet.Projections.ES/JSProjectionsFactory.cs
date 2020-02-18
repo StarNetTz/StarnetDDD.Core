@@ -31,10 +31,10 @@ namespace Starnet.Projections.ES
                 await ProjectionManager.CreateContinuousAsync(kv.Key, kv.Value, ESConnectionConfig.UserCredentials);
         }
 
-        Dictionary<string, string> GetNewProjectionNames(List<string> existing)
-        {
-            return (from kv in Projections where !existing.Contains(kv.Key) select kv).ToDictionary(kv=> kv.Key, kv=>kv.Value);
-        }
+            Dictionary<string, string> GetNewProjectionNames(List<string> existing)
+            {
+                return (from kv in Projections where !existing.Contains(kv.Key) select kv).ToDictionary(kv=> kv.Key, kv=>kv.Value);
+            }
     }
 
     public class LoggerWrapper : EventStore.ClientAPI.ILogger
