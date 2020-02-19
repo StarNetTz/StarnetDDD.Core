@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AssemblyVersion>5.0.2.0</AssemblyVersion>
-    <FileVersion>5.0.2.0</FileVersion>
+    <AssemblyVersion>5.0.3.0</AssemblyVersion>
+    <FileVersion>5.0.3.0</FileVersion>
     <Company>StarNet</Company>
     <Authors>Zvjezdan Tomicevic</Authors>
     <Description>Lightweight DDD framework</Description>
@@ -12,7 +12,7 @@
     <Copyright>Copyright © 2018 StarNet d.o.o.</Copyright>
     <NeutralLanguage></NeutralLanguage>
     <PackageReleaseNotes></PackageReleaseNotes>
-    <Version>5.0.2</Version>
+    <Version>5.0.3</Version>
   </PropertyGroup>
 
 </Project>
