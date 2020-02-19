@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starnet.Projections", "Starnet.Projections\Starnet.Projections.csproj", "{F27AA905-BF70-46F5-94AC-54048CB3C3AB}"
 EndProject
@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starnet.Projections.ES.Inte
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RavenDb", "RavenDb", "{4D86DC5F-3CC4-4EC8-B14E-EE9CE1149877}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starnet.Projections.RavenDb", "Starnet.Projections.RavenDb\Starnet.Projections.RavenDb.csproj", "{1D06C5DE-A875-4E47-80A7-E326970C4561}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starnet.Projections.RavenDb", "Starnet.Projections.RavenDb\Starnet.Projections.RavenDb.csproj", "{1D06C5DE-A875-4E47-80A7-E326970C4561}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starnet.Projections.Testing", "Starnet.Projections.Testing\Starnet.Projections.Testing.csproj", "{135EC633-2D45-47E6-83E6-B70457BB8F14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starnet.Projections.Testing", "Starnet.Projections.Testing\Starnet.Projections.Testing.csproj", "{135EC633-2D45-47E6-83E6-B70457BB8F14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
