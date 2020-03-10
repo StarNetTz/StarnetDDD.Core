@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>6.0.1</Version>
+    <Version>6.0.2</Version>
     <Authors>Zvjezdan Tomicevic</Authors>
     <Company>StarnetZvjezdan Tomicevic</Company>
-    <AssemblyVersion>6.0.1.0</AssemblyVersion>
+    <AssemblyVersion>6.0.2.0</AssemblyVersion>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <FileVersion>6.0.1.0</FileVersion>
+    <FileVersion>6.0.2.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

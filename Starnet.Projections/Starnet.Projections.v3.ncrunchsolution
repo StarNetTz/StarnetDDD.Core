@@ -1,6 +1,7 @@
 ﻿<SolutionConfiguration>
   <Settings>
     <AllowParallelTestExecution>False</AllowParallelTestExecution>
+    <InstrumentationMode>Optimised</InstrumentationMode>
     <MetricsExclusionList>
       <Value>Starnet.Projections.Tests\Starnet.Projections.Tests.csproj\GESTests</Value>
       <Value>Starnet.Projections\Starnet.Projections.csproj\GES</Value>
