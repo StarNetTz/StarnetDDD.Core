@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starnet.Aggregates.ES", "St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starnet.Aggregates.Testing", "Starnet.Aggregates.Testing\Starnet.Aggregates.Testing.csproj", "{CE227BC1-99C8-4FA2-B345-24BB1A1D92BF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starnet.Aggregates.Tests", "Starnet.Aggregates.Tests\Starnet.Aggregates.Tests.csproj", "{F4FE12B1-9601-4051-9F4A-A7A37F966B87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starnet.Aggregates.UnitTests", "Starnet.Aggregates.Tests\Starnet.Aggregates.UnitTests.csproj", "{F4FE12B1-9601-4051-9F4A-A7A37F966B87}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starnet.Aggregates.ES.IntegrationTests", "Starnet.Aggregates.EventStore.IntegrationTests\Starnet.Aggregates.ES.IntegrationTests.csproj", "{CBD10E73-1800-4E4A-A5B7-E2C638C60B75}"
 EndProject

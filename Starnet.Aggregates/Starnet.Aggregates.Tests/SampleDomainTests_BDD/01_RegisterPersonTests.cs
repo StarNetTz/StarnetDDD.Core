@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Starnet.Aggregates.Tests
 {
-    class BDDTests : _ServiceSpec
+    class RegisterPersonTests : _ServiceSpec
     {
         [Test]
-        public async Task can_register_and_registration_publishes_on_external_bus()
+        public async Task can_execute_valid_command()
         {
             var id = $"Persons-{Guid.NewGuid()}";
             var ev = new PersonRegistered() { Id = id, Name = "John" };
@@ -38,26 +38,6 @@ namespace Starnet.Aggregates.Tests
             Given(new PersonRegistered() { Id = id, Name = "John" });
             When(new RegisterPerson() { Id = id, Name = "Danny" });
             await ExpectError("PersonAlreadyRegistered");
-        }
-
-        [Test]
-        public async Task can_rename()
-        {
-            var id = $"Persons-{Guid.NewGuid()}";
-
-            Given(new PersonRegistered() { Id = id, Name = "John" });
-            When(new RenamePerson() { Id = id, Name = "Gary" });
-            await Expect(new PersonRenamed() { Id = id, Name = "Gary" });
-        }
-
-        [Test]
-        public async Task rename_is_idempotent()
-        {
-            var id = $"Persons-{Guid.NewGuid()}";
-
-            Given(new PersonRegistered() { Id = id, Name = "John" });
-            When(new RenamePerson() { Id = id, Name = "John" });
-            await Expect();
         }
     }
 }

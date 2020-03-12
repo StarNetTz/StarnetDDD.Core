@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Starnet.Aggregates.EventStore\Starnet.Aggregates.ES.csproj" />
     <ProjectReference Include="..\Starnet.Aggregates\Starnet.Aggregates.csproj" />
+    <ProjectReference Include="..\Starnet.SampleDomain\Starnet.SampleDomain.csproj" />
   </ItemGroup>
 
 </Project>
