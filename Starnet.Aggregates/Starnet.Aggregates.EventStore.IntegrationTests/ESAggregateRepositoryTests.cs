@@ -89,7 +89,7 @@ namespace Starnet.Aggregates.ES.Tests
         {
             var id = $"persons-{Guid.NewGuid()}";
             var agg = CreatePersonAggregate(id, "Zvjezdan");
-            agg.Rename(new RenamePerson() { Id = id, Name = "Zeka peka" });
+            agg.Rename(new RenamePerson() { Id = id, Name = "Gary" });
             await Repository.StoreAsync(agg);
             Assert.That(async () => await Repository.GetAsync<PersonAggregate>(agg.Id, -1), Throws.Exception.TypeOf<InvalidOperationException>());
         }

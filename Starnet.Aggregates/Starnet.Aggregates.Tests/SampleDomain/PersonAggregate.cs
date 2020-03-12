@@ -9,9 +9,9 @@
             State = state;
         }
 
-        internal void Create(CreatePerson cmd)
+        internal void Create(RegisterPerson cmd)
         {
-            var e = new PersonCreated() { Id = cmd.Id, Name = cmd.Name };
+            var e = new PersonRegistered() { Id = cmd.Id, Name = cmd.Name };
             Apply(e);
             PublishedEvents.Add(e);
         }

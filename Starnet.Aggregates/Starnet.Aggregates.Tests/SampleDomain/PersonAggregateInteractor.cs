@@ -27,7 +27,7 @@ namespace Starnet.Aggregates.Tests
         {
             var agg = await AggRepository.GetAsync<PersonAggregate>(id);
             if (agg != null)
-                throw DomainError.Named("AggregateAlreadyExists", string.Empty);
+                throw DomainError.Named("PersonAlreadyRegistered", string.Empty);
             agg = new PersonAggregate(new PersonAggregateState());
             usingThisMethod(agg);
             PublishedEvents = agg.PublishedEvents;
@@ -39,7 +39,7 @@ namespace Starnet.Aggregates.Tests
             await When((dynamic)command);
         }
 
-        async Task When(CreatePerson c)
+        async Task When(RegisterPerson c)
         {
             await CreateAgg(c.Id, agg => agg.Create(c));
         }

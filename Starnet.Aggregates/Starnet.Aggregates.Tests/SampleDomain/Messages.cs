@@ -11,13 +11,13 @@ namespace Starnet.Aggregates.Tests
         string Id { get; }
     }
 
-    public class CreatePerson : ICommand
+    public class RegisterPerson : ICommand
     {
         public string Id { get; set; }
         public string Name { get; set; }
     }
 
-    public class PersonCreated : IEvent
+    public class PersonRegistered : IEvent
     {
         public string Id { get; set; }
         public string Name { get; set; }

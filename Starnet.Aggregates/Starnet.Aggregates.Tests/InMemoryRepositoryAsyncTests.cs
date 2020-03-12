@@ -53,7 +53,7 @@ namespace Starnet.Aggregates.Tests
         async Task CreateUpdatedAggregate(string aggId, int nrOfUpdates)
         {
             var p = new PersonAggregate(new PersonAggregateState());
-            p.Create(new CreatePerson() { Id = aggId, Name = "0" });
+            p.Create(new RegisterPerson() { Id = aggId, Name = "0" });
             for (int i = 0; i < nrOfUpdates; i++)
                 p.Rename(new RenamePerson() { Id = aggId, Name = $"Name {i + 1}" });
             await Repository.StoreAsync(p);
@@ -88,7 +88,7 @@ namespace Starnet.Aggregates.Tests
         PersonAggregate CreatePersonAggregate(string id, string name)
         {
             var agg = new PersonAggregate(new PersonAggregateState());
-            agg.Create(new CreatePerson() { Id = id, Name = name });
+            agg.Create(new RegisterPerson() { Id = id, Name = name });
             return agg;
         }
     }

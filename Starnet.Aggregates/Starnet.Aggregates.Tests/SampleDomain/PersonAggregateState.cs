@@ -12,7 +12,7 @@ namespace Starnet.Aggregates.Tests
             When((dynamic)ev);
         }
 
-        void When(PersonCreated e)
+        void When(PersonRegistered e)
         {
             Id = e.Id;
             Name = e.Name;

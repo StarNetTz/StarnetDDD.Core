@@ -1,4 +1,6 @@
-﻿Run event store in docker with default settings, for integration tests purposes.
+﻿Download and run eventstore with default settings 
+					or
+run event store in docker with default settings:
 1. Install docker, linux mode
 2. Pull docker image:	docker pull eventstore/eventstore
 3. Run container using:	docker run --name eventstore-node -it -p 2113:2113 -p 1113:1113 eventstore/eventstore

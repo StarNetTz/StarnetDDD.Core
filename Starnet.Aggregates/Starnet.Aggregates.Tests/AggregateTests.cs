@@ -23,7 +23,7 @@ namespace Starnet.Aggregates.Tests
         [Test]
         public void can_create_person()
         {
-            Person.Create(new CreatePerson() { Id = "1", Name = "Zvjezdan" });
+            Person.Create(new RegisterPerson() { Id = "1", Name = "Zvjezdan" });
             AssertPersonCreated(Person);
             Assert.That(Person.PublishedEvents.Count, Is.EqualTo(1));
         }
@@ -32,7 +32,7 @@ namespace Starnet.Aggregates.Tests
             {
                 Assert.That(person.Id, Is.EqualTo("1"));
                 Assert.That(person.Version, Is.EqualTo(1));
-                var e = person.Changes[0] as PersonCreated;
+                var e = person.Changes[0] as PersonRegistered;
                 Assert.That(e.Id, Is.EqualTo("1"));
                 Assert.That(e.Name, Is.EqualTo("Zvjezdan"));
             }
@@ -40,7 +40,7 @@ namespace Starnet.Aggregates.Tests
         [Test]
         public void can_rename_person()
         {
-            Person.Create(new CreatePerson() { Id = "1", Name = "Zvjezdan" });
+            Person.Create(new RegisterPerson() { Id = "1", Name = "Zvjezdan" });
 
             Person.Rename(new RenamePerson() { Id = "1", Name = "Muriz" });
 
@@ -58,7 +58,7 @@ namespace Starnet.Aggregates.Tests
         [Test]
         public void rename_with_invalid_name_throws_domain_error()
         {
-            Person.Create(new CreatePerson() { Id = "1", Name = "Zvjezdan" });
+            Person.Create(new RegisterPerson() { Id = "1", Name = "Zvjezdan" });
             var exception = Assert.Throws<DomainError>(() => { Person.Rename(new RenamePerson() { Id = "1", Name = "" }); });
             Assert.That(exception.Name, Is.EqualTo("InvalidPersonName"));
         }
