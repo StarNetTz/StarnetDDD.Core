@@ -1,4 +1,5 @@
 ﻿using Starnet.Aggregates.Testing;
+using Starnet.SampleDomain;
 using System.Linq;
 using System.Threading.Tasks;
 

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Starnet.Aggregates;
+using System;
 
-namespace Starnet.Aggregates.Tests
+namespace Starnet.SampleDomain
 {
-    internal class PersonAggregateState : AggregateState
+    public class PersonAggregateState : AggregateState
     {
 
-        string Name { get; set; }
+        internal string Name { get; set; }
 
         protected override void DelegateWhenToConcreteClass(object ev)
         {

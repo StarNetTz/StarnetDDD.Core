@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starnet.Aggregates", "Starnet.Aggregates\Starnet.Aggregates.csproj", "{1BB89F5F-371A-443D-96D8-A1F428790E40}"
 EndProject
@@ -14,6 +14,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Starnet.Aggregates.ES.IntegrationTests", "Starnet.Aggregates.EventStore.IntegrationTests\Starnet.Aggregates.ES.IntegrationTests.csproj", "{CBD10E73-1800-4E4A-A5B7-E2C638C60B75}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventStore", "EventStore", "{FE2DFB83-4F26-4CAA-B1A6-751296196B07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starnet.SampleDomain", "Starnet.SampleDomain\Starnet.SampleDomain.csproj", "{F5ED7F73-CDCF-4750-B998-2C673BCC0EED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleDomain", "SampleDomain", "{D06391F1-8761-4D31-8E92-188AC12AAEB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,10 @@ Global
 		{CBD10E73-1800-4E4A-A5B7-E2C638C60B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBD10E73-1800-4E4A-A5B7-E2C638C60B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBD10E73-1800-4E4A-A5B7-E2C638C60B75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5ED7F73-CDCF-4750-B998-2C673BCC0EED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5ED7F73-CDCF-4750-B998-2C673BCC0EED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5ED7F73-CDCF-4750-B998-2C673BCC0EED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5ED7F73-CDCF-4750-B998-2C673BCC0EED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +56,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{44E7BFB6-02A8-4AEE-BB9A-A5A4BC669110} = {FE2DFB83-4F26-4CAA-B1A6-751296196B07}
 		{CBD10E73-1800-4E4A-A5B7-E2C638C60B75} = {FE2DFB83-4F26-4CAA-B1A6-751296196B07}
+		{F5ED7F73-CDCF-4750-B998-2C673BCC0EED} = {D06391F1-8761-4D31-8E92-188AC12AAEB6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82F50364-EAAB-4710-A48A-F72E0AEFAD42}

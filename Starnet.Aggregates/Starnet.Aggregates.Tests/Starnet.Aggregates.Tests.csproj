@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Starnet.Aggregates.Testing\Starnet.Aggregates.Testing.csproj" />
     <ProjectReference Include="..\Starnet.Aggregates\Starnet.Aggregates.csproj" />
+    <ProjectReference Include="..\Starnet.SampleDomain\Starnet.SampleDomain.csproj" />
   </ItemGroup>
 
 </Project>

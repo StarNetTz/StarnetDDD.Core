@@ -5,10 +5,10 @@ namespace Starnet.Aggregates.Tests
     class ConcurrencyExceptionTests
     {
         [Test]
-        public void CanInstantiate()
+        public void Can_instantiate()
         {
             var d = new ConcurrencyException();
-            var d2 = new ConcurrencyException("error", d);
+            new ConcurrencyException("error message", d);
         }
     }
 }

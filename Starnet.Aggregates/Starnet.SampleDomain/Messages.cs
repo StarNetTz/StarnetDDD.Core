@@ -1,5 +1,5 @@
 ﻿
-namespace Starnet.Aggregates.Tests
+namespace Starnet.SampleDomain
 {
     public interface ICommand
     {
