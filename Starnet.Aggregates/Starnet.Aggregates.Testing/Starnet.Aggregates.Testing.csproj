@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>Zvjezdan Tomicevic</Authors>
     <Company>Starnet d.o.o.</Company>
     <Copyright>Copyright © 2018 StarNet d.o.o.</Copyright>
     <Description>Lightweight DDD framework, BDD style testing support</Description>
-    <FileVersion>5.1.0.0</FileVersion>
-    <AssemblyVersion>5.1.0.0</AssemblyVersion>
-    <Version>5.1.0</Version>
+    <FileVersion>6.0.2.0</FileVersion>
+    <AssemblyVersion>6.0.2.0</AssemblyVersion>
+    <Version>6.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
