@@ -11,7 +11,7 @@ namespace Starnet.Aggregates.Tests
         {
             var repository = new BDDAggregateRepository();
             repository.Preload(cmd.Id, given);
-            var svc = new PersonAggregateInteractor(repository);
+            var svc = new PersonAggregateInteractor(repository); //inject interactor specific dependencies here
             await svc.Execute(cmd);
             var publishedEvents = svc.GetPublishedEvents();
             var arr = (repository.Appended != null) ? repository.Appended.Cast<IEvent>().ToArray() : null;

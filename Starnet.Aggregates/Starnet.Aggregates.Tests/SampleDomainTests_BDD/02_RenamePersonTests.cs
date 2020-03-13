@@ -13,7 +13,9 @@ namespace Starnet.Aggregates.Tests
             var id = $"Persons-{Guid.NewGuid()}";
 
             Given(new PersonRegistered() { Id = id, Name = "John" });
+
             When(new RenamePerson() { Id = id, Name = "Gary" });
+
             await Expect(new PersonRenamed() { Id = id, Name = "Gary" });
         }
 
@@ -23,7 +25,9 @@ namespace Starnet.Aggregates.Tests
             var id = $"Persons-{Guid.NewGuid()}";
 
             Given(new PersonRegistered() { Id = id, Name = "John" });
+
             When(new RenamePerson() { Id = id, Name = "John" });
+
             await Expect();
         }
     }

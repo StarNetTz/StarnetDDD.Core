@@ -37,18 +37,20 @@ namespace Starnet.Aggregates.ES.Tests
         {
             var id = $"persons-{Guid.NewGuid()}";
             await Repository.StoreAsync(PersonAggregateFactory.Create(id, "Joe"));
-
             var agg = await Repository.GetAsync<PersonAggregate>(id);
+
             Assert.That(agg.Version, Is.EqualTo(1));
         }
 
         [Test]
         public async Task can_store_and_load_aggregates_above_page_size_treshold()
         {
+            const int ExpectedVersion = OverflownPageSize + 1;
+
             var id = $"persons-{Guid.NewGuid()}";
             await CreateAndPersistAggregateThatExceedesPageSizeTreshold(id);
             var loadedAggregate = await Repository.GetAsync<PersonAggregate>(id);
-            const int ExpectedVersion = OverflownPageSize + 1;
+           
             Assert.That(loadedAggregate.Version, Is.EqualTo(ExpectedVersion));
         }
 

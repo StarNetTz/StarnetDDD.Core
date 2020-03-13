@@ -16,7 +16,9 @@ namespace Starnet.Aggregates.Tests
             var expectedPublishedEvents = expectedProducedEvents;
 
             Given();
+
             When(new RegisterPerson() { Id = id, Name = "John" });
+
             await Expect(expectedProducedEvents, expectedPublishedEvents);
         }
 
@@ -26,7 +28,9 @@ namespace Starnet.Aggregates.Tests
             var id = $"Persons-{Guid.NewGuid()}";
 
             Given(new PersonRegistered() { Id = id, Name = "John" });
+
             When(new RegisterPerson() { Id = id, Name = "John" });
+
             await Expect();
         }
 
