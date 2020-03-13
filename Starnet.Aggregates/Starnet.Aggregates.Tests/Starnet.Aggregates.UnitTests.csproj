@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <Version>2.0.0</Version>
   </PropertyGroup>
 
@@ -15,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Starnet.Aggregates.EventStore\Starnet.Aggregates.ES.csproj" />
+    <ProjectReference Include="..\Starnet.Aggregates.Testing\Starnet.Aggregates.Testing.csproj" />
     <ProjectReference Include="..\Starnet.Aggregates\Starnet.Aggregates.csproj" />
     <ProjectReference Include="..\Starnet.SampleDomain\Starnet.SampleDomain.csproj" />
   </ItemGroup>

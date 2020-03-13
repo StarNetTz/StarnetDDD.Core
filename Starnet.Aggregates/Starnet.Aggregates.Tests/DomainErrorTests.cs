@@ -5,9 +5,9 @@ namespace Starnet.Aggregates.Tests
     class DomainErrorTests
     {
         [Test]
-        public void CanInstantiate()
+        public void can_create_using_default_constructor()
         {
-            var d = new DomainError();
+            var de = new DomainError();
         }
     }
 }
