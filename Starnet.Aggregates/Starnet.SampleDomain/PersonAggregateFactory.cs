@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Starnet.SampleDomain
+﻿namespace Starnet.SampleDomain
 {
     public class PersonAggregateFactory
     {
@@ -21,7 +16,5 @@ namespace Starnet.SampleDomain
                 p.Rename(new RenamePerson() { Id = id, Name = $"Name {i + 1}" });
             return p;
         }
-
-       
     }
 }
