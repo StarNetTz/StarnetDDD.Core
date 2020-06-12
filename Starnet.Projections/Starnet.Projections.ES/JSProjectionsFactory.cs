@@ -10,6 +10,7 @@ namespace Starnet.Projections.ES
     public interface IJSProjectionsFactory
     {
         public Task CreateProjections();
+        public void AddProjection(string name, string srcCode);
     }
 
     public class JSProjectionsFactory : IJSProjectionsFactory
@@ -40,6 +41,11 @@ namespace Starnet.Projections.ES
             {
                 return (from kv in Projections where !existing.Contains(kv.Key) select kv).ToDictionary(kv=> kv.Key, kv=>kv.Value);
             }
+
+        public void AddProjection(string name, string srcCode)
+        {
+            Projections.Add(name, srcCode);
+        }
     }
 
     public class LoggerWrapper : EventStore.ClientAPI.ILogger
