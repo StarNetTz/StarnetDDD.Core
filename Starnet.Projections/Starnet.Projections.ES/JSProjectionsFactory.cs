@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 
 namespace Starnet.Projections.ES
 {
-    public class JSProjectionsFactory
+    public interface IJSProjectionsFactory
+    {
+        public Task CreateProjections();
+    }
+
+    public class JSProjectionsFactory : IJSProjectionsFactory
     {
         readonly ILogger Logger;
 
