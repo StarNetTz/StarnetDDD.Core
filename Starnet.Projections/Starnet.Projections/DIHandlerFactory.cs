@@ -1,20 +1,19 @@
-﻿using SimpleInjector;
-using System;
+﻿using System;
 
 namespace Starnet.Projections
 {
     public class DIHandlerFactory : IHandlerFactory
     {
-        readonly Container Container;
+        IServiceProvider Provider;
 
-        public DIHandlerFactory(Container container)
+        public DIHandlerFactory(IServiceProvider provider)
         {
-            Container = container;
+            Provider = provider;
         }
 
         public IHandler Create(Type t)
         {
-            return Container.GetInstance(t) as IHandler;
+            return (IHandler)Provider.GetService(t);
         }
     }
 }

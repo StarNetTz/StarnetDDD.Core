@@ -29,8 +29,7 @@ namespace Starnet.Projections.ES.IntegrationTests
                 LogManager.LoadConfiguration("nlog.config");
                 container.Register(() => loggerFactory, Lifestyle.Singleton);
                 container.Register<JSProjectionsFactory>();
-
-                container.RegisterConditional(typeof(Microsoft.Extensions.Logging.ILogger), c => typeof(Logger<>).MakeGenericType(c.Consumer.ImplementationType), Lifestyle.Singleton, c => true);
+                container.RegisterSingleton(typeof(ILogger<>), typeof(Logger<>));
                 container.Verify();
                 return container;
             }

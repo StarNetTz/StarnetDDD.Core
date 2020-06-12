@@ -11,13 +11,15 @@ namespace Starnet.Projections.Testing
         public Container Container { get; set; }
 
         public IProjectionsStore ProjectionsStore { get; set; }
-        ProjectionsFactory ProjectionsFactory;
+        IProjectionsFactory ProjectionsFactory;
 
         protected virtual void ConfigureContainer(Container container) { }
 
         public ProjectionSpecification()
         {
             Container = new Container();
+            var svcProviderInstance = new SimpleInjectorServiceProvider() { Container = Container };
+            Container.RegisterInstance<IServiceProvider>(svcProviderInstance);
             Container.Register<INoSqlStore, InMemoryProjectionsStore>(Lifestyle.Singleton);
             Container.Register<ISqlStore, InMemoryProjectionsStore>(Lifestyle.Singleton);
             Container.Register<ICheckpointReader, StubCheckpointReader>();
@@ -26,7 +28,7 @@ namespace Starnet.Projections.Testing
             Container.Register<ISubscriptionFactory, InMemorySubscriptionFactory>();
             Container.Register<IProjectionsFactory, ProjectionsFactory>();
             ConfigureContainer(Container);
-            ProjectionsFactory = Container.GetInstance<ProjectionsFactory>();
+            ProjectionsFactory = Container.GetInstance<IProjectionsFactory>();
             ProjectionsStore = Container.GetInstance<INoSqlStore>();
             Container.Verify();
         }
@@ -48,25 +50,25 @@ namespace Starnet.Projections.Testing
                 throw new AssertionException(diff);
         }
 
-        private static string ExtractIdFromObject(object model)
-        {
-            var id = model.GetType().GetProperty("Id").GetValue(model, null);
-            ValidateIdType(id);
-            return id.ToString();
-        }
-
-        static void ValidateIdType(object id)
-        {
-            switch (id)
+            static string ExtractIdFromObject(object model)
             {
-                case string s:
-                case int i:
-                case long l:
-                case Guid g:
-                    return;
-                default:
-                    throw new ArgumentException("Unsopported Id type!");
+                var id = model.GetType().GetProperty("Id").GetValue(model, null);
+                ValidateIdType(id);
+                return id.ToString();
             }
-        }
+
+                static void ValidateIdType(object id)
+                {
+                    switch (id)
+                    {
+                        case string s:
+                        case int i:
+                        case long l:
+                        case Guid g:
+                            return;
+                        default:
+                            throw new ArgumentException("Unsopported Id type!");
+                    }
+                }
     }
 }

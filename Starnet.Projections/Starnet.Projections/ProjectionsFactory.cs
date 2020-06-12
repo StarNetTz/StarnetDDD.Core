@@ -1,4 +1,5 @@
-﻿using SimpleInjector;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SimpleInjector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace Starnet.Projections
 {
     public class ProjectionsFactory : IProjectionsFactory
     {
-        readonly Container Container;
+        readonly IServiceProvider Provider;
 
-        public ProjectionsFactory(Container container)
+        public ProjectionsFactory(IServiceProvider provider)
         {
-            Container = container;
+            Provider = provider;
         }
 
         public async Task<IList<IProjection>> Create(Assembly projectionsAssembly)
@@ -28,7 +29,7 @@ namespace Starnet.Projections
                     continue;
                 ret.Add(await Create(t));
             }
-               
+
             return ret;
         }
 
@@ -44,56 +45,56 @@ namespace Starnet.Projections
             var proj = new Projection();
             proj.Name = pi.Name;
             proj.SubscriptionStreamName = pi.SubscriptionStreamName;
-            ICheckpointReader cr = Container.GetInstance<ICheckpointReader>();
+            ICheckpointReader cr = Provider.GetService<ICheckpointReader>();
             proj.Checkpoint = await cr.Read($"Checkpoints-{proj.Name}");
 
-            ICheckpointWriter cw = Container.GetInstance<ICheckpointWriter>();
+            ICheckpointWriter cw = Provider.GetService<ICheckpointWriter>();
             proj.CheckpointWriter = cw;
             proj.Subscription = CreateSubscription(proj);
             proj.Handlers = GetHandlers(type);
             return proj;
         }
 
-            ProjectionInfo GetProjectionInfo(Type type)
+        ProjectionInfo GetProjectionInfo(Type type)
+        {
+            return new ProjectionInfo
             {
-                return new ProjectionInfo
-                {
-                    Name = GetProjectionName(type),
-                    SubscriptionStreamName = GetSubscriptionStreamName(type)
-                };
-            }
+                Name = GetProjectionName(type),
+                SubscriptionStreamName = GetSubscriptionStreamName(type)
+            };
+        }
 
-                string GetProjectionName(Type type)
-                {
-                    return type.Name.Replace("Projection", "");
-                }
+        string GetProjectionName(Type type)
+        {
+            return type.Name.Replace("Projection", "");
+        }
 
-                string GetSubscriptionStreamName(Type type)
-                {
-                    var attrInfo = type.GetCustomAttribute(typeof(SubscribesToStream)) as SubscribesToStream;
-                    return attrInfo.Name;
-                }
+        string GetSubscriptionStreamName(Type type)
+        {
+            var attrInfo = type.GetCustomAttribute(typeof(SubscribesToStream)) as SubscribesToStream;
+            return attrInfo.Name;
+        }
 
-            ISubscription CreateSubscription(Projection proj)
-            {
-                var subscription = Container.GetInstance<ISubscriptionFactory>().Create();
-                subscription.StreamName = proj.SubscriptionStreamName;
-                subscription.EventAppearedCallback = proj.Project;
-                return subscription;
-            }
+        ISubscription CreateSubscription(Projection proj)
+        {
+            var subscription = Provider.GetRequiredService<ISubscriptionFactory>().Create();
+            subscription.StreamName = proj.SubscriptionStreamName;
+            subscription.EventAppearedCallback = proj.Project;
+            return subscription;
+        }
 
-            List<IHandler> GetHandlers(Type type)
-            {
-                Type[] typeArgs = (
-                    from iType in type.GetInterfaces()
-                    where iType.IsGenericType
-                    && iType.GetGenericTypeDefinition() == typeof(IHandledBy<>)
-                    select iType.GetGenericArguments()[0]).ToArray();
-                var handlers = new List<IHandler>();
-                foreach (var t in typeArgs)
-                    handlers.Add(Container.GetInstance<IHandlerFactory>().Create(t));
-                return handlers;
-            }
+        List<IHandler> GetHandlers(Type type)
+        {
+            Type[] typeArgs = (
+                from iType in type.GetInterfaces()
+                where iType.IsGenericType
+                && iType.GetGenericTypeDefinition() == typeof(IHandledBy<>)
+                select iType.GetGenericArguments()[0]).ToArray();
+            var handlers = new List<IHandler>();
+            foreach (var t in typeArgs)
+                handlers.Add(Provider.GetService<IHandlerFactory>().Create(t));
+            return handlers;
+        }
 
         class ProjectionInfo
         {

@@ -12,17 +12,21 @@ namespace Starnet.Projections.Tests
     class InMemoryProjectionsFactoryTests
     {
         readonly Container Container;
-        ProjectionsFactory ProjectionsFactory;
+        IProjectionsFactory ProjectionsFactory;
 
         public InMemoryProjectionsFactoryTests()
         {
             Container = new Container();
+            var svcProviderInstance = new SimpleInjectorServiceProvider() {  Container = Container} ;
+            Container.RegisterInstance<IServiceProvider>(svcProviderInstance);
+
             Container.Register<IHandlerFactory, DIHandlerFactory>();
             Container.Register<ICheckpointReader, StubCheckpointReader>();
             Container.Register<ICheckpointWriterFactory, StubCheckpointWriterFactory>();
             Container.Register<ICheckpointWriter, StubCheckpointWriter>();
             Container.Register<ISubscriptionFactory, InMemorySubscriptionFactory>();
             Container.Register<INoSqlStore, InMemoryProjectionsStore>();
+          
             Container.Register<IProjectionsFactory, ProjectionsFactory>();
             Container.Register<ITimeProvider, MockTimeProvider>();
             Container.Verify();

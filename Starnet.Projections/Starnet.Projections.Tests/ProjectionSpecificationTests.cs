@@ -31,7 +31,6 @@ namespace Starnet.Projections.UnitTests
             await Expect(new TestModel() { Id = Id, SomeValue = "123" });
         }
 
-
         [Test]
         public void can_project_event1()
         {
@@ -39,7 +38,6 @@ namespace Starnet.Projections.UnitTests
             {
                 await Given(new TestEvent() { Id = Id, SomeValue = "123" });
                 await Expect(new TestModelWithUnsupportedIdType() { Id = 1, SomeValue = "123" }); }, Throws.ArgumentException);
-          
         }
 
 
@@ -49,12 +47,12 @@ namespace Starnet.Projections.UnitTests
             Assert.That(ExecuteFailingTest(), Throws.InstanceOf<AssertionException>());
         }
 
-        private NUnit.Framework.Constraints.ActualValueDelegate<Task> ExecuteFailingTest()
-        {
-            return async () =>
+            NUnit.Framework.Constraints.ActualValueDelegate<Task> ExecuteFailingTest()
             {
-                await Given(new TestEvent() { Id = Id, SomeValue = "123" });
-                await Expect(new TestModel() { Id = Id, SomeValue = "1234" });};
-        }
+                return async () =>
+                {
+                    await Given(new TestEvent() { Id = Id, SomeValue = "123" });
+                    await Expect(new TestModel() { Id = Id, SomeValue = "1234" });};
+            }
     }
 }

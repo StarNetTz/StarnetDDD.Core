@@ -15,17 +15,14 @@ namespace Starnet.Projections.ES
 
     public class JSProjectionsFactory : IJSProjectionsFactory
     {
-        readonly ILogger Logger;
-
         ProjectionsManager ProjectionManager;
 
         public Dictionary<string, string> Projections { get;  set; }
 
-        public JSProjectionsFactory(ILogger logger)
+        public JSProjectionsFactory(ILogger<LoggerWrapper> logger)
         {
             Projections = new Dictionary<string, string>();
-            Logger = logger;
-            ProjectionManager = new ProjectionsManager(new LoggerWrapper(Logger), ESConnectionConfig.HttpEndpoint, TimeSpan.FromSeconds(10));
+            ProjectionManager = new ProjectionsManager(new LoggerWrapper(logger), ESConnectionConfig.HttpEndpoint, TimeSpan.FromSeconds(10));
         }
 
         public async Task CreateProjections()
@@ -50,13 +47,12 @@ namespace Starnet.Projections.ES
 
     public class LoggerWrapper : EventStore.ClientAPI.ILogger
     {
-        ILogger Logger;
+        ILogger<LoggerWrapper> Logger;
 
-        public LoggerWrapper(ILogger logger)
+        public LoggerWrapper(ILogger<LoggerWrapper> logger)
         {
             Logger = logger;
         }
-
         public void Debug(string format, params object[] args)
         {
             Logger.LogDebug(format, args);
