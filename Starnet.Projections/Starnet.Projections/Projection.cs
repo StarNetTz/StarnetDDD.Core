@@ -22,14 +22,19 @@ namespace Starnet.Projections
             {
                 await HandleEvent(e, c);
             }
-            catch (AggregateException ex)
+            catch (AggregateException ae)
+            {
+                LogException(e, c, ae);
+                throw;
+            }
+        }
+
+            void LogException(object e, long c, Exception ex)
             {
                 var trace = $"Projection {Name} on stream {SubscriptionStreamName} failed on checkpoint {c} while trying to project {e.GetType().FullName}";
                 Logger.Error(trace);
                 Logger.Error(ex);
-                throw;
             }
-        }
 
         async Task HandleEvent(object e, long c)
         {

@@ -59,14 +59,14 @@ namespace Starnet.Projections.Tests
             }
 
         [Test]
-        public async Task failing_projection_throws_an_exception()
+        public async Task failing_projection_throws_an_aggregate_exception()
         {
             var proj = await ProjectionsFactory.Create<FailingProjection>();
             PreloadFailingProjectionsSubscription(proj);
             Assert.That(async () => { await proj.Start(); }, Throws.Exception.TypeOf<AggregateException>());
         }
 
-            void PreloadFailingProjectionsSubscription(IProjection proj)
+        void PreloadFailingProjectionsSubscription(IProjection proj)
             {
                 var sub = proj.Subscription as InMemorySubscription;
                 sub.LoadEvents(
