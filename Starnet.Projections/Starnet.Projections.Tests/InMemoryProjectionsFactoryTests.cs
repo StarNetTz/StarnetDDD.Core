@@ -29,14 +29,14 @@ namespace Starnet.Projections.Tests
           
             Container.Register<IProjectionsFactory, ProjectionsFactory>();
             Container.Register<ITimeProvider, MockTimeProvider>();
+            Container.Register<FailingHandler>();
+            Container.Register<TestHandler>();
             Container.Verify();
+
+            ProjectionsFactory = Container.GetInstance<IProjectionsFactory>();
         }
 
-        [OneTimeSetUp]
-        public void OneTimeSetup()
-        {
-            ProjectionsFactory = Container.GetInstance<ProjectionsFactory>();
-        }
+
 
         [Test]
         public async Task can_create_test_projection_and_project()

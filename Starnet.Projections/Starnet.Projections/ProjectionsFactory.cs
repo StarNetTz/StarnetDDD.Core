@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SimpleInjector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,10 +44,10 @@ namespace Starnet.Projections
             var proj = new Projection();
             proj.Name = pi.Name;
             proj.SubscriptionStreamName = pi.SubscriptionStreamName;
-            ICheckpointReader cr = Provider.GetService<ICheckpointReader>();
+            ICheckpointReader cr = Provider.GetRequiredService<ICheckpointReader>();
             proj.Checkpoint = await cr.Read($"Checkpoints-{proj.Name}");
 
-            ICheckpointWriter cw = Provider.GetService<ICheckpointWriter>();
+            ICheckpointWriter cw = Provider.GetRequiredService<ICheckpointWriter>();
             proj.CheckpointWriter = cw;
             proj.Subscription = CreateSubscription(proj);
             proj.Handlers = GetHandlers(type);
@@ -85,13 +84,13 @@ namespace Starnet.Projections
 
         List<IHandler> GetHandlers(Type type)
         {
-            Type[] typeArgs = (
+            Type[] projectionTypesThatPointToHandlers = (
                 from iType in type.GetInterfaces()
                 where iType.IsGenericType
                 && iType.GetGenericTypeDefinition() == typeof(IHandledBy<>)
                 select iType.GetGenericArguments()[0]).ToArray();
             var handlers = new List<IHandler>();
-            foreach (var t in typeArgs)
+            foreach (var t in projectionTypesThatPointToHandlers)
                 handlers.Add(Provider.GetRequiredService<IHandlerFactory>().Create(t));
             return handlers;
         }
