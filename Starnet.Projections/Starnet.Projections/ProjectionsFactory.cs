@@ -92,7 +92,7 @@ namespace Starnet.Projections
                 select iType.GetGenericArguments()[0]).ToArray();
             var handlers = new List<IHandler>();
             foreach (var t in typeArgs)
-                handlers.Add(Provider.GetService<IHandlerFactory>().Create(t));
+                handlers.Add(Provider.GetRequiredService<IHandlerFactory>().Create(t));
             return handlers;
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Starnet.Projections
 {
@@ -13,7 +14,7 @@ namespace Starnet.Projections
 
         public IHandler Create(Type t)
         {
-            return (IHandler)Provider.GetService(t);
+            return Provider.GetRequiredService(t) as IHandler;
         }
     }
 }
