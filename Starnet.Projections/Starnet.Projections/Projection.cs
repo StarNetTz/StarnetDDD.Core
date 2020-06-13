@@ -7,13 +7,13 @@ namespace Starnet.Projections
 {
     public class Projection : IProjection
     {
+        private static Logger Logger = LogManager.GetCurrentClassLogger();
         public string Name { get; set; }
         public string SubscriptionStreamName { get; set; }
         public ISubscription Subscription { get; set; }
         public IEnumerable<IHandler> Handlers { get; set; }
         public ICheckpointWriter CheckpointWriter { get; set; }
-        private static Logger Logger = LogManager.GetCurrentClassLogger();
-
+       
         public Checkpoint Checkpoint { get; set; }
        
         public async Task Project(object e, long c)
