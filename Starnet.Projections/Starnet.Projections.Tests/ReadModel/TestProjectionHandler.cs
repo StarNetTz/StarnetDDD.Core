@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 
 namespace Starnet.Projections.Tests
 {
-    public class TestHandler : IHandler
+    public class TestProjectionHandler : IHandler
     {
         readonly INoSqlStore Store;
         readonly ITimeProvider TimeProvider;
 
-        public TestHandler(INoSqlStore store, ITimeProvider timeProvider)
+        public TestProjectionHandler(INoSqlStore store, ITimeProvider timeProvider)
         {
             Store = store;
             TimeProvider = timeProvider;

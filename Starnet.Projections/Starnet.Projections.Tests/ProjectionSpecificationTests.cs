@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using SimpleInjector;
 using Starnet.Projections.Testing;
 using Starnet.Projections.Tests;
 using System;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 namespace Starnet.Projections.UnitTests
 {
     [TestFixture]
-    public class ProjectionSpecificationTests2 : ProjectionSpecification<TestProjection>
+    public class ProjectionSpecificationTests : ProjectionSpecification<TestProjection>
     {
         string Id;
 
@@ -17,8 +16,6 @@ namespace Starnet.Projections.UnitTests
         {
             base.ConfigureContainer(services);
             services.AddTransient<ITimeProvider, MockTimeProvider>();
-            services.AddTransient<FailingHandler>();
-            services.AddTransient<TestHandler>();
         }
 
         [SetUp]
@@ -35,7 +32,7 @@ namespace Starnet.Projections.UnitTests
         }
 
         [Test]
-        public void can_project_event1()
+        public void cannot_project_event_with_unsupported_id_type()
         {
             Assert.That(async () =>
             {
@@ -50,12 +47,12 @@ namespace Starnet.Projections.UnitTests
             Assert.That(ExecuteFailingTest(), Throws.InstanceOf<AssertionException>());
         }
 
-        NUnit.Framework.Constraints.ActualValueDelegate<Task> ExecuteFailingTest()
-        {
-            return async () =>
+            NUnit.Framework.Constraints.ActualValueDelegate<Task> ExecuteFailingTest()
             {
-                await Given(new TestEvent() { Id = Id, SomeValue = "123" });
-                await Expect(new TestModel() { Id = Id, SomeValue = "1234" });};
-        }
+                return async () =>
+                {
+                    await Given(new TestEvent() { Id = Id, SomeValue = "123" });
+                    await Expect(new TestModel() { Id = Id, SomeValue = "1234" });};
+            }
     }
 }

@@ -29,7 +29,7 @@ namespace Starnet.Projections.Tests
             ServiceCollection.AddTransient<IProjectionsFactory, ProjectionsFactory>();
             ServiceCollection.AddTransient<ITimeProvider, MockTimeProvider>();
             ServiceCollection.AddTransient<FailingHandler>();
-            ServiceCollection.AddTransient<TestHandler>();
+            ServiceCollection.AddTransient<TestProjectionHandler>();
 
             var provider = ServiceCollection.BuildServiceProvider();
             ProjectionsFactory = provider.GetRequiredService<IProjectionsFactory>();

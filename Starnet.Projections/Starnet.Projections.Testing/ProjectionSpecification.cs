@@ -18,9 +18,10 @@ namespace Starnet.Projections.Testing
         public ProjectionSpecification()
         {
             ServiceCollection = new ServiceCollection();
-
-            ServiceCollection.AddSingleton<INoSqlStore, InMemoryProjectionsStore>();
-            ServiceCollection.AddSingleton<ISqlStore, InMemoryProjectionsStore>();
+            ServiceCollection.AddTransient(GetHandlerType());
+            var store = new InMemoryProjectionsStore();
+            ServiceCollection.AddSingleton<INoSqlStore>(store);
+            ServiceCollection.AddSingleton<ISqlStore>(store);
             ServiceCollection.AddTransient<ICheckpointReader, StubCheckpointReader>();
             ServiceCollection.AddTransient<ICheckpointWriter, StubCheckpointWriter>();
 
@@ -36,6 +37,15 @@ namespace Starnet.Projections.Testing
             ProjectionsFactory = provider.GetRequiredService<IProjectionsFactory>();
             ProjectionsStore = provider.GetRequiredService<INoSqlStore>();
         }
+
+            static Type GetHandlerType()
+            {
+                var projType = typeof(TProjection);
+                var assem = projType.Assembly;
+                var handlerName = projType.FullName + "Handler";
+                var handlerType = assem.GetType(handlerName, true, false);
+                return handlerType;
+            }
 
         public async Task Given(params object[] args)
         {
