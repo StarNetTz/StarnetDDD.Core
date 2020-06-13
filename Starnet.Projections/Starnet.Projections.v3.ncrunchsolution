@@ -13,6 +13,7 @@
       <Value>ObjectComparer.cs:Starnet.Projections.Testing\Starnet.Projections.Testing.csproj</Value>
       <Value>Starnet.Projections.RavenDb\Starnet.Projections.RavenDb.csproj</Value>
       <Value>StubCheckpointWriterFactory.cs:Starnet.Projections.Testing\Starnet.Projections.Testing.csproj</Value>
+      <Value>FailingProjectionsFactoryStub.cs:Starnet.Projections.Tests\Starnet.Projections.UnitTests.csproj</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>

@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.Extensions.Logging;
 using NUnit.Framework;
-using SimpleInjector;
+using System;
 using System.Threading.Tasks;
 
 namespace Starnet.Projections.ES.IntegrationTests
@@ -12,26 +13,25 @@ namespace Starnet.Projections.ES.IntegrationTests
         [Test]
         public async Task CanCreateProjectionUsingSimpleInjector()
         {
-            var container = CreateDIContainer();
-            var fact = container.GetInstance<JSProjectionsFactory>();
-            fact.Projections.Add("AssociationsOverviewWithNlog", "fromStreams('$ce-Competitions').when({CompetitionAdded: function(s,e){linkTo('cp-AssociationsOverview', e);return s;},CompetitionRenamed: function(s,e){linkTo('cp-AssociationsOverview', e);return s;},CompetitionsAssociationChanged: function(s,e){linkTo('cp-AssociationsOverview', e);return s;},CompetitionsRankChanged: function(s,e){linkTo('cp-AssociationsOverview', e);return s;}})");
+            LogManager.LoadConfiguration("nlog.config");
+            var provider = CreateServiceProvider();
+            var fact = provider.GetRequiredService<IJSProjectionsFactory>();
+            fact.AddProjection("AssociationsOverviewWithNlog", "fromStreams('$ce-Competitions').when({CompetitionAdded: function(s,e){linkTo('cp-AssociationsOverview', e);return s;},CompetitionRenamed: function(s,e){linkTo('cp-AssociationsOverview', e);return s;},CompetitionsAssociationChanged: function(s,e){linkTo('cp-AssociationsOverview', e);return s;},CompetitionsRankChanged: function(s,e){linkTo('cp-AssociationsOverview', e);return s;}})");
             await fact.CreateProjections();
         }
 
-            static Container CreateDIContainer()
+            IServiceProvider CreateServiceProvider()
             {
-                var container = new Container();
+                var services = new ServiceCollection();
                 var loggerFactory = LoggerFactory.Create(builder =>
                 {
                     builder.AddNLog(new NLogProviderOptions { CaptureMessageTemplates = true, CaptureMessageProperties = true });
                 });
+                services.AddSingleton(loggerFactory);
 
-                LogManager.LoadConfiguration("nlog.config");
-                container.Register(() => loggerFactory, Lifestyle.Singleton);
-                container.Register<JSProjectionsFactory>();
-                container.RegisterSingleton(typeof(ILogger<>), typeof(Logger<>));
-                container.Verify();
-                return container;
+                services.AddTransient(typeof(ILogger<>), typeof(Logger<>));
+                services.AddTransient<IJSProjectionsFactory, JSProjectionsFactory>();
+                return services.BuildServiceProvider();
             }
     }
 }

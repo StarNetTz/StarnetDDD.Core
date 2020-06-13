@@ -1,5 +1,6 @@
-﻿using NUnit.Framework;
-using SimpleInjector;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NUnit.Framework;
+
 using System.Threading.Tasks;
 
 namespace Starnet.Projections.ES.IntegrationTests
@@ -7,27 +8,22 @@ namespace Starnet.Projections.ES.IntegrationTests
     [TestFixture]
     class ESProjectionsFactoryTests
     {
-        readonly Container Container;
-        ProjectionsFactory ProjectionsFactory;
+     
+        IProjectionsFactory ProjectionsFactory;
 
         public ESProjectionsFactoryTests()
         {
-            Container = new Container();
+            var services = new ServiceCollection();
+            services.AddTransient<IHandlerFactory, StubHandlerFactory>();
 
-            Container.Register<IHandlerFactory, StubHandlerFactory>();
+            services.AddTransient<ICheckpointReader, StubCheckpointReader>();
+            services.AddTransient<ICheckpointWriter, StubCheckpointWriter>();
 
-            Container.Register<ICheckpointReader, StubCheckpointReader>();
-            Container.Register<ICheckpointWriter, StubCheckpointWriter>();
-           
-            Container.Register<ISubscriptionFactory, ESSubscriptionFactory>();
-            Container.Register<IProjectionsFactory, ProjectionsFactory>();
-            Container.Verify();
-        }
+            services.AddTransient<ISubscriptionFactory, ESSubscriptionFactory>();
+            services.AddTransient<IProjectionsFactory, ProjectionsFactory>();
+            var prov = services.BuildServiceProvider();
 
-        [OneTimeSetUp]
-        public void OneTimeSetup()
-        {
-            ProjectionsFactory = Container.GetInstance<ProjectionsFactory>();
+            ProjectionsFactory = prov.GetRequiredService<IProjectionsFactory>();
         }
 
         [Test]

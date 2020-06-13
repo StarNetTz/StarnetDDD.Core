@@ -1,42 +1,39 @@
 ﻿using System;
 using NUnit.Framework;
-using SimpleInjector;
 using System.Reflection;
 using System.Threading.Tasks;
 using Starnet.Projections.Testing;
+
+using Microsoft.Extensions.DependencyInjection;
 using Starnet.Projections.UnitTests;
+using System.Collections.Generic;
 
 namespace Starnet.Projections.Tests
 {
     [TestFixture]
     class InMemoryProjectionsFactoryTests
     {
-        readonly Container Container;
         IProjectionsFactory ProjectionsFactory;
 
         public InMemoryProjectionsFactoryTests()
         {
-            Container = new Container();
-            var svcProviderInstance = new SimpleInjectorServiceProvider() {  Container = Container} ;
-            Container.RegisterInstance<IServiceProvider>(svcProviderInstance);
+            var ServiceCollection = new ServiceCollection();
 
-            Container.Register<IHandlerFactory, DIHandlerFactory>();
-            Container.Register<ICheckpointReader, StubCheckpointReader>();
-            Container.Register<ICheckpointWriterFactory, StubCheckpointWriterFactory>();
-            Container.Register<ICheckpointWriter, StubCheckpointWriter>();
-            Container.Register<ISubscriptionFactory, InMemorySubscriptionFactory>();
-            Container.Register<INoSqlStore, InMemoryProjectionsStore>();
-          
-            Container.Register<IProjectionsFactory, ProjectionsFactory>();
-            Container.Register<ITimeProvider, MockTimeProvider>();
-            Container.Register<FailingHandler>();
-            Container.Register<TestHandler>();
-            Container.Verify();
+            ServiceCollection.AddSingleton<INoSqlStore, InMemoryProjectionsStore>();
+            ServiceCollection.AddSingleton<ISqlStore, InMemoryProjectionsStore>();
+            ServiceCollection.AddTransient<ICheckpointReader, StubCheckpointReader>();
+            ServiceCollection.AddTransient<ICheckpointWriter, StubCheckpointWriter>();
 
-            ProjectionsFactory = Container.GetInstance<IProjectionsFactory>();
+            ServiceCollection.AddTransient<IHandlerFactory, DIHandlerFactory>();
+            ServiceCollection.AddTransient<ISubscriptionFactory, InMemorySubscriptionFactory>();
+            ServiceCollection.AddTransient<IProjectionsFactory, ProjectionsFactory>();
+            ServiceCollection.AddTransient<ITimeProvider, MockTimeProvider>();
+            ServiceCollection.AddTransient<FailingHandler>();
+            ServiceCollection.AddTransient<TestHandler>();
+
+            var provider = ServiceCollection.BuildServiceProvider();
+            ProjectionsFactory = provider.GetRequiredService<IProjectionsFactory>();
         }
-
-
 
         [Test]
         public async Task can_create_test_projection_and_project()
@@ -66,7 +63,7 @@ namespace Starnet.Projections.Tests
             Assert.That(async () => { await proj.Start(); }, Throws.Exception.TypeOf<AggregateException>());
         }
 
-        void PreloadFailingProjectionsSubscription(IProjection proj)
+            void PreloadFailingProjectionsSubscription(IProjection proj)
             {
                 var sub = proj.Subscription as InMemorySubscription;
                 sub.LoadEvents(

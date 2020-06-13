@@ -32,8 +32,7 @@ namespace Starnet.Projections
             void LogException(object e, long c, Exception ex)
             {
                 var trace = $"Projection {Name} on stream {SubscriptionStreamName} failed on checkpoint {c} while trying to project {e.GetType().FullName}";
-                Logger.Error(trace);
-                Logger.Error(ex);
+                Logger.Error(ex, trace);
             }
 
         async Task HandleEvent(object e, long c)
