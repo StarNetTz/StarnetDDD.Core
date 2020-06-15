@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Starnet.Projections.Testing
@@ -63,6 +64,14 @@ namespace Starnet.Projections.Testing
         {
             foreach (var d in docs)
                 await StoreAsync<T>(d);
+        }
+
+        public async Task<Dictionary<string, T>> LoadAsync<T>(params string[] ids) where T : class
+        {
+            var data = new Dictionary<string, T>();
+            foreach (var id in ids)
+                    data.Add(id, await LoadAsync<T>(id));
+            return data;
         }
     }
 }

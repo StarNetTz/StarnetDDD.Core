@@ -1,4 +1,5 @@
 ﻿using Raven.Client.Documents;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Starnet.Projections.RavenDb
@@ -65,6 +66,12 @@ namespace Starnet.Projections.RavenDb
                     await s.StoreAsync(d);
                 await s.SaveChangesAsync();
             }
+        }
+
+        public async Task<Dictionary<string, T>> LoadAsync<T>(params string[] ids) where T : class
+        {
+            using (var s = DocumentStore.OpenAsyncSession())
+                return await s.LoadAsync<T>(ids);
         }
     }
 }
