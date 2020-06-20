@@ -4,10 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>Zvjezdan Tomicevic</Authors>
     <Company>StarNet</Company>
-    <Description>Lightweight DDD framework</Description>
-    <Copyright>Copyright © 2018 StarNet d.o.o.</Copyright>
-    <AssemblyVersion>8.1.0.0</AssemblyVersion>
-    <Version>8.1.0</Version>
+    <Description></Description>
+    <Copyright></Copyright>
+    <AssemblyVersion>8.2.0.0</AssemblyVersion>
+    <Version>8.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
