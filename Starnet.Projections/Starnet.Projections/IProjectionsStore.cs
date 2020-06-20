@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Starnet.Projections
 {
@@ -10,6 +11,7 @@ namespace Starnet.Projections
         Task DeleteAsync(string id);
         Task StoreAsync<T>(T doc);
         Task StoreInUnitOfWorkAsync<T>(params T[] docs);
+        Task<Dictionary<string, T>> LoadAsync<T>(params string[] ids) where T : class;
     }
 
     public interface INoSqlStore : IProjectionsStore { };

@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using SimpleInjector;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NUnit.Framework;
 using Starnet.Projections.Testing;
 using Starnet.Projections.Tests;
 using System;
@@ -12,10 +12,10 @@ namespace Starnet.Projections.UnitTests
     {
         string Id;
 
-        protected override void ConfigureContainer(Container container)
+        protected override void ConfigureContainer(IServiceCollection services)
         {
-            base.ConfigureContainer(container);
-            container.Register<ITimeProvider, MockTimeProvider>();
+            base.ConfigureContainer(services);
+            services.AddTransient<ITimeProvider, MockTimeProvider>();
         }
 
         [SetUp]
@@ -31,15 +31,13 @@ namespace Starnet.Projections.UnitTests
             await Expect(new TestModel() { Id = Id, SomeValue = "123" });
         }
 
-
         [Test]
-        public void can_project_event1()
+        public void cannot_project_event_with_unsupported_id_type()
         {
             Assert.That(async () =>
             {
                 await Given(new TestEvent() { Id = Id, SomeValue = "123" });
                 await Expect(new TestModelWithUnsupportedIdType() { Id = 1, SomeValue = "123" }); }, Throws.ArgumentException);
-          
         }
 
 
@@ -49,12 +47,12 @@ namespace Starnet.Projections.UnitTests
             Assert.That(ExecuteFailingTest(), Throws.InstanceOf<AssertionException>());
         }
 
-        private NUnit.Framework.Constraints.ActualValueDelegate<Task> ExecuteFailingTest()
-        {
-            return async () =>
+            NUnit.Framework.Constraints.ActualValueDelegate<Task> ExecuteFailingTest()
             {
-                await Given(new TestEvent() { Id = Id, SomeValue = "123" });
-                await Expect(new TestModel() { Id = Id, SomeValue = "1234" });};
-        }
+                return async () =>
+                {
+                    await Given(new TestEvent() { Id = Id, SomeValue = "123" });
+                    await Expect(new TestModel() { Id = Id, SomeValue = "1234" });};
+            }
     }
 }

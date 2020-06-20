@@ -7,19 +7,22 @@ using System.Threading.Tasks;
 
 namespace Starnet.Projections.ES
 {
-    public class JSProjectionsFactory
+    public interface IJSProjectionsFactory
     {
-        readonly ILogger Logger;
+        public Task CreateProjections();
+        public void AddProjection(string name, string srcCode);
+    }
 
+    public class JSProjectionsFactory : IJSProjectionsFactory
+    {
         ProjectionsManager ProjectionManager;
 
         public Dictionary<string, string> Projections { get;  set; }
 
-        public JSProjectionsFactory(ILogger logger)
+        public JSProjectionsFactory(ILogger<LoggerWrapper> logger)
         {
             Projections = new Dictionary<string, string>();
-            Logger = logger;
-            ProjectionManager = new ProjectionsManager(new LoggerWrapper(Logger), ESConnectionConfig.HttpEndpoint, TimeSpan.FromSeconds(10));
+            ProjectionManager = new ProjectionsManager(new LoggerWrapper(logger), ESConnectionConfig.HttpEndpoint, TimeSpan.FromSeconds(10));
         }
 
         public async Task CreateProjections()
@@ -35,17 +38,21 @@ namespace Starnet.Projections.ES
             {
                 return (from kv in Projections where !existing.Contains(kv.Key) select kv).ToDictionary(kv=> kv.Key, kv=>kv.Value);
             }
+
+        public void AddProjection(string name, string srcCode)
+        {
+            Projections.Add(name, srcCode);
+        }
     }
 
     public class LoggerWrapper : EventStore.ClientAPI.ILogger
     {
-        ILogger Logger;
+        ILogger<LoggerWrapper> Logger;
 
-        public LoggerWrapper(ILogger logger)
+        public LoggerWrapper(ILogger<LoggerWrapper> logger)
         {
             Logger = logger;
         }
-
         public void Debug(string format, params object[] args)
         {
             Logger.LogDebug(format, args);

@@ -70,7 +70,7 @@ namespace Starnet.Projections.ES
 
         void SubscriptionDropped(EventStoreCatchUpSubscription projection, SubscriptionDropReason subscriptionDropReason, Exception exception)
         {
-
+            Logger.Error($"{StreamName} subscription dropped because of an error ({subscriptionDropReason}).");
             //Subscription.Stop();
             switch (subscriptionDropReason)
             {
@@ -82,7 +82,6 @@ namespace Starnet.Projections.ES
                 case SubscriptionDropReason.ConnectionClosed:
                 case SubscriptionDropReason.CatchUpError:
                 case SubscriptionDropReason.ProcessingQueueOverflow:
-                    Logger.Error($"{StreamName} projection stopped because of a transient error ({subscriptionDropReason}). ");
                     Logger.Error($"Exception Detail:  {exception}");
                     //Task.Run(() => Start(CurrentCheckpoint));
                     break;

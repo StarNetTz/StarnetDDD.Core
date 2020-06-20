@@ -7,13 +7,13 @@ namespace Starnet.Projections
 {
     public class Projection : IProjection
     {
+        private static Logger Logger = LogManager.GetCurrentClassLogger();
         public string Name { get; set; }
         public string SubscriptionStreamName { get; set; }
         public ISubscription Subscription { get; set; }
         public IEnumerable<IHandler> Handlers { get; set; }
         public ICheckpointWriter CheckpointWriter { get; set; }
-        private static Logger Logger = LogManager.GetCurrentClassLogger();
-
+       
         public Checkpoint Checkpoint { get; set; }
        
         public async Task Project(object e, long c)
@@ -22,14 +22,18 @@ namespace Starnet.Projections
             {
                 await HandleEvent(e, c);
             }
-            catch (AggregateException ex)
+            catch (AggregateException ae)
             {
-                var trace = $"Projection {Name} on stream {SubscriptionStreamName} failed on checkpoint {c} while trying to project {e.GetType().FullName}";
-                Logger.Error(trace);
-                Logger.Error(ex);
+                LogException(e, c, ae);
                 throw;
             }
         }
+
+            void LogException(object e, long c, Exception ex)
+            {
+                var trace = $"Projection {Name} on stream {SubscriptionStreamName} failed on checkpoint {c} while trying to project {e.GetType().FullName}";
+                Logger.Error(ex, trace);
+            }
 
         async Task HandleEvent(object e, long c)
         {
