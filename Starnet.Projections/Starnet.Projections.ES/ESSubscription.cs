@@ -47,8 +47,7 @@ namespace Starnet.Projections.ES
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error($"Failed to deserialize type: {eventClrTypeName}");
-                    Logger.Error(ex);
+                    Logger.Error(ex, $"Failed to deserialize type: {eventClrTypeName}");
                     throw;
                 }
             }
@@ -56,44 +55,45 @@ namespace Starnet.Projections.ES
         public async Task Start(long fromCheckpoint)
         {
             await Connection.ConnectAsync().ConfigureAwait(false);
-            //bool useVerboseMode = false;
-            //bool resloveLinkTos = true;
-            //Default CatchUpSubscriptionSettings settings = new CatchUpSubscriptionSettings(10000, 500, useVerboseMode, resloveLinkTos);
             long? eventstoreCheckpoint = (fromCheckpoint == 0) ? null : (long?)(fromCheckpoint - 1);
             Subscription = Connection.SubscribeToStreamFrom(StreamName, eventstoreCheckpoint, CatchUpSubscriptionSettings.Default, EventAppeared, LiveProcessingStarted,SubscriptionDropped);
         }
 
         void LiveProcessingStarted(EventStoreCatchUpSubscription obj)
         {
-            Logger.Trace($"LiveProcessingStarted on stream {StreamName}");
+            Logger.Debug($"LiveProcessingStarted on stream {StreamName}");
         }
 
         void SubscriptionDropped(EventStoreCatchUpSubscription projection, SubscriptionDropReason subscriptionDropReason, Exception exception)
         {
-            Logger.Error($"{StreamName} subscription dropped because of an error ({subscriptionDropReason}).");
-            //Subscription.Stop();
-            switch (subscriptionDropReason)
+            Subscription.Stop();
+            if (IsTransient(subscriptionDropReason))
             {
-                case SubscriptionDropReason.UserInitiated:
-                    Logger.Error($"{projection} projection stopped by user.");
-                    break;
-                case SubscriptionDropReason.SubscribingError:
-                case SubscriptionDropReason.ServerError:
-                case SubscriptionDropReason.ConnectionClosed:
-                case SubscriptionDropReason.CatchUpError:
-                case SubscriptionDropReason.ProcessingQueueOverflow:
-                    Logger.Error($"Exception Detail:  {exception}");
-                    //Task.Run(() => Start(CurrentCheckpoint));
-                    break;
-                case SubscriptionDropReason.EventHandlerException:
-                    Logger.Error("EventHandlerException");
-                    Logger.Error($"Exception Detail:  {exception}");
-                    break;
-                default:
-                    Logger.Error("Dropped for generic reason:");
-                    Logger.Error($"Exception Detail:  {exception}");
-                    break;
+                Logger.Warn(exception, $"{StreamName} subscription dropped because of an transient error: ({subscriptionDropReason}).");
+                Task.Run(() => Start(CurrentCheckpoint));
+            }
+            else
+            {
+                Logger.Fatal(exception, $"{StreamName} subscription failed: ({subscriptionDropReason}).");
+                throw exception;
             }
         }
+
+            bool IsTransient(SubscriptionDropReason subscriptionDropReason)
+            {
+                switch (subscriptionDropReason)
+                {
+                    case SubscriptionDropReason.SubscribingError:
+                    case SubscriptionDropReason.ServerError:
+                    case SubscriptionDropReason.ConnectionClosed:
+                    case SubscriptionDropReason.CatchUpError:
+                    case SubscriptionDropReason.ProcessingQueueOverflow:
+                        return true;
+                    case SubscriptionDropReason.EventHandlerException:
+                    case SubscriptionDropReason.UserInitiated:
+                    default:
+                        return false;
+                }
+            }
     }
 }
