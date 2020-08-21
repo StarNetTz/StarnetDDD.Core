@@ -1,0 +1,1 @@
+﻿./EventStore.ClusterNode.exe --db=./db --log=./logs --dev --mem-db=false --enable-external-tcp --run-projections=all --start-standard-projections=true 
