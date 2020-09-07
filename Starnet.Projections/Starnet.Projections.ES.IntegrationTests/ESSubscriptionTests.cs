@@ -22,7 +22,7 @@ namespace Starnet.Projections.ES.IntegrationTests
 
             void ConfigureSubscription()
             {
-                Subscription = new ESSubscription(EventStoreConnection.Create(ESConnectionConfig.TcpEndpoint))
+                Subscription = new ESSubscription()
                 {
                     StreamName = "$ce-Match",
                     EventAppearedCallback = EventAppeared
@@ -41,7 +41,7 @@ namespace Starnet.Projections.ES.IntegrationTests
         public async Task can_write_events_to_event_store_and_project_them()
         {
             await new ESDataGenerator().WriteEventsToStore(2);
-            await Task.Delay(500);
+            await Task.Delay(20000);
             AssertThatEventsProjected();
         }
 

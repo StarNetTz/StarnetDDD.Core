@@ -4,29 +4,27 @@ using Newtonsoft.Json.Linq;
 using NLog;
 using System;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Starnet.Projections.ES
 {
     public class ESSubscription : ISubscription
     {
-        private static Logger Logger = LogManager.GetCurrentClassLogger();
+        static Logger Logger = LogManager.GetCurrentClassLogger();
+        const string EventClrTypeHeader = "EventClrTypeName";
+        const int MaxRecconectionAttemts = 3;
+        readonly JsonSerializerSettings SerializerSettings;
         long CurrentCheckpoint = 0;
+        IEventStoreConnection Connection;
+        EventStoreStreamCatchUpSubscription Subscription = null;
+        int ReconnectionCounter;
 
         public string StreamName { get; set; }
-
         public Func<object, long, Task> EventAppearedCallback { get; set; }
 
-        const string EventClrTypeHeader = "EventClrTypeName";
-        readonly IEventStoreConnection Connection;
-
-        EventStoreStreamCatchUpSubscription Subscription = null;
-       
-        readonly JsonSerializerSettings SerializerSettings;
-
-        public ESSubscription(IEventStoreConnection connection)
+        public ESSubscription()
         {
-            Connection = connection;
             SerializerSettings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
         }
 
@@ -54,9 +52,17 @@ namespace Starnet.Projections.ES
 
         public async Task Start(long fromCheckpoint)
         {
+            Connection = EventStoreConnection.Create(ESConnectionConfig.ConnectionString);
+            Connection.Connected += Connection_Connected;
             await Connection.ConnectAsync().ConfigureAwait(false);
             long? eventstoreCheckpoint = (fromCheckpoint == 0) ? null : (long?)(fromCheckpoint - 1);
-            Subscription = Connection.SubscribeToStreamFrom(StreamName, eventstoreCheckpoint, CatchUpSubscriptionSettings.Default, EventAppeared, LiveProcessingStarted,SubscriptionDropped);
+            Subscription = Connection.SubscribeToStreamFrom(StreamName, eventstoreCheckpoint, CatchUpSubscriptionSettings.Default, EventAppeared, LiveProcessingStarted, SubscriptionDropped);
+        }
+
+        void Connection_Connected(object sender, ClientConnectionEventArgs e)
+        {
+            ReconnectionCounter = 0;
+            Logger.Debug($"Connected for {StreamName}");
         }
 
         void LiveProcessingStarted(EventStoreCatchUpSubscription obj)
@@ -66,17 +72,30 @@ namespace Starnet.Projections.ES
 
         void SubscriptionDropped(EventStoreCatchUpSubscription projection, SubscriptionDropReason subscriptionDropReason, Exception exception)
         {
+            Connection.Connected -= Connection_Connected;
             Subscription.Stop();
             if (IsTransient(subscriptionDropReason))
             {
-                Logger.Warn(exception, $"{StreamName} subscription dropped because of an transient error: ({subscriptionDropReason}).");
-                Task.Run(() => Start(CurrentCheckpoint));
+                ReconnectionCounter++;
+                if (ReconnectionCounter > MaxRecconectionAttemts)
+                    LogAndFail();
+
+                Logger.Warn(exception, $"{StreamName} subscription dropped because of an transient error: ({subscriptionDropReason}). Reconnection attempt nr: {ReconnectionCounter}.");
+                Thread.Sleep(1000);
+                Start(CurrentCheckpoint).Wait();
             }
             else
             {
                 Logger.Fatal(exception, $"{StreamName} subscription failed: ({subscriptionDropReason}).");
                 throw exception;
             }
+        }
+
+        private static void LogAndFail()
+        {
+            var msg = $"Reconnection attempt limit({MaxRecconectionAttemts}) reached.";
+            Logger.Fatal(msg);
+            throw new ApplicationException(msg);
         }
 
             bool IsTransient(SubscriptionDropReason subscriptionDropReason)
