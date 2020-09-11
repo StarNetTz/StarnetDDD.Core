@@ -13,7 +13,7 @@ namespace Starnet.Projections.ES
     {
         static Logger Logger = LogManager.GetCurrentClassLogger();
         const string EventClrTypeHeader = "EventClrTypeName";
-        const int MaxRecconectionAttemts = 3;
+        const int MaxRecconectionAttemts = 10;
         readonly JsonSerializerSettings SerializerSettings;
         long CurrentCheckpoint = 0;
         IEventStoreConnection Connection;
@@ -81,7 +81,7 @@ namespace Starnet.Projections.ES
                     LogAndFail();
 
                 Logger.Warn(exception, $"{StreamName} subscription dropped because of an transient error: ({subscriptionDropReason}). Reconnection attempt nr: {ReconnectionCounter}.");
-                Thread.Sleep(1000);
+                Thread.Sleep(300);
                 Start(CurrentCheckpoint).Wait();
             }
             else
