@@ -1,4 +1,5 @@
-﻿using EventStore.ClientAPI;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace Starnet.Projections.ES.IntegrationTests
 
             void ConfigureSubscription()
             {
-                Subscription = new ESSubscription()
+                Subscription = new ESSubscription(new NullLoggerFactory().CreateLogger<ESSubscription>())
                 {
                     StreamName = "$ce-Match",
                     EventAppearedCallback = EventAppeared

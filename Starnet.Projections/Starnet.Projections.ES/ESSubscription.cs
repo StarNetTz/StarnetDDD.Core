@@ -1,7 +1,7 @@
 ﻿using EventStore.ClientAPI;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NLog;
 using System;
 using System.Text;
 using System.Threading;
@@ -11,10 +11,12 @@ namespace Starnet.Projections.ES
 {
     public class ESSubscription : ISubscription
     {
-        static Logger Logger = LogManager.GetCurrentClassLogger();
         const string EventClrTypeHeader = "EventClrTypeName";
         const int MaxRecconectionAttemts = 10;
+
+        readonly ILogger<ESSubscription> Logger;
         readonly JsonSerializerSettings SerializerSettings;
+
         long CurrentCheckpoint = 0;
         IEventStoreConnection Connection;
         EventStoreStreamCatchUpSubscription Subscription = null;
@@ -23,8 +25,9 @@ namespace Starnet.Projections.ES
         public string StreamName { get; set; }
         public Func<object, long, Task> EventAppearedCallback { get; set; }
 
-        public ESSubscription()
+        public ESSubscription(ILogger<ESSubscription> logger)
         {
+            Logger = logger;
             SerializerSettings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
         }
 
@@ -45,7 +48,7 @@ namespace Starnet.Projections.ES
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error(ex, $"Failed to deserialize type: {eventClrTypeName}");
+                    Logger.LogError(ex, $"Failed to deserialize type: {eventClrTypeName}");
                     throw;
                 }
             }
@@ -62,12 +65,12 @@ namespace Starnet.Projections.ES
         void Connection_Connected(object sender, ClientConnectionEventArgs e)
         {
             ReconnectionCounter = 0;
-            Logger.Debug($"Connected for {StreamName}");
+            Logger.LogDebug($"Connected for {StreamName}");
         }
 
         void LiveProcessingStarted(EventStoreCatchUpSubscription obj)
         {
-            Logger.Debug($"LiveProcessingStarted on stream {StreamName}");
+            Logger.LogDebug($"LiveProcessingStarted on stream {StreamName}");
         }
 
         void SubscriptionDropped(EventStoreCatchUpSubscription projection, SubscriptionDropReason subscriptionDropReason, Exception exception)
@@ -80,22 +83,15 @@ namespace Starnet.Projections.ES
                 if (ReconnectionCounter > MaxRecconectionAttemts)
                     LogAndFail();
 
-                Logger.Warn(exception, $"{StreamName} subscription dropped because of an transient error: ({subscriptionDropReason}). Reconnection attempt nr: {ReconnectionCounter}.");
+                Logger.LogWarning(exception, $"{StreamName} subscription dropped because of an transient error: ({subscriptionDropReason}). Reconnection attempt nr: {ReconnectionCounter}.");
                 Thread.Sleep(300);
                 Start(CurrentCheckpoint).Wait();
             }
             else
             {
-                Logger.Fatal(exception, $"{StreamName} subscription failed: ({subscriptionDropReason}).");
+                Logger.LogCritical(exception, $"{StreamName} subscription failed: ({subscriptionDropReason}).");
                 throw exception;
             }
-        }
-
-        private static void LogAndFail()
-        {
-            var msg = $"Reconnection attempt limit({MaxRecconectionAttemts}) reached.";
-            Logger.Fatal(msg);
-            throw new ApplicationException(msg);
         }
 
             bool IsTransient(SubscriptionDropReason subscriptionDropReason)
@@ -113,6 +109,13 @@ namespace Starnet.Projections.ES
                     default:
                         return false;
                 }
+            }
+
+            void LogAndFail()
+            {
+                var msg = $"Reconnection attempt on {StreamName} subscription failed permanently. Limit({MaxRecconectionAttemts}) reached.";
+                Logger.LogCritical(msg);
+                throw new ApplicationException(msg);
             }
     }
 }
