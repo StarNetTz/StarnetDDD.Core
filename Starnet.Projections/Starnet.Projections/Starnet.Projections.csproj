@@ -6,15 +6,15 @@
     <Company>StarNet</Company>
     <Description></Description>
     <Copyright></Copyright>
-    <AssemblyVersion>8.2.0.0</AssemblyVersion>
-    <Version>8.2.0</Version>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <Version>9.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.5" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.5" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.5" />
-    <PackageReference Include="NLog.Config" Version="4.7.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.8" />
+    <PackageReference Include="NLog.Config" Version="4.7.4" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>
 
