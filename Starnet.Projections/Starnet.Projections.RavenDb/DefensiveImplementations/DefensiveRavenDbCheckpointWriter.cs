@@ -27,6 +27,7 @@ namespace Starnet.Projections.RavenDb
                     {
                         await s.StoreAsync(checkpoint);
                         await s.SaveChangesAsync();
+                        return;
                     }
                 }
                 catch (Exception ex)
