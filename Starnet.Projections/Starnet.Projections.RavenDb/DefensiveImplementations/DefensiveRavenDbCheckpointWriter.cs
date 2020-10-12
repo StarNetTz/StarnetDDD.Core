@@ -38,7 +38,6 @@ namespace Starnet.Projections.RavenDb
                 }
                 await Task.Delay(Delay);
             }
-           
         }
 
             bool IsTransient(Exception ex)
