@@ -8,7 +8,7 @@ namespace Starnet.Projections.RavenDb
     public class DefensiveRavenDbProjectionsStore : INoSqlStore, ISqlStore
     {
         private int MaxRetries = 3;
-        private readonly TimeSpan Delay = TimeSpan.FromMilliseconds(50);
+        readonly TimeSpan Delay = TimeSpan.FromMilliseconds(50);
 
         readonly IDocumentStore DocumentStore;
 
